@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bassma Ennarah — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream:       #F2EDE4;
+            --manila:      #E8C97A;
+            --manila-dark: #C9A84C;
+            --manila-shad: #A07830;
+            --text:        #1A1514;
+            --muted:       #7A6E66;
+
+            --c1: #F2C4CE;  --c1t: #3D1230;
+            --c2: #3B1636;  --c2t: #F2C4CE;
+            --c3: #EDE3C8;  --c3t: #2E2416;
+            --c4: #6E8F5C;  --c4t: #F2EDE4;
+            --c5: #1C3454;  --c5t: #F2EDE4;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           PINNED SCENE  — folder + files all live here
+        ============================================================ */
+        #scene {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--cream);
+        }
+
+        /* top meta bar */
+        .meta-bar {
+            position: absolute;
+            top: 32px; left: 0; right: 0;
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            z-index: 50;
+        }
+
+        /* ── Folder ── */
+        #folder-wrap {
+            position: absolute;
+            /* GSAP will set xPercent: -50, yPercent: -50 so we just need top/left */
+            top: 52%;
+            left: 50%;
+            z-index: 20;   /* folder sits ON TOP of files initially */
+        }
+
+        /* papers peeking from folder top */
+        .peek {
+            position: absolute;
+            height: 54px;
+            border-radius: 3px 3px 0 0;
+        }
+        .pk1 { background: var(--c1); top:-48px; left:28px; right:46px; transform:rotate(-2deg);   z-index:1; }
+        .pk2 { background: var(--c2); top:-42px; left:14px; right:30px; transform:rotate( 1.2deg); z-index:2; }
+        .pk3 { background: var(--c3); top:-36px; left:22px; right:40px; transform:rotate(-0.4deg); z-index:3; }
+
+        .folder-tab {
+            position: absolute;
+            top: -26px; left: 0;
+            width: 155px; height: 28px;
+            background: var(--manila-dark);
+            border-radius: 7px 7px 0 0;
+            z-index: 5;
+        }
+
+        .folder-body {
+            position: relative;
+            width: 600px;
+            height: 370px;
+            background: var(--manila);
+            border-radius: 0 12px 12px 12px;
+            box-shadow:
+                0 5px 0 var(--manila-shad),
+                0 10px 50px rgba(0,0,0,.18),
+                inset 0 1px 0 rgba(255,255,255,.35);
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .folder-body::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0; width: 28px;
+            background: rgba(0,0,0,.04);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .folder-anno {
+            position: absolute;
+            top: 18px; left: 20px;
+            font-size: 10px; letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(90,65,20,.5);
+            font-weight: 500;
+        }
+
+        /* polaroid */
+        .polaroid-wrap { position: absolute; top: 20px; right: 24px; z-index: 8; }
+
+        .paperclip-svg { position: absolute; top: -20px; right: 26px; width: 36px; z-index: 10; }
+
+        .polaroid {
+            width: 132px;
+            background: #fff;
+            padding: 8px 8px 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.22);
+            transform: rotate(4.5deg);
+        }
+
+        .polaroid-img {
+            width: 116px; height: 128px;
+            background: linear-gradient(140deg,#C9A8BE 0%,#8BA4B8 50%,#A2C0AA 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 700;
+            letter-spacing: 3px; color: rgba(255,255,255,.9);
+        }
+
+        /* folder text */
+        .folder-text { position: absolute; bottom: 36px; left: 34px; }
+
+        .name-script {
+            display: block;
+            font-family: 'Dancing Script', cursive;
+            font-size: 54px;
+            color: rgba(95,68,18,.72);
+            line-height: 1; margin-bottom: -6px;
+        }
+
+        .name-last {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 66px; font-weight: 900;
+            letter-spacing: -1.5px; color: var(--text); line-height: 1;
+        }
+
+        .name-tagline {
+            margin-top: 14px;
+            font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--muted); font-weight: 500;
+        }
+
+        /* ── Nav files — absolutely positioned inside #scene ── */
+        /*
+         * All five files stack at the folder's centre (58vh) to start.
+         * GSAP will animate each one upward to its final spread position.
+         * z-index is LOWER than the folder so they appear to emerge from inside it.
+         */
+        .nav-file {
+            position: absolute;
+            /* initial top set by GSAP */
+            left: 7%;
+            width: 86%;
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 52px;
+            text-decoration: none;
+            border-radius: 6px;
+            box-shadow: 0 6px 28px rgba(0,0,0,.12);
+            cursor: pointer;
+            z-index: 8;   /* above folder body once they emerge */
+            opacity: 0;   /* GSAP fades them in */
+            /* hover handled after scene pin ends */
+            transition: box-shadow .25s ease;
+        }
+
+        .nav-file:hover {
+            box-shadow: 0 14px 36px rgba(0,0,0,.18);
+        }
+
+        .nf-1 { background: var(--c1); }
+        .nf-2 { background: var(--c2); }
+        .nf-3 { background: var(--c3); }
+        .nf-4 { background: var(--c4); }
+        .nf-5 { background: var(--c5); }
+
+        .nf-num   { font-size:11px; letter-spacing:3px; text-transform:uppercase; opacity:0; min-width:32px; }
+        .nf-label { flex:1; text-align:center; font-family:'Playfair Display',serif; font-size:32px; font-weight:700; letter-spacing:-.5px; opacity:0; }
+        .nf-arrow { font-size:20px; opacity:0; transition:opacity .2s,transform .2s; }
+        .nav-file:hover .nf-arrow { opacity:1; transform:translateX(5px); }
+
+        .nf-1 .nf-num,.nf-1 .nf-label,.nf-1 .nf-arrow { color:var(--c1t); }
+        .nf-2 .nf-num,.nf-2 .nf-label,.nf-2 .nf-arrow { color:var(--c2t); }
+        .nf-3 .nf-num,.nf-3 .nf-label,.nf-3 .nf-arrow { color:var(--c3t); }
+        .nf-4 .nf-num,.nf-4 .nf-label,.nf-4 .nf-arrow { color:var(--c4t); }
+        .nf-5 .nf-num,.nf-5 .nf-label,.nf-5 .nf-arrow { color:var(--c5t); }
+
+        /* scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: var(--muted);
+            animation: bob 2.4s ease-in-out infinite;
+            z-index: 50;
+        }
+        .scroll-hint span { font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+        @keyframes bob {
+            0%,100% { transform:translateX(-50%) translateY(0); }
+            50%      { transform:translateX(-50%) translateY(7px); }
+        }
+
+        /* ============================================================
+           CONTENT SECTIONS
+        ============================================================ */
+        section { min-height:100vh; padding:100px 8%; }
+
+        .sec-eye {
+            display:block; font-size:10.5px; letter-spacing:3px;
+            text-transform:uppercase; color:var(--muted); margin-bottom:14px;
+        }
+
+        .sec-title {
+            font-family:'Playfair Display',serif;
+            font-size:clamp(48px,7vw,78px);
+            font-weight:900; line-height:.95; margin-bottom:60px;
+        }
+        .sec-title em { font-style:italic; font-weight:400; }
+
+        /* About */
+        #about {
+            background:var(--cream);
+            display:grid;
+            grid-template-columns:1fr 1.5fr;
+            gap:80px; align-items:center;
+        }
+
+        .about-photo {
+            width:100%; aspect-ratio:3/4;
+            background:linear-gradient(150deg,#C9A8BE 0%,#8BA4B8 55%,#9CC0A8 100%);
+            border-radius:4px;
+            display:flex; align-items:flex-end; padding:20px;
+            font-size:11px; letter-spacing:2px; text-transform:uppercase;
+            color:rgba(255,255,255,.65);
+        }
+
+        .about-bio p { font-size:16.5px; line-height:1.85; color:var(--muted); margin-bottom:18px; }
+        .about-bio p strong { color:var(--text); font-weight:600; }
+
+        .stats {
+            display:flex; gap:48px; margin-top:44px;
+            padding-top:44px; border-top:1px solid rgba(0,0,0,.08);
+        }
+        .stat-num { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; line-height:1; }
+        .stat-lbl { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+        /* Projects */
+        #projects { background:var(--c2); color:var(--c2t); }
+        #projects .sec-eye   { color:rgba(242,196,206,.5); }
+        #projects .sec-title { color:var(--c2t); }
+
+        .proj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+
+        .proj-card {
+            border:1px solid rgba(255,255,255,.10);
+            border-radius:8px; padding:32px 28px;
+            transition:border-color .2s, background .2s;
+        }
+        .proj-card:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.22); }
+
+        .proj-num  { font-size:10px; letter-spacing:3px; text-transform:uppercase; opacity:.35; margin-bottom:18px; }
+        .proj-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:12px; }
+        .proj-desc { font-size:14px; line-height:1.75; opacity:.68; margin-bottom:24px; }
+
+        .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+        .tag  { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding:4px 12px; border:1px solid rgba(255,255,255,.18); border-radius:20px; opacity:.7; }
+
+        .proj-links { display:flex; gap:18px; }
+        .proj-link  { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:inherit; text-decoration:none; opacity:.55; transition:opacity .2s, border-color .2s; border-bottom:1px solid transparent; }
+        .proj-link:hover { opacity:1; border-bottom-color:currentColor; }
+
+        /* Skills */
+        #skills { background:var(--c3); color:var(--c3t); }
+        #skills .sec-title { color:var(--c3t); }
+
+        .skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+
+        .skill-card {
+            background:rgba(255,255,255,.65);
+            border-radius:8px; padding:18px 20px;
+            display:flex; align-items:center; gap:14px;
+            box-shadow:0 2px 8px rgba(0,0,0,.06);
+            transition:transform .2s, box-shadow .2s;
+        }
+        .skill-card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.1); }
+
+        .skill-icon { width:38px; height:38px; border-radius:8px; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+        .skill-name  { font-size:14px; font-weight:500; }
+        .skill-level { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-top:2px; }
+
+        /* Experience */
+        #experience { background:var(--c4); color:var(--c4t); }
+        #experience .sec-eye   { color:rgba(242,237,228,.5); }
+        #experience .sec-title { color:var(--c4t); }
+
+        .timeline { position:relative; padding-left:36px; }
+        .timeline::before { content:''; position:absolute; left:0; top:8px; bottom:0; width:1px; background:rgba(255,255,255,.25); }
+
+        .tl-item { position:relative; margin-bottom:56px; }
+        .tl-item::before { content:''; position:absolute; left:-40px; top:10px; width:9px; height:9px; border-radius:50%; background:white; box-shadow:0 0 0 3px rgba(255,255,255,.2); }
+
+        .tl-date    { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; opacity:.6; margin-bottom:8px; }
+        .tl-role    { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; margin-bottom:4px; }
+        .tl-company { font-size:14px; opacity:.65; margin-bottom:12px; }
+        .tl-desc    { font-size:15px; line-height:1.8; opacity:.78; max-width:580px; }
+
+        /* Contact */
+        #contact { background:var(--c5); color:var(--c5t); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+        #contact .sec-eye { color:rgba(242,237,228,.45); }
+
+        .contact-title { font-family:'Playfair Display',serif; font-size:clamp(60px,9vw,108px); font-weight:900; line-height:.92; color:white; margin-bottom:28px; }
+        .contact-sub   { font-size:17px; line-height:1.75; opacity:.6; max-width:460px; margin-bottom:52px; }
+
+        .contact-links { display:flex; gap:28px; flex-wrap:wrap; justify-content:center; }
+        .contact-link  { color:white; text-decoration:none; font-size:12px; letter-spacing:2.5px; text-transform:uppercase; padding-bottom:4px; border-bottom:1px solid rgba(255,255,255,.3); transition:border-color .2s,opacity .2s; opacity:.75; }
+        .contact-link:hover { border-bottom-color:white; opacity:1; }
+
+        /* Nav dots */
+        #nav-dots {
+            position:fixed; right:24px; top:50%; transform:translateY(-50%);
+            display:flex; flex-direction:column; gap:9px;
+            z-index:1000; opacity:0; transition:opacity .4s;
+        }
+        #nav-dots.vis { opacity:1; }
+
+        .dot { width:7px; height:7px; border-radius:50%; background:rgba(26,21,20,.22); cursor:pointer; transition:transform .25s,background .25s; }
+        .dot.active { transform:scale(1.6); background:rgba(26,21,20,.65); }
+        .dot-l       { background:rgba(255,255,255,.25); }
+        .dot-l.active{ background:rgba(255,255,255,.85); }
+
+    </style>
+</head>
+<body>
+
+<!-- Nav dots -->
+<nav id="nav-dots">
+    <div class="dot" data-sec="scene"      title="Home"></div>
+    <div class="dot" data-sec="about"      title="About"></div>
+    <div class="dot" data-sec="projects"   title="Projects"></div>
+    <div class="dot" data-sec="skills"     title="Skills"></div>
+    <div class="dot" data-sec="experience" title="Experience"></div>
+    <div class="dot" data-sec="contact"    title="Contact"></div>
+</nav>
+
+<!-- ============================================================
+     PINNED SCENE  (folder + files animate here)
+============================================================ -->
+<div id="scene">
+
+    <div class="meta-bar">
+        <span>CS Student · Software Engineer</span>
+        <span>2024 — Present</span>
+    </div>
+
+    <!-- ── Nav files ──
+         They all start stacked at the folder centre.
+         GSAP moves each one upward to its final band position.
+         Order in DOM = stack order: nf-5 is deepest (rendered first / behind),
+         nf-1 is on top (rendered last, emerges first).
+    -->
+    <a href="#contact"    class="nav-file nf-5" id="f5">
+        <span class="nf-num">05</span><span class="nf-label">Contact</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#experience" class="nav-file nf-4" id="f4">
+        <span class="nf-num">04</span><span class="nf-label">Experience</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#skills"     class="nav-file nf-3" id="f3">
+        <span class="nf-num">03</span><span class="nf-label">Skills</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#projects"   class="nav-file nf-2" id="f2">
+        <span class="nf-num">02</span><span class="nf-label">Projects</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#about"      class="nav-file nf-1" id="f1">
+        <span class="nf-num">01</span><span class="nf-label">About Me</span><span class="nf-arrow">→</span>
+    </a>
+
+    <!-- ── Folder ── -->
+    <div id="folder-wrap">
+        <div class="folder-tab"></div>
+
+        <div class="folder-body">
+            <span class="folder-anno">Portfolio · v1.0</span>
+
+            <div class="polaroid-wrap">
+                <svg class="paperclip-svg" viewBox="0 0 36 88" fill="none">
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22 C33 14,28 10,20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
+                          stroke="#B0A090" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+                </svg>
+                <div class="polaroid">
+                    <img class="polaroid-img" src="headshot.jpg" alt="Bassma Ennarah" style="object-fit:cover;">
+                </div>
+            </div>
+
+            <div class="folder-text">
+                <span class="name-script">Bassma</span>
+                <span class="name-last">ENNARAH</span>
+                <p class="name-tagline">Computer Science · Builder · Creator</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- scroll hint -->
+    <div class="scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
+            <path d="M7 3 L7 19 M2 14 L7 19 L12 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+</div><!-- /#scene -->
+
+
+<!-- ============================================================
+     CONTENT SECTIONS
+============================================================ -->
+<section id="about">
+    <div class="about-photo">[ your photo ]</div>
+    <div>
+        <span class="sec-eye">01 — About</span>
+        <h2 class="sec-title">About <em>me</em></h2>
+        <div class="about-bio">
+            <p>I'm Bassma — a CS student with a love for <strong>building things that are beautiful and functional</strong>. I care about the intersection of design and engineering, and I'm always looking for ways to make software feel more human.</p>
+            <p>Whether it's a full-stack web app, a machine learning model, or a polished UI, I bring the same energy: <strong>curiosity, attention to detail, and a refusal to ship something ugly.</strong></p>
+            <p>When I'm not coding, you'll find me [your interests here — be specific, it makes you memorable].</p>
+        </div>
+        <div class="stats">
+            <div><div class="stat-num">5+</div><div class="stat-lbl">Projects</div></div>
+            <div><div class="stat-num">3+</div><div class="stat-lbl">Years coding</div></div>
+            <div><div class="stat-num">∞</div><div class="stat-lbl">Tabs open</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <span class="sec-eye">02 — Projects</span>
+    <h2 class="sec-title">Selected <em>work</em></h2>
+    <div class="proj-grid">
+        <div class="proj-card">
+            <div class="proj-num">01</div>
+            <div class="proj-name">Project Name</div>
+            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
+            <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span></div>
+            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+        </div>
+        <div class="proj-card">
+            <div class="proj-num">02</div>
+            <div class="proj-name">Project Name</div>
+            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
+            <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Flask</span></div>
+            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+        </div>
+        <div class="proj-card">
+            <div class="proj-num">03</div>
+            <div class="proj-name">Project Name</div>
+            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
+            <div class="tags"><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">Tailwind</span></div>
+            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <span class="sec-eye">03 — Skills</span>
+    <h2 class="sec-title">Tech <em>stack</em></h2>
+    <div class="skills-grid">
+        <div class="skill-card"><div class="skill-icon">⚛️</div><div><div class="skill-name">React</div><div class="skill-level">Advanced</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🐍</div><div><div class="skill-name">Python</div><div class="skill-level">Advanced</div></div></div>
+        <div class="skill-card"><div class="skill-icon">☕</div><div><div class="skill-name">Java</div><div class="skill-level">Proficient</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🟦</div><div><div class="skill-name">TypeScript</div><div class="skill-level">Proficient</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🗄️</div><div><div class="skill-name">SQL</div><div class="skill-level">Proficient</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🐳</div><div><div class="skill-name">Docker</div><div class="skill-level">Familiar</div></div></div>
+        <div class="skill-card"><div class="skill-icon">☁️</div><div><div class="skill-name">AWS</div><div class="skill-level">Familiar</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🎨</div><div><div class="skill-name">Figma</div><div class="skill-level">Proficient</div></div></div>
+        <div class="skill-card"><div class="skill-icon">⚡</div><div><div class="skill-name">Next.js</div><div class="skill-level">Proficient</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🔥</div><div><div class="skill-name">Firebase</div><div class="skill-level">Familiar</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🔀</div><div><div class="skill-name">Git</div><div class="skill-level">Advanced</div></div></div>
+        <div class="skill-card"><div class="skill-icon">🤖</div><div><div class="skill-name">ML / AI</div><div class="skill-level">Learning</div></div></div>
+    </div>
+</section>
+
+<section id="experience">
+    <span class="sec-eye">04 — Experience</span>
+    <h2 class="sec-title">Where I've <em>been</em></h2>
+    <div class="timeline">
+        <div class="tl-item">
+            <div class="tl-date">Summer 2024</div>
+            <div class="tl-role">Software Engineering Intern</div>
+            <div class="tl-company">Company Name · Location</div>
+            <div class="tl-desc">What did you build? What was the impact? Use numbers if you have them — "reduced load time by 40%" beats "improved performance".</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-date">2023 — Present</div>
+            <div class="tl-role">Undergraduate Researcher</div>
+            <div class="tl-company">University Lab · Your School</div>
+            <div class="tl-desc">What are you researching? What methods? This shows you can work on open-ended problems — a huge differentiator.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-date">2022 — Present</div>
+            <div class="tl-role">CS Student</div>
+            <div class="tl-company">Your University · Expected Graduation 20XX</div>
+            <div class="tl-desc">Relevant coursework: Data Structures, Algorithms, Systems Programming, Machine Learning, Database Systems.</div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <span class="sec-eye">05 — Contact</span>
+    <h1 class="contact-title">Let's<br><em>talk.</em></h1>
+    <p class="contact-sub">I'm open to internships, collaborations, and interesting conversations. If you have a project or opportunity, my inbox is open.</p>
+    <div class="contact-links">
+        <a href="mailto:bassma.ennarah@gmail.com" class="contact-link">Email</a>
+        <a href="https://linkedin.com"             class="contact-link" target="_blank">LinkedIn</a>
+        <a href="https://github.com"               class="contact-link" target="_blank">GitHub</a>
+        <a href="#"                                class="contact-link">Resume ↓</a>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ──────────────────────────────────────────────────────────────
+   1.  FOLDER ENTRANCE  (on page load)
+────────────────────────────────────────────────────────────── */
+gsap.set('#folder-wrap', { xPercent: -50, yPercent: -50 });
+
+gsap.from('#folder-wrap', { y: 30, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
+gsap.from('.meta-bar',    { opacity: 0, duration: 0.8, delay: 0.9,  ease: 'power2.out' });
+gsap.from('.scroll-hint', { opacity: 0, duration: 0.8, delay: 1.4,  ease: 'power2.out' });
+
+
+/* ──────────────────────────────────────────────────────────────
+   2.  BURST ANIMATION
+
+   The nav-file elements ARE the peek tabs you see in the folder.
+   They start clipped so only their top edge is visible above the
+   folder opening — like pages tabbed inside a folder.
+
+   On first scroll: clip-path opens as each file slides upward,
+   revealing the full band.  Folder drops off screen simultaneously.
+   All five happen at once (0.04 s stagger = simultaneous feel).
+────────────────────────────────────────────────────────────── */
+function buildAnimation() {
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+
+    // ── Folder geometry ───────────────────────────────────────────────────────
+    const FOLDER_W      = 600;
+    const folderBodyTop = vh * 0.52 - 185;   // top of the manila folder body
+    const FL            = (vw - FOLDER_W) / 2;
+
+    // ── Final spread positions ────────────────────────────────────────────────
+    const FILE_H    = 88;
+    const FILE_GAP  = 25;
+    const SPREAD_TOP = vh * 0.06;
+    const finalTop  = Array.from({ length: 5 }, (_, i) =>
+        SPREAD_TOP + i * (FILE_H + FILE_GAP)
+    );
+
+    // ── Peek geometry ─────────────────────────────────────────────────────────
+    // Files start BEHIND the folder (z < folder-wrap's 20).
+    // The folder body paints on top, masking everything below folderBodyTop.
+    // Only the top TAB_SHOW px of each file is visible — a real paper peek.
+    const TAB_SHOW = 24;
+
+    const tabs = [
+        { top: folderBodyTop - TAB_SHOW -  0, left: FL + 28, w: FOLDER_W - 74, rot: -1.8, z: 15 },
+        { top: folderBodyTop - TAB_SHOW -  7, left: FL + 12, w: FOLDER_W - 42, rot:  1.2, z: 14 },
+        { top: folderBodyTop - TAB_SHOW - 14, left: FL + 22, w: FOLDER_W - 60, rot: -0.6, z: 13 },
+        { top: folderBodyTop - TAB_SHOW - 21, left: FL + 16, w: FOLDER_W - 56, rot:  0.8, z: 12 },
+        { top: folderBodyTop - TAB_SHOW - 28, left: FL + 24, w: FOLDER_W - 64, rot: -0.4, z: 11 },
+    ];
+
+    const domFiles = Array.from(document.querySelectorAll('.nav-file')).reverse();
+    // [nf-1 About … nf-5 Contact]
+
+    domFiles.forEach((f, i) => {
+        const t = tabs[i];
+        gsap.set(f, {
+            top:          t.top,
+            left:         t.left,
+            width:        t.w,
+            height:       FILE_H,
+            y:            0,
+            x:            0,
+            rotation:     t.rot,
+            clipPath:     'none',            // no clip — folder body is the mask
+            borderRadius: '4px 4px 0 0',
+            opacity:      1,
+            zIndex:       t.z,              // BEHIND folder-wrap (z:20)
+        });
+    });
+
+    const dy      = domFiles.map((_, i) => finalTop[i] - tabs[i].top);
+    const finalX   = [-14,  18, -10,  14,  -8];
+    const finalRot = [-0.9, 0.6, -0.4, 0.5, -0.2];
+
+    // ── Scrub timeline (progress 0 → 1 matches scroll position) ─────────────
+    const tl = gsap.timeline({ defaults: { ease: 'none' } })
+
+        // Files slide up out of the folder
+        .to(domFiles, {
+            y:            (i) => dy[i],
+            left:         '7%',
+            width:        '86%',
+            x:            (i) => finalX[i],
+            rotation:     (i) => finalRot[i],
+            borderRadius: '6px',
+            stagger:      0.04,
+            duration:     0.65,
+        }, 0)
+
+        // Labels appear once the files are mostly spread
+        .to('.nf-label',          { opacity: 1,   stagger: 0.04, duration: 0.18 }, 0.58)
+        .to('.nf-num, .nf-arrow', { opacity: 0.5, stagger: 0.04, duration: 0.18 }, 0.58)
+
+        // Folder drops away — fromTo so reverse always restores it cleanly
+        .fromTo('#folder-wrap',
+            { y: 0, opacity: 1, scale: 1 },
+            { y: vh * 0.65, opacity: 0, scale: 0.9, duration: 0.65 },
+        0)
+
+        .to('.scroll-hint', { opacity: 0, duration: 0.12 }, 0);
+
+    // ── Pin + scrub ───────────────────────────────────────────────────────────
+    // scrub: 0.5  → animation chases the scroll with a short lag (feels physical)
+    // end: +=150% → 1.5× viewport of scrolling to run the full animation
+    ScrollTrigger.create({
+        trigger:       '#scene',
+        start:         'top top',
+        end:           '+=150%',
+        pin:           true,
+        anticipatePin: 1,
+        scrub:         0.5,
+        animation:     tl,
+    });
+}
+buildAnimation();
+
+
+
+/* ──────────────────────────────────────────────────────────────
+   3.  SECTION FADE-UPS
+────────────────────────────────────────────────────────────── */
+const fadeEls = [
+    '.sec-eye', '.sec-title',
+    '.about-bio p', '.stats',
+    '.proj-card', '.skill-card', '.tl-item',
+    '.contact-title', '.contact-sub', '.contact-links'
+];
+
+fadeEls.forEach(selector => {
+    gsap.utils.toArray(selector).forEach(el => {
+        gsap.from(el, {
+            scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
+            y: 22, opacity: 0, duration: 0.65, ease: 'power2.out'
+        });
+    });
+});
+
+
+/* ──────────────────────────────────────────────────────────────
+   4.  NAV DOTS
+────────────────────────────────────────────────────────────── */
+const navDots  = document.getElementById('nav-dots');
+const dots     = Array.from(document.querySelectorAll('.dot'));
+const sections = ['scene','about','projects','skills','experience','contact'];
+const darkSecs = new Set(['projects','experience','contact']);
+
+// Show dots after pinned scene ends
+ScrollTrigger.create({
+    trigger: '#about',
+    start:   'top 70%',
+    onEnter:     () => navDots.classList.add('vis'),
+    onLeaveBack: () => navDots.classList.remove('vis'),
+});
+
+dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+        document.getElementById(sections[i]).scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+sections.forEach((id, i) => {
+    ScrollTrigger.create({
+        trigger: '#' + id,
+        start:   'top 50%',
+        end:     'bottom 50%',
+        onEnter:     () => setDot(i, id),
+        onEnterBack: () => setDot(i, id),
+    });
+});
+
+function setDot(i, secId) {
+    dots.forEach((d, j) => {
+        d.classList.toggle('active', j === i);
+        d.classList.toggle('dot-l',  darkSecs.has(secId));
+    });
+}
+</script>
+
+</body>
+</html>
