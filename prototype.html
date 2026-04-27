@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -121,7 +122,7 @@
         /* polaroid */
         .polaroid-wrap { position: absolute; top: 20px; right: 24px; z-index: 8; }
 
-        .paperclip-svg { position: absolute; top: -20px; right: 26px; width: 36px; z-index: 10; }
+        .paperclip-svg { position: absolute; top: -20px; left: 10px; width: 36px; z-index: 10; }
 
         .polaroid {
             width: 132px;
@@ -214,14 +215,21 @@
         /* scroll hint */
         .scroll-hint {
             position: absolute;
-            bottom: 32px; left: 50%;
+            bottom: 36px; left: 50%;
             transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
             color: var(--muted);
             animation: bob 2.4s ease-in-out infinite;
             z-index: 50;
+            text-align: center;
         }
-        .scroll-hint span { font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+        .scroll-hint span {
+            font-family: 'Dancing Script', cursive;
+            font-size: 22px;
+            color: rgba(90,65,20,.55);
+            line-height: 1;
+        }
+        .scroll-hint svg { opacity: .45; }
         @keyframes bob {
             0%,100% { transform:translateX(-50%) translateY(0); }
             50%      { transform:translateX(-50%) translateY(7px); }
@@ -246,30 +254,90 @@
 
         /* About */
         #about {
-            background:var(--cream);
-            display:grid;
-            grid-template-columns:1fr 1.5fr;
-            gap:80px; align-items:center;
+            background: var(--cream);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 72px;
+            align-items: start;
         }
 
-        .about-photo {
-            width:100%; aspect-ratio:3/4;
-            background:linear-gradient(150deg,#C9A8BE 0%,#8BA4B8 55%,#9CC0A8 100%);
-            border-radius:4px;
-            display:flex; align-items:flex-end; padding:20px;
-            font-size:11px; letter-spacing:2px; text-transform:uppercase;
-            color:rgba(255,255,255,.65);
+        /* polaroid photo */
+        .about-photo-wrap {
+            position: relative;
+            width: 210px;
+            margin-top: 16px;
+            flex-shrink: 0;
+        }
+
+        .polaroid-tape {
+            position: absolute;
+            top: -14px; left: 50%;
+            transform: translateX(-50%) rotate(-1.5deg);
+            width: 66px; height: 22px;
+            background: rgba(242,196,206,.7);
+            border-radius: 2px;
+            z-index: 2;
+            box-shadow: 0 1px 4px rgba(0,0,0,.08);
+        }
+
+        .polaroid-about {
+            background: #fff;
+            padding: 10px 10px 44px;
+            box-shadow: 0 8px 32px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.07);
+            transform: rotate(-3deg);
+            position: relative;
+        }
+
+        .polaroid-about img {
+            width: 190px;
+            height: 230px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .polaroid-caption {
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            text-align: center;
+            color: var(--muted);
+            padding-top: 8px;
+        }
+
+        .about-doodle {
+            display: block;
+            font-family: 'Dancing Script', cursive;
+            font-size: 15px;
+            color: var(--muted);
+            opacity: .55;
+            margin-top: 14px;
+            text-align: center;
+            transform: rotate(2deg);
         }
 
         .about-bio p { font-size:16.5px; line-height:1.85; color:var(--muted); margin-bottom:18px; }
         .about-bio p strong { color:var(--text); font-weight:600; }
 
+        /* stat stickers */
         .stats {
-            display:flex; gap:48px; margin-top:44px;
-            padding-top:44px; border-top:1px solid rgba(0,0,0,.08);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 44px;
+            padding-top: 44px;
+            border-top: 1px solid rgba(0,0,0,.08);
         }
-        .stat-num { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; line-height:1; }
-        .stat-lbl { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+        .stats > div {
+            background: #fff;
+            border-radius: 12px;
+            padding: 14px 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.07);
+        }
+        .stats > div:nth-child(1) { transform: rotate(-1.5deg); }
+        .stats > div:nth-child(2) { transform: rotate(1.2deg); }
+        .stats > div:nth-child(3) { transform: rotate(-0.8deg); }
+        .stat-num { font-family:'Playfair Display',serif; font-size:42px; font-weight:900; line-height:1; }
+        .stat-lbl { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
 
         /* Projects */
         #projects { background:var(--c2); color:var(--c2t); }
@@ -285,6 +353,52 @@
         }
         .proj-card:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.22); }
 
+        /* project image slot */
+        .proj-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 6px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.2);
+            overflow: hidden;
+        }
+        .proj-img img { width:100%; height:100%; object-fit:cover; }
+
+        /* in-progress badge */
+        .proj-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 11px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            background: rgba(255,255,255,.08);
+            color: rgba(255,255,255,.55);
+            border: 1px solid rgba(255,255,255,.13);
+        }
+        .proj-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--c1);
+            animation: blink 1.8s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%,100% { opacity:1; }
+            50%      { opacity:0.25; }
+        }
+
         .proj-num  { font-size:10px; letter-spacing:3px; text-transform:uppercase; opacity:.35; margin-bottom:18px; }
         .proj-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:12px; }
         .proj-desc { font-size:14px; line-height:1.75; opacity:.68; margin-bottom:24px; }
@@ -296,24 +410,208 @@
         .proj-link  { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:inherit; text-decoration:none; opacity:.55; transition:opacity .2s, border-color .2s; border-bottom:1px solid transparent; }
         .proj-link:hover { opacity:1; border-bottom-color:currentColor; }
 
-        /* Skills */
+        /* Skills — Desktop Computer */
         #skills { background:var(--c3); color:var(--c3t); }
         #skills .sec-title { color:var(--c3t); }
 
-        .skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-
-        .skill-card {
-            background:rgba(255,255,255,.65);
-            border-radius:8px; padding:18px 20px;
-            display:flex; align-items:center; gap:14px;
-            box-shadow:0 2px 8px rgba(0,0,0,.06);
-            transition:transform .2s, box-shadow .2s;
+        .desktop-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .skill-card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,.1); }
 
-        .skill-icon { width:38px; height:38px; border-radius:8px; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-        .skill-name  { font-size:14px; font-weight:500; }
-        .skill-level { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-top:2px; }
+        /* monitor body */
+        .monitor {
+            width: min(720px, 100%);
+            background: linear-gradient(180deg, #DDD0B0 0%, #C8B888 100%);
+            border-radius: 18px 18px 6px 6px;
+            padding: 16px 16px 22px;
+            box-shadow:
+                0 2px 0 #b0a060,
+                0 28px 70px rgba(0,0,0,.22),
+                inset 0 1px 0 rgba(255,255,255,.55);
+            position: relative;
+        }
+
+        /* webcam dot */
+        .monitor::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 50%;
+            transform: translateX(-50%);
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.22);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+        }
+
+        .monitor-screen {
+            border-radius: 6px;
+            height: 420px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: inset 0 0 60px rgba(0,0,0,.6);
+        }
+
+        .desktop-wallpaper {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #2a0d26 0%, #1a1e40 55%, #0e2040 100%);
+            z-index: 0;
+        }
+
+        /* faint noise/grain on wallpaper */
+        .desktop-wallpaper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: .35;
+        }
+
+        /* menu bar */
+        .desktop-menubar {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 5px 14px;
+            background: rgba(255,255,255,.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            font-size: 11px;
+            color: rgba(255,255,255,.82);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        .menu-logo { font-size: 15px; opacity: .9; }
+        .menu-app  { font-weight: 600; font-size: 11.5px; }
+        .menu-links { display:flex; gap:14px; opacity:.55; font-size:10.5px; }
+        .menu-right { margin-left:auto; display:flex; gap:14px; opacity:.5; font-size:10px; align-items:center; }
+
+        /* scrollable icon area */
+        .desktop-icons-area {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 22px 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,.15) transparent;
+        }
+        .desktop-icons-area::-webkit-scrollbar { width: 4px; }
+        .desktop-icons-area::-webkit-scrollbar-track { background: transparent; }
+        .desktop-icons-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); border-radius: 2px; }
+
+        .desktop-icons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 6px 8px;
+            border-radius: 8px;
+            cursor: default;
+            transition: background .15s;
+        }
+        .desktop-icon:hover { background: rgba(255,255,255,.09); }
+        .desktop-icon:active { background: rgba(255,255,255,.16); }
+
+        .d-icon-img {
+            width: 56px; height: 56px;
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 18px rgba(0,0,0,.35);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .desktop-icon:hover .d-icon-img {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,.4);
+        }
+        .d-icon-img i { line-height: 1; }
+
+        .d-icon-name {
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(255,255,255,.88);
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0,0,0,.6);
+            line-height: 1.2;
+        }
+        .d-icon-level {
+            font-size: 8px;
+            color: rgba(255,255,255,.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* scroll nudge inside screen */
+        .desktop-scroll-hint {
+            text-align: center;
+            padding: 10px 0 14px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.18);
+        }
+
+        /* dock */
+        .desktop-dock {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 8px 20px 10px;
+            background: rgba(255,255,255,.07);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,.07);
+            flex-shrink: 0;
+        }
+        .dock-icon {
+            width: 38px; height: 38px;
+            background: rgba(255,255,255,.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: transform .2s;
+            cursor: default;
+        }
+        .dock-icon:hover { transform: translateY(-6px) scale(1.15); }
+        .dock-icon i { line-height: 1; }
+
+        /* stand */
+        .monitor-neck {
+            width: 76px;
+            height: 40px;
+            background: linear-gradient(180deg, #C8B888 0%, #B4A470 100%);
+            margin: 0 auto;
+        }
+        .monitor-base {
+            width: 250px;
+            height: 18px;
+            background: linear-gradient(180deg, #B4A470 0%, #A09060 100%);
+            border-radius: 0 0 14px 14px;
+            margin: 0 auto;
+            box-shadow: 0 6px 20px rgba(0,0,0,.16);
+        }
 
         /* Experience */
         #experience { background:var(--c4); color:var(--c4t); }
@@ -428,10 +726,7 @@
 
     <!-- scroll hint -->
     <div class="scroll-hint" aria-hidden="true">
-        <span>scroll</span>
-        <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
-            <path d="M7 3 L7 19 M2 14 L7 19 L12 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <span>scroll to open ↓</span>
     </div>
 
 </div><!-- /#scene -->
@@ -441,19 +736,26 @@
      CONTENT SECTIONS
 ============================================================ -->
 <section id="about">
-    <div class="about-photo">[ your photo ]</div>
+    <div class="about-photo-wrap">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-about">
+            <img src="headshot.jpg" alt="Bassma Ennarah">
+            <p class="polaroid-caption">bassma :)</p>
+        </div>
+        <span class="about-doodle">← that's me</span>
+    </div>
     <div>
         <span class="sec-eye">01 — About</span>
         <h2 class="sec-title">About <em>me</em></h2>
         <div class="about-bio">
-            <p>I'm Bassma — a CS student with a love for <strong>building things that are beautiful and functional</strong>. I care about the intersection of design and engineering, and I'm always looking for ways to make software feel more human.</p>
-            <p>Whether it's a full-stack web app, a machine learning model, or a polished UI, I bring the same energy: <strong>curiosity, attention to detail, and a refusal to ship something ugly.</strong></p>
-            <p>When I'm not coding, you'll find me [your interests here — be specific, it makes you memorable].</p>
+            <p>I'm a CS student at Cal State Fullerton, graduating December 2026. I build web and mobile apps — mostly with React, TypeScript, Python, and Firebase — and I care a lot about <strong>making things that actually feel good to use.</strong></p>
+            <p>I also run a 400+ member organization at CSUF for women in business and STEM. It's taught me that <strong>shipping under pressure, coordinating across people, and caring about the end user</strong> matter just as much as the code itself.</p>
+            <p>Right now I'm working on Rey (an AI terminal companion for beginners) and Nanuk (a sustainability scanner with a polar bear). Both in progress. Both things I genuinely wanted to exist.</p>
         </div>
         <div class="stats">
-            <div><div class="stat-num">5+</div><div class="stat-lbl">Projects</div></div>
-            <div><div class="stat-num">3+</div><div class="stat-lbl">Years coding</div></div>
-            <div><div class="stat-num">∞</div><div class="stat-lbl">Tabs open</div></div>
+            <div><div class="stat-num">27+</div><div class="stat-lbl">Repos</div></div>
+            <div><div class="stat-num">400+</div><div class="stat-lbl">Members led</div></div>
+            <div><div class="stat-num">Dec '26</div><div class="stat-lbl">Graduating</div></div>
         </div>
     </div>
 </section>
@@ -463,25 +765,30 @@
     <h2 class="sec-title">Selected <em>work</em></h2>
     <div class="proj-grid">
         <div class="proj-card">
+            <div class="proj-img">[ screenshot ]</div>
+            <span class="proj-badge">In Progress</span>
             <div class="proj-num">01</div>
-            <div class="proj-name">Project Name</div>
-            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
-            <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span></div>
-            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+            <div class="proj-name">Rey</div>
+            <div class="proj-desc">An AI-powered desktop companion for beginner programmers. Ask Rey any terminal question in plain English and get a clear answer — no Stack Overflow rabbit holes required.</div>
+            <div class="tags"><span class="tag">Python</span><span class="tag">AI</span><span class="tag">macOS</span><span class="tag">Desktop</span></div>
+            <div class="proj-links"><a href="https://github.com/bennarah/Rey-Terminal-Assistant" class="proj-link" target="_blank">GitHub ↗</a></div>
         </div>
         <div class="proj-card">
+            <div class="proj-img">[ screenshot ]</div>
+            <span class="proj-badge">In Progress</span>
             <div class="proj-num">02</div>
-            <div class="proj-name">Project Name</div>
-            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
-            <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Flask</span></div>
-            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+            <div class="proj-name">Nanuk</div>
+            <div class="proj-desc">Scan a product barcode and instantly see its sustainability impact — scored, explained, and tied to a polar bear mascot whose Arctic home depends on your choices. Built at FullyHacks 2026.</div>
+            <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">AI</span><span class="tag">Mobile</span></div>
+            <div class="proj-links"><a href="https://github.com/nathanchamorro1/fullyhacks-2026" class="proj-link" target="_blank">GitHub ↗</a></div>
         </div>
         <div class="proj-card">
+            <div class="proj-img">[ screenshot ]</div>
             <div class="proj-num">03</div>
-            <div class="proj-name">Project Name</div>
-            <div class="proj-desc">What does this project do? What problem does it solve? Keep it one or two punchy sentences. Results beat features.</div>
-            <div class="tags"><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">Tailwind</span></div>
-            <div class="proj-links"><a href="#" class="proj-link">GitHub ↗</a><a href="#" class="proj-link">Live Demo ↗</a></div>
+            <div class="proj-name">Fitness App</div>
+            <div class="proj-desc">AI-powered mobile app helping users reach their health goals through personalized workout insights. Led as Team Lead — owned sprint planning, testing, and frontend delivery end-to-end.</div>
+            <div class="tags"><span class="tag">React Native</span><span class="tag">Firebase</span><span class="tag">AI</span><span class="tag">Agile</span></div>
+            <div class="proj-links"><a href="https://github.com/bennarah/fitness-app" class="proj-link" target="_blank">GitHub ↗</a></div>
         </div>
     </div>
 </section>
@@ -489,19 +796,124 @@
 <section id="skills">
     <span class="sec-eye">03 — Skills</span>
     <h2 class="sec-title">Tech <em>stack</em></h2>
-    <div class="skills-grid">
-        <div class="skill-card"><div class="skill-icon">⚛️</div><div><div class="skill-name">React</div><div class="skill-level">Advanced</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🐍</div><div><div class="skill-name">Python</div><div class="skill-level">Advanced</div></div></div>
-        <div class="skill-card"><div class="skill-icon">☕</div><div><div class="skill-name">Java</div><div class="skill-level">Proficient</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🟦</div><div><div class="skill-name">TypeScript</div><div class="skill-level">Proficient</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🗄️</div><div><div class="skill-name">SQL</div><div class="skill-level">Proficient</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🐳</div><div><div class="skill-name">Docker</div><div class="skill-level">Familiar</div></div></div>
-        <div class="skill-card"><div class="skill-icon">☁️</div><div><div class="skill-name">AWS</div><div class="skill-level">Familiar</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🎨</div><div><div class="skill-name">Figma</div><div class="skill-level">Proficient</div></div></div>
-        <div class="skill-card"><div class="skill-icon">⚡</div><div><div class="skill-name">Next.js</div><div class="skill-level">Proficient</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🔥</div><div><div class="skill-name">Firebase</div><div class="skill-level">Familiar</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🔀</div><div><div class="skill-name">Git</div><div class="skill-level">Advanced</div></div></div>
-        <div class="skill-card"><div class="skill-icon">🤖</div><div><div class="skill-name">ML / AI</div><div class="skill-level">Learning</div></div></div>
+
+    <div class="desktop-wrap">
+        <div class="monitor">
+            <div class="monitor-screen">
+                <div class="desktop-wallpaper"></div>
+
+                <!-- Menu bar -->
+                <div class="desktop-menubar">
+                    <span class="menu-logo">⌘</span>
+                    <span class="menu-app">skills.app</span>
+                    <div class="menu-links">
+                        <span>File</span><span>Edit</span><span>View</span>
+                    </div>
+                    <div class="menu-right">
+                        <span>↕ scroll to explore</span>
+                        <span>Apr 2026</span>
+                    </div>
+                </div>
+
+                <!-- Icons -->
+                <div class="desktop-icons-area">
+                    <div class="desktop-icons-grid">
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="d-icon-name">React</div>
+                            <div class="d-icon-level">Advanced</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-typescript-plain colored"></i></div>
+                            <div class="d-icon-name">TypeScript</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-python-plain colored"></i></div>
+                            <div class="d-icon-name">Python</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-cplusplus-plain colored"></i></div>
+                            <div class="d-icon-name">C++</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="d-icon-name">React Native</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-flutter-plain colored"></i></div>
+                            <div class="d-icon-name">Flutter</div>
+                            <div class="d-icon-level">Familiar</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-html5-plain colored"></i></div>
+                            <div class="d-icon-name">HTML / CSS</div>
+                            <div class="d-icon-level">Advanced</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-mysql-plain colored"></i></div>
+                            <div class="d-icon-name">SQL</div>
+                            <div class="d-icon-level">Familiar</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-firebase-plain colored"></i></div>
+                            <div class="d-icon-name">Firebase</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-git-plain colored"></i></div>
+                            <div class="d-icon-name">Git / GitHub</div>
+                            <div class="d-icon-level">Advanced</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-figma-plain colored"></i></div>
+                            <div class="d-icon-name">Figma</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-vscode-plain colored"></i></div>
+                            <div class="d-icon-name">VS Code</div>
+                            <div class="d-icon-level">Advanced</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-linux-plain colored"></i></div>
+                            <div class="d-icon-name">Linux</div>
+                            <div class="d-icon-level">Familiar</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img"><i class="devicon-dart-plain colored"></i></div>
+                            <div class="d-icon-name">Dart</div>
+                            <div class="d-icon-level">Familiar</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img" style="font-size:24px;">📋</div>
+                            <div class="d-icon-name">Agile / Scrum</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                        <div class="desktop-icon">
+                            <div class="d-icon-img" style="font-size:24px;">🧩</div>
+                            <div class="d-icon-name">OOP</div>
+                            <div class="d-icon-level">Proficient</div>
+                        </div>
+                    </div>
+                    <div class="desktop-scroll-hint">— end of list —</div>
+                </div>
+
+                <!-- Dock -->
+                <div class="desktop-dock">
+                    <div class="dock-icon"><i class="devicon-github-original"></i></div>
+                    <div class="dock-icon"><i class="devicon-vscode-plain colored"></i></div>
+                    <div class="dock-icon"><i class="devicon-figma-plain colored"></i></div>
+                    <div class="dock-icon"><i class="devicon-git-plain colored"></i></div>
+                    <div class="dock-icon"><i class="devicon-firefox-plain colored"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="monitor-neck"></div>
+        <div class="monitor-base"></div>
     </div>
 </section>
 
@@ -510,22 +922,22 @@
     <h2 class="sec-title">Where I've <em>been</em></h2>
     <div class="timeline">
         <div class="tl-item">
-            <div class="tl-date">Summer 2024</div>
-            <div class="tl-role">Software Engineering Intern</div>
-            <div class="tl-company">Company Name · Location</div>
-            <div class="tl-desc">What did you build? What was the impact? Use numbers if you have them — "reduced load time by 40%" beats "improved performance".</div>
+            <div class="tl-date">June 2025 — Present</div>
+            <div class="tl-role">Team Coordinator</div>
+            <div class="tl-company">Women in Business & STEM, CSUF · Fullerton, CA</div>
+            <div class="tl-desc">Organizing schedules, events, and operations for a 400+ member organization. Leading communications, newsletters, and member engagement — and making sure nothing falls through the cracks.</div>
         </div>
         <div class="tl-item">
-            <div class="tl-date">2023 — Present</div>
-            <div class="tl-role">Undergraduate Researcher</div>
-            <div class="tl-company">University Lab · Your School</div>
-            <div class="tl-desc">What are you researching? What methods? This shows you can work on open-ended problems — a huge differentiator.</div>
+            <div class="tl-date">July 2025 — August 2025</div>
+            <div class="tl-role">Project Management Intern</div>
+            <div class="tl-company">SELECT</div>
+            <div class="tl-desc">Collaborated with the PM and engineering team to deliver a client project on schedule and within scope. Contributed to sprint planning, task estimation, and milestone tracking in an Agile environment.</div>
         </div>
         <div class="tl-item">
-            <div class="tl-date">2022 — Present</div>
-            <div class="tl-role">CS Student</div>
-            <div class="tl-company">Your University · Expected Graduation 20XX</div>
-            <div class="tl-desc">Relevant coursework: Data Structures, Algorithms, Systems Programming, Machine Learning, Database Systems.</div>
+            <div class="tl-date">December 2024 — June 2025</div>
+            <div class="tl-role">Leadership Team Intern</div>
+            <div class="tl-company">Women in Business & STEM, CSUF · Fullerton, CA</div>
+            <div class="tl-desc">Supported strategic planning and club-wide leadership initiatives. Analyzed organizational growth opportunities and implemented action plans — recognized as the sole Outstanding Intern at program end.</div>
         </div>
     </div>
 </section>
@@ -535,10 +947,10 @@
     <h1 class="contact-title">Let's<br><em>talk.</em></h1>
     <p class="contact-sub">I'm open to internships, collaborations, and interesting conversations. If you have a project or opportunity, my inbox is open.</p>
     <div class="contact-links">
-        <a href="mailto:bassma.ennarah@gmail.com" class="contact-link">Email</a>
-        <a href="https://linkedin.com"             class="contact-link" target="_blank">LinkedIn</a>
-        <a href="https://github.com"               class="contact-link" target="_blank">GitHub</a>
-        <a href="#"                                class="contact-link">Resume ↓</a>
+        <a href="mailto:bassma.ennarah@gmail.com"          class="contact-link">Email</a>
+        <a href="https://linkedin.com/in/bassma-ennarah" class="contact-link" target="_blank">LinkedIn</a>
+        <a href="https://github.com/bennarah"            class="contact-link" target="_blank">GitHub</a>
+        <a href="#"                                      class="contact-link">Resume ↓</a>
     </div>
 </section>
 
@@ -582,7 +994,7 @@ function buildAnimation() {
     // ── Final spread positions ────────────────────────────────────────────────
     const FILE_H    = 88;
     const FILE_GAP  = 25;
-    const SPREAD_TOP = vh * 0.06;
+    const SPREAD_TOP = Math.max(20, (vh - (5 * FILE_H + 4 * FILE_GAP)) / 2);
     const finalTop  = Array.from({ length: 5 }, (_, i) =>
         SPREAD_TOP + i * (FILE_H + FILE_GAP)
     );
@@ -674,8 +1086,8 @@ buildAnimation();
 ────────────────────────────────────────────────────────────── */
 const fadeEls = [
     '.sec-eye', '.sec-title',
-    '.about-bio p', '.stats',
-    '.proj-card', '.skill-card', '.tl-item',
+    '.about-photo-wrap', '.about-bio p', '.stats',
+    '.proj-card', '.desktop-wrap', '.tl-item',
     '.contact-title', '.contact-sub', '.contact-links'
 ];
 
