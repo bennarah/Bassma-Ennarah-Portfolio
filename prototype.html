@@ -13,9 +13,9 @@
 
         :root {
             --cream:       #F2EDE4;
-            --manila:      #E8C97A;
-            --manila-dark: #C9A84C;
-            --manila-shad: #A07830;
+            --manila:      #C4B490;
+            --manila-dark: #A89468;
+            --manila-shad: #8A7050;
             --text:        #1A1514;
             --muted:       #7A6E66;
 
@@ -24,6 +24,7 @@
             --c3: #EDE3C8;  --c3t: #2E2416;
             --c4: #6E8F5C;  --c4t: #F2EDE4;
             --c5: #1C3454;  --c5t: #F2EDE4;
+            --c6: #C8846A;  --c6t: #2A1410;
         }
 
         html { scroll-behavior: smooth; }
@@ -42,7 +43,10 @@
             position: relative;
             height: 100vh;
             overflow: hidden;
-            background: var(--cream);
+            background-color: #F0E8D8;
+            background-image: url('textured-paper-2.jpeg');
+            background-size: cover;
+            background-position: center;
         }
 
         /* top meta bar */
@@ -83,31 +87,65 @@
             position: absolute;
             top: -26px; left: 0;
             width: 155px; height: 28px;
-            background: var(--manila-dark);
+            background: linear-gradient(180deg, #B8A472 0%, #A89060 100%);
             border-radius: 7px 7px 0 0;
             z-index: 5;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.35),
+                inset 0 -1px 0 rgba(0,0,0,.12);
+        }
+
+        /* fold edge where tab meets body */
+        .folder-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: rgba(0,0,0,.12);
         }
 
         .folder-body {
             position: relative;
             width: 600px;
             height: 370px;
-            background: var(--manila);
+            background: linear-gradient(160deg,
+                #D0C09A 0%,
+                #C4B490 35%,
+                #BAA882 70%,
+                #B09C74 100%);
             border-radius: 0 12px 12px 12px;
             box-shadow:
-                0 5px 0 var(--manila-shad),
-                0 10px 50px rgba(0,0,0,.18),
-                inset 0 1px 0 rgba(255,255,255,.35);
+                0 2px 0 #C09030,
+                0 5px 0 #A87820,
+                0 8px 0 rgba(0,0,0,.07),
+                0 16px 60px rgba(0,0,0,.22),
+                inset 0 1px 0 rgba(255,255,255,.5),
+                inset 0 -1px 0 rgba(0,0,0,.06);
             z-index: 5;
             overflow: hidden;
         }
 
+        /* subtle canvas/paper texture on folder */
+        .folder-body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: .4;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            mix-blend-mode: multiply;
+        }
+
+        /* right-edge shadow fold */
         .folder-body::after {
             content: '';
             position: absolute;
-            right: 0; top: 0; bottom: 0; width: 28px;
-            background: rgba(0,0,0,.04);
+            right: 0; top: 0; bottom: 0; width: 32px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,.06));
             border-radius: 0 12px 12px 0;
+            z-index: 2;
         }
 
         .folder-anno {
@@ -122,14 +160,39 @@
         /* polaroid */
         .polaroid-wrap { position: absolute; top: 20px; right: 24px; z-index: 8; }
 
-        .paperclip-svg { position: absolute; top: -20px; left: 10px; width: 36px; z-index: 10; }
+        /* shared clip position — both SVGs sit here */
+        .paperclip-svg,
+        .paperclip-behind {
+            position: absolute;
+            top: -20px; left: 10px;
+            width: 36px;
+        }
+
+        /* BACK layer: inner loop only, hidden above the polaroid top */
+        .paperclip-behind {
+            z-index: 0;
+            clip-path: inset(20px 0 0 0); /* only show from polaroid top edge downward */
+        }
+
+        /* FRONT layer: outer loop only, no clipping — rides over the photo */
+        .paperclip-svg {
+            z-index: 30;
+        }
 
         .polaroid {
+            position: relative;
+            z-index: 1;
             width: 132px;
             background: #fff;
             padding: 8px 8px 28px;
             box-shadow: 0 8px 24px rgba(0,0,0,.22);
             transform: rotate(4.5deg);
+        }
+
+        /* ensure the image doesn't escape polaroid's stacking context above the clip */
+        .polaroid-img {
+            position: relative;
+            z-index: 0;
         }
 
         .polaroid-img {
@@ -195,11 +258,12 @@
             box-shadow: 0 14px 36px rgba(0,0,0,.18);
         }
 
-        .nf-1 { background: var(--c1); }
-        .nf-2 { background: var(--c2); }
-        .nf-3 { background: var(--c3); }
-        .nf-4 { background: var(--c4); }
-        .nf-5 { background: var(--c5); }
+        .nf-1 { background: var(--c1); color: var(--c1t); }
+        .nf-2 { background: var(--c2); color: var(--c2t); }
+        .nf-3 { background: var(--c3); color: var(--c3t); }
+        .nf-4 { background: var(--c4); color: var(--c4t); }
+        .nf-5 { background: var(--c5); color: var(--c5t); }
+        .nf-6 { background: var(--c6); color: var(--c6t); }
 
         .nf-num   { font-size:11px; letter-spacing:3px; text-transform:uppercase; opacity:0; min-width:32px; }
         .nf-label { flex:1; text-align:center; font-family:'Playfair Display',serif; font-size:32px; font-weight:700; letter-spacing:-.5px; opacity:0; }
@@ -350,27 +414,103 @@
             border:1px solid rgba(255,255,255,.10);
             border-radius:8px; padding:32px 28px;
             transition:border-color .2s, background .2s;
+            position: relative;
         }
         .proj-card:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.22); }
 
-        /* project image slot */
-        .proj-img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 6px;
-            margin-bottom: 22px;
+        /* ── Phone mockup (Nanuk, Fitness) ── */
+        .device-phone {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .phone-shell {
+            width: 108px;
+            background: #111;
+            border-radius: 28px;
+            padding: 10px 7px 14px;
+            box-shadow:
+                0 10px 32px rgba(0,0,0,.55),
+                inset 0 0 0 1px rgba(255,255,255,.09);
+            position: relative;
+        }
+        .phone-pill {
+            width: 34px; height: 5px;
+            background: #252525;
+            border-radius: 3px;
+            margin: 0 auto 8px;
+        }
+        .phone-screen {
+            border-radius: 18px;
+            overflow: hidden;
+            background: #000;
+        }
+        .phone-screen img { width:100%; display:block; }
+        .phone-screen-empty {
+            border-radius: 18px;
+            height: 180px;
+            background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 9px;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,.2);
-            overflow: hidden;
+            color: rgba(255,255,255,.15);
         }
-        .proj-img img { width:100%; height:100%; object-fit:cover; }
+
+        /* ── Desktop window mockup (Rey) ── */
+        .device-window {
+            margin-bottom: 24px;
+        }
+        .window-shell {
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow:
+                0 10px 32px rgba(0,0,0,.55),
+                inset 0 0 0 1px rgba(255,255,255,.09);
+        }
+        .window-bar {
+            background: #1e1e1e;
+            padding: 7px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .traffic { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+        .traffic-r { background:#ff5f57; }
+        .traffic-y { background:#febc2e; }
+        .traffic-g { background:#28c840; }
+        .window-bar-title {
+            flex: 1;
+            text-align: center;
+            font-size: 10px;
+            color: rgba(255,255,255,.25);
+            letter-spacing: 1px;
+            margin-right: 28px;
+        }
+        .window-screen {
+            overflow: hidden;
+            max-height: 165px;
+        }
+        .window-screen img { width:100%; display:block; object-fit:cover; object-position:top left; }
+
+        /* ── Rey mascot sprite ── */
+        .rey-mascot {
+            position: absolute;
+            bottom: -18px;
+            right: 22px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            z-index: 20;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,.3));
+            animation: rey-bounce 1.8s ease-in-out infinite;
+        }
+        @keyframes rey-bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-5px); }
+        }
 
         /* in-progress badge */
         .proj-badge {
@@ -410,7 +550,7 @@
         .proj-link  { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:inherit; text-decoration:none; opacity:.55; transition:opacity .2s, border-color .2s; border-bottom:1px solid transparent; }
         .proj-link:hover { opacity:1; border-bottom-color:currentColor; }
 
-        /* Skills — Desktop Computer */
+        /* Skills — iMac + iOS screen */
         #skills { background:var(--c3); color:var(--c3t); }
         #skills .sec-title { color:var(--c3t); }
 
@@ -420,198 +560,140 @@
             align-items: center;
         }
 
-        /* monitor body */
-        .monitor {
-            width: min(720px, 100%);
-            background: linear-gradient(180deg, #DDD0B0 0%, #C8B888 100%);
-            border-radius: 18px 18px 6px 6px;
-            padding: 16px 16px 22px;
-            box-shadow:
-                0 2px 0 #b0a060,
-                0 28px 70px rgba(0,0,0,.22),
-                inset 0 1px 0 rgba(255,255,255,.55);
+        /* iMac image wrapper */
+        .imac-wrap {
             position: relative;
+            width: min(740px, 100%);
+            filter: drop-shadow(0 32px 64px rgba(0,0,0,.22));
+        }
+        .imac-img {
+            width: 100%;
+            display: block;
+            pointer-events: none;
+            user-select: none;
         }
 
-        /* webcam dot */
-        .monitor::before {
-            content: '';
+        /* Screen overlay — matches the transparent cutout in Mac.png */
+        .imac-screen {
             position: absolute;
-            top: 8px; left: 50%;
-            transform: translateX(-50%);
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            background: rgba(0,0,0,.22);
-            box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
-        }
-
-        .monitor-screen {
-            border-radius: 6px;
-            height: 420px;
+            left: 4.29%;
+            top: 5.2%;
+            width: 91.43%;
+            height: 65.5%;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
-            box-shadow: inset 0 0 60px rgba(0,0,0,.6);
         }
 
-        .desktop-wallpaper {
+        /* iOS wallpaper — very light pastel pink */
+        .ios-wallpaper {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #2a0d26 0%, #1a1e40 55%, #0e2040 100%);
+            background: linear-gradient(160deg, #fce8f2 0%, #f8d4e8 40%, #f2c0dc 80%, #f8d4e8 100%);
             z-index: 0;
         }
-
-        /* faint noise/grain on wallpaper */
-        .desktop-wallpaper::after {
+        .ios-wallpaper::after {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            opacity: .35;
+            background: radial-gradient(ellipse 70% 55% at 30% 30%, rgba(255,255,255,.5) 0%, transparent 65%),
+                        radial-gradient(ellipse 50% 40% at 75% 70%, rgba(240,160,200,.25) 0%, transparent 65%);
         }
 
-        /* menu bar */
-        .desktop-menubar {
+        /* iOS status bar */
+        .ios-status-bar {
             position: relative;
             z-index: 2;
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 5px 14px;
-            background: rgba(255,255,255,.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,.07);
+            justify-content: space-between;
+            padding: 5px 18px 3px;
             font-size: 11px;
-            color: rgba(255,255,255,.82);
-            font-weight: 500;
+            font-weight: 600;
+            color: rgba(80,30,55,.8);
             flex-shrink: 0;
         }
-        .menu-logo { font-size: 15px; opacity: .9; }
-        .menu-app  { font-weight: 600; font-size: 11.5px; }
-        .menu-links { display:flex; gap:14px; opacity:.55; font-size:10.5px; }
-        .menu-right { margin-left:auto; display:flex; gap:14px; opacity:.5; font-size:10px; align-items:center; }
+        .ios-time { font-size: 12px; font-weight: 700; letter-spacing: .3px; }
+        .ios-status-right { display:flex; gap:5px; align-items:center; }
 
-        /* scrollable icon area */
-        .desktop-icons-area {
+        /* iOS scrollable icon grid */
+        .ios-icons-area {
             position: relative;
             z-index: 1;
             flex: 1;
             overflow-y: auto;
-            padding: 18px 22px 10px;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,.15) transparent;
+            padding: 14px 24px 6px;
+            scrollbar-width: none;
         }
-        .desktop-icons-area::-webkit-scrollbar { width: 4px; }
-        .desktop-icons-area::-webkit-scrollbar-track { background: transparent; }
-        .desktop-icons-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,.18); border-radius: 2px; }
+        .ios-icons-area::-webkit-scrollbar { display: none; }
 
-        .desktop-icons-grid {
+        .ios-icons-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px 6px;
         }
 
-        .desktop-icon {
+        /* iOS app icon */
+        .ios-icon {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            padding: 10px 6px 8px;
-            border-radius: 8px;
+            gap: 4px;
             cursor: default;
-            transition: background .15s;
         }
-        .desktop-icon:hover { background: rgba(255,255,255,.09); }
-        .desktop-icon:active { background: rgba(255,255,255,.16); }
-
-        .d-icon-img {
-            width: 56px; height: 56px;
-            background: rgba(255,255,255,.07);
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 14px;
+        .ios-icon-img {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.55);
+            border: 1px solid rgba(255,255,255,.7);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 18px rgba(0,0,0,.35);
-            transition: transform .2s, box-shadow .2s;
+            font-size: 26px;
+            transition: transform .15s;
         }
-        .desktop-icon:hover .d-icon-img {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,0,0,.4);
-        }
-        .d-icon-img i { line-height: 1; }
+        .ios-icon:active .ios-icon-img { transform: scale(.9); }
+        .ios-icon-img i { line-height: 1; }
 
-        .d-icon-name {
-            font-size: 10px;
-            font-weight: 500;
-            color: rgba(255,255,255,.88);
+        .ios-icon-name {
+            font-size: 8.5px;
+            font-weight: 600;
+            color: rgba(80,30,55,.85);
             text-align: center;
-            text-shadow: 0 1px 4px rgba(0,0,0,.6);
             line-height: 1.2;
-        }
-        .d-icon-level {
-            font-size: 8px;
-            color: rgba(255,255,255,.35);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: .1px;
+            max-width: 56px;
         }
 
-        /* scroll nudge inside screen */
-        .desktop-scroll-hint {
-            text-align: center;
-            padding: 10px 0 14px;
-            font-size: 9px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.18);
-        }
-
-        /* dock */
-        .desktop-dock {
+        /* iOS dock */
+        .ios-dock {
             position: relative;
             z-index: 2;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            gap: 10px;
-            padding: 8px 20px 10px;
-            background: rgba(255,255,255,.07);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,.07);
+            align-items: center;
+            gap: 12px;
+            padding: 7px 22px 8px;
+            background: rgba(255,255,255,.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,.5);
             flex-shrink: 0;
         }
-        .dock-icon {
-            width: 38px; height: 38px;
-            background: rgba(255,255,255,.1);
-            border-radius: 10px;
+        .dock-ios-icon {
+            width: 42px; height: 42px;
+            border-radius: 11px;
+            background: rgba(255,255,255,.55);
+            border: 1px solid rgba(255,255,255,.7);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            transition: transform .2s;
+            transition: transform .18s;
             cursor: default;
         }
-        .dock-icon:hover { transform: translateY(-6px) scale(1.15); }
-        .dock-icon i { line-height: 1; }
-
-        /* stand */
-        .monitor-neck {
-            width: 76px;
-            height: 40px;
-            background: linear-gradient(180deg, #C8B888 0%, #B4A470 100%);
-            margin: 0 auto;
-        }
-        .monitor-base {
-            width: 250px;
-            height: 18px;
-            background: linear-gradient(180deg, #B4A470 0%, #A09060 100%);
-            border-radius: 0 0 14px 14px;
-            margin: 0 auto;
-            box-shadow: 0 6px 20px rgba(0,0,0,.16);
-        }
+        .dock-ios-icon i { line-height: 1; }
+        .dock-ios-icon:hover { transform: translateY(-5px) scale(1.12); }
 
         /* Experience */
         #experience { background:var(--c4); color:var(--c4t); }
@@ -628,6 +710,229 @@
         .tl-role    { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; margin-bottom:4px; }
         .tl-company { font-size:14px; opacity:.65; margin-bottom:12px; }
         .tl-desc    { font-size:15px; line-height:1.8; opacity:.78; max-width:580px; }
+
+        /* ============================================================
+           BEYOND THE TERMINAL — misc / personality section
+        ============================================================ */
+        #beyond {
+            background: #EDE8DC;
+            padding: 100px 0 70px;
+            overflow: hidden;
+        }
+        #beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: 80px; }
+        #beyond .sec-title { color: var(--text); padding: 0 80px; margin-bottom: 16px; }
+        .beyond-blurb {
+            padding: 0 80px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--muted);
+            max-width: 500px;
+            margin-bottom: 44px;
+        }
+
+        /* Horizontal drag-scroll journal */
+        .journal-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 12px 80px 52px;
+            scrollbar-width: none;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+            user-select: none;
+            scroll-snap-type: x mandatory;
+        }
+        .journal-scroll.is-grabbing { cursor: grabbing; }
+        .journal-scroll::-webkit-scrollbar { display: none; }
+
+        /* Base page card */
+        .jp {
+            flex-shrink: 0;
+            width: 300px;
+            background: #FAF7F1;
+            border-radius: 10px;
+            padding: 26px 22px 24px;
+            position: relative;
+            box-shadow: 2px 4px 18px rgba(0,0,0,.09), 0 1px 0 rgba(0,0,0,.04);
+            scroll-snap-align: start;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .jp:hover {
+            transform: translateY(-4px);
+            box-shadow: 4px 10px 32px rgba(0,0,0,.13), 0 1px 0 rgba(0,0,0,.04);
+        }
+        .jp-lined {
+            background-image: repeating-linear-gradient(
+                transparent, transparent 27px,
+                rgba(180,160,130,.14) 27px, rgba(180,160,130,.14) 28px
+            );
+        }
+        .jp-graph {
+            background-image:
+                linear-gradient(rgba(180,160,130,.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(180,160,130,.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .jp-label {
+            font-size: 9.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .jp-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.15;
+        }
+        .jp-sub {
+            font-size: 12px;
+            line-height: 1.65;
+            color: var(--muted);
+        }
+
+        /* ── Travel ── */
+        .travel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .travel-photo {
+            aspect-ratio: 4/3;
+            background: #DDD6CC;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            gap: 4px;
+        }
+        .travel-photo:nth-child(odd)  { transform: rotate(-1.2deg); }
+        .travel-photo:nth-child(even) { transform: rotate(1deg); }
+        .travel-photo-lbl {
+            font-family: 'Dancing Script', cursive;
+            font-size: 10px;
+            color: rgba(26,21,20,.45);
+        }
+
+        /* ── Coffee ── */
+        .coffee-emoji {
+            font-size: 64px;
+            text-align: center;
+            display: block;
+            margin: 16px 0 12px;
+            line-height: 1;
+        }
+        .coffee-cta {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text);
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 2px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ── Letterboxd ── */
+        .film-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 14px 0 16px;
+        }
+        .film-card {
+            border-radius: 6px;
+            height: 106px;
+            padding: 10px 9px 9px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .film-year  { font-size: 9px; color: rgba(255,255,255,.55); margin-bottom: 2px; }
+        .film-name  { font-size: 11px; font-weight: 700; color: white; line-height: 1.25; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+        .film-stars { font-size: 9px; color: #f5c518; margin-top: 3px; }
+        .lb-btn {
+            display: block;
+            width: 100%;
+            padding: 9px;
+            background: #1a1a1a;
+            color: white;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        /* ── Lakers ── */
+        .lakers-badge {
+            width: 78px; height: 78px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #552583, #FDB927);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            margin: 18px auto 16px;
+            box-shadow: 0 6px 20px rgba(85,37,131,.28);
+        }
+        .lakers-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-style: italic;
+            text-align: center;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            opacity: .85;
+        }
+        .lakers-attr {
+            text-align: center;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ── Songs ── */
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .song-row {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 8px 10px;
+            background: rgba(0,0,0,.04);
+            border-radius: 8px;
+        }
+        .song-disc {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .song-info   { flex: 1; min-width: 0; }
+        .song-name   { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+        .song-artist { font-size: 10px; color: var(--muted); }
+        .song-num    { font-size: 10px; font-weight: 600; color: rgba(26,21,20,.22); flex-shrink: 0; }
 
         /* Contact */
         #contact { background:var(--c5); color:var(--c5t); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
@@ -664,6 +969,7 @@
     <div class="dot" data-sec="projects"   title="Projects"></div>
     <div class="dot" data-sec="skills"     title="Skills"></div>
     <div class="dot" data-sec="experience" title="Experience"></div>
+    <div class="dot" data-sec="beyond"     title="Beyond"></div>
     <div class="dot" data-sec="contact"    title="Contact"></div>
 </nav>
 
@@ -683,6 +989,9 @@
          Order in DOM = stack order: nf-5 is deepest (rendered first / behind),
          nf-1 is on top (rendered last, emerges first).
     -->
+    <a href="#beyond"     class="nav-file nf-6" id="f6">
+        <span class="nf-num">06</span><span class="nf-label">Beyond</span><span class="nf-arrow">→</span>
+    </a>
     <a href="#contact"    class="nav-file nf-5" id="f5">
         <span class="nf-num">05</span><span class="nf-label">Contact</span><span class="nf-arrow">→</span>
     </a>
@@ -707,10 +1016,40 @@
             <span class="folder-anno">Portfolio · v1.0</span>
 
             <div class="polaroid-wrap">
-                <svg class="paperclip-svg" viewBox="0 0 36 88" fill="none">
-                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22 C33 14,28 10,20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
-                          stroke="#B0A090" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+
+                <!-- BEHIND layer: inner loop only — slides behind the photo -->
+                <svg class="paperclip-behind" viewBox="0 0 36 88" fill="none">
+                    <path d="M20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
+                          stroke="rgba(0,0,0,.18)" stroke-width="4" stroke-linecap="round" fill="none"
+                          transform="translate(0.6,1.2)"/>
+                    <path d="M20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
+                          stroke="#8A8478" stroke-width="3" stroke-linecap="round" fill="none"/>
                 </svg>
+
+                <!-- FRONT layer: outer loop only — rides over the photo -->
+                <svg class="paperclip-svg" viewBox="0 0 36 88" fill="none">
+                    <defs>
+                        <linearGradient id="clip-grad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stop-color="#7A7468"/>
+                            <stop offset="30%"  stop-color="#C8C2B0"/>
+                            <stop offset="55%"  stop-color="#E8E0CC"/>
+                            <stop offset="75%"  stop-color="#B0A890"/>
+                            <stop offset="100%" stop-color="#888078"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- shadow -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="rgba(0,0,0,.22)" stroke-width="4.5" stroke-linecap="round" fill="none"
+                          transform="translate(0.8,1.5)"/>
+                    <!-- metallic body -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="url(#clip-grad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <!-- specular highlight -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="rgba(255,255,255,.32)" stroke-width="1" stroke-linecap="round" fill="none"
+                          transform="translate(-0.4,-0.4)"/>
+                </svg>
+
                 <div class="polaroid">
                     <img class="polaroid-img" src="headshot.jpg" alt="Bassma Ennarah" style="object-fit:cover;">
                 </div>
@@ -765,16 +1104,36 @@
     <h2 class="sec-title">Selected <em>work</em></h2>
     <div class="proj-grid">
         <div class="proj-card">
-            <div class="proj-img">[ screenshot ]</div>
+            <div class="device-window">
+                <div class="window-shell">
+                    <div class="window-bar">
+                        <div class="traffic traffic-r"></div>
+                        <div class="traffic traffic-y"></div>
+                        <div class="traffic traffic-g"></div>
+                        <span class="window-bar-title">Rey — Terminal Assistant</span>
+                    </div>
+                    <div class="window-screen">
+                        <img src="Rey-Demo-Image copy.png" alt="Rey Terminal Assistant">
+                    </div>
+                </div>
+            </div>
             <span class="proj-badge">In Progress</span>
             <div class="proj-num">01</div>
             <div class="proj-name">Rey</div>
             <div class="proj-desc">An AI-powered desktop companion for beginner programmers. Ask Rey any terminal question in plain English and get a clear answer — no Stack Overflow rabbit holes required.</div>
             <div class="tags"><span class="tag">Python</span><span class="tag">AI</span><span class="tag">macOS</span><span class="tag">Desktop</span></div>
             <div class="proj-links"><a href="https://github.com/bennarah/Rey-Terminal-Assistant" class="proj-link" target="_blank">GitHub ↗</a></div>
+            <div class="rey-mascot"></div>
         </div>
         <div class="proj-card">
-            <div class="proj-img">[ screenshot ]</div>
+            <div class="device-phone">
+                <div class="phone-shell">
+                    <div class="phone-pill"></div>
+                    <div class="phone-screen">
+                        <img src="gallery-2.jpg" alt="Nanuk App">
+                    </div>
+                </div>
+            </div>
             <span class="proj-badge">In Progress</span>
             <div class="proj-num">02</div>
             <div class="proj-name">Nanuk</div>
@@ -783,7 +1142,12 @@
             <div class="proj-links"><a href="https://github.com/nathanchamorro1/fullyhacks-2026" class="proj-link" target="_blank">GitHub ↗</a></div>
         </div>
         <div class="proj-card">
-            <div class="proj-img">[ screenshot ]</div>
+            <div class="device-phone">
+                <div class="phone-shell">
+                    <div class="phone-pill"></div>
+                    <div class="phone-screen"><img src="home.png" alt="Fitness App"></div>
+                </div>
+            </div>
             <div class="proj-num">03</div>
             <div class="proj-name">Fitness App</div>
             <div class="proj-desc">AI-powered mobile app helping users reach their health goals through personalized workout insights. Led as Team Lead — owned sprint planning, testing, and frontend delivery end-to-end.</div>
@@ -798,123 +1162,119 @@
     <h2 class="sec-title">Tech <em>stack</em></h2>
 
     <div class="desktop-wrap">
-        <div class="monitor">
-            <div class="monitor-screen">
-                <div class="desktop-wallpaper"></div>
+        <div class="imac-wrap">
+            <img class="imac-img" src="Mac.png" alt="iMac">
 
-                <!-- Menu bar -->
-                <div class="desktop-menubar">
-                    <span class="menu-logo">⌘</span>
-                    <span class="menu-app">skills.app</span>
-                    <div class="menu-links">
-                        <span>File</span><span>Edit</span><span>View</span>
-                    </div>
-                    <div class="menu-right">
-                        <span>↕ scroll to explore</span>
-                        <span>Apr 2026</span>
+            <!-- iOS screen overlay — sits inside the transparent screen cutout -->
+            <div class="imac-screen">
+
+                <!-- Wallpaper -->
+                <div class="ios-wallpaper"></div>
+
+                <!-- Status bar -->
+                <div class="ios-status-bar">
+                    <span class="ios-time">9:41</span>
+                    <span class="ios-status-right">
+                        <!-- Signal bars -->
+                        <svg width="17" height="12" viewBox="0 0 17 12" fill="rgba(80,30,55,.8)" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0"   y="6"  width="3" height="6"  rx="0.8"/>
+                            <rect x="4.5" y="4"  width="3" height="8"  rx="0.8"/>
+                            <rect x="9"   y="2"  width="3" height="10" rx="0.8"/>
+                            <rect x="13.5" y="0" width="3" height="12" rx="0.8"/>
+                        </svg>
+                        <!-- Wi-Fi -->
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 9.5a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" fill="rgba(80,30,55,.8)"/>
+                            <path d="M4.2 6.8C5.2 5.7 6.5 5 8 5s2.8.7 3.8 1.8" stroke="rgba(80,30,55,.8)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                            <path d="M1 3.8C3 1.5 5.4 0 8 0s5 1.5 7 3.8" stroke="rgba(80,30,55,.8)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".5"/>
+                        </svg>
+                        <!-- Battery -->
+                        <svg width="25" height="12" viewBox="0 0 25 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="rgba(80,30,55,.5)"/>
+                            <rect x="1.5" y="1.5" width="19" height="9" rx="2" fill="rgba(80,30,55,.8)"/>
+                            <path d="M23 4v4c.9-.4 1.5-1.1 1.5-2s-.6-1.6-1.5-2z" fill="rgba(80,30,55,.4)"/>
+                        </svg>
+                    </span>
+                </div>
+
+                <!-- App icon grid -->
+                <div class="ios-icons-area">
+                    <div class="ios-icons-grid">
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="ios-icon-name">React</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-typescript-plain colored"></i></div>
+                            <div class="ios-icon-name">TypeScript</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-python-plain colored"></i></div>
+                            <div class="ios-icon-name">Python</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-cplusplus-plain colored"></i></div>
+                            <div class="ios-icon-name">C++</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="ios-icon-name">React Native</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-flutter-plain colored"></i></div>
+                            <div class="ios-icon-name">Flutter</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-html5-plain colored"></i></div>
+                            <div class="ios-icon-name">HTML / CSS</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-mysql-plain colored"></i></div>
+                            <div class="ios-icon-name">SQL</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-firebase-plain colored"></i></div>
+                            <div class="ios-icon-name">Firebase</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-git-plain colored"></i></div>
+                            <div class="ios-icon-name">Git</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-figma-plain colored"></i></div>
+                            <div class="ios-icon-name">Figma</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-vscode-plain colored"></i></div>
+                            <div class="ios-icon-name">VS Code</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-linux-plain colored"></i></div>
+                            <div class="ios-icon-name">Linux</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-dart-plain colored"></i></div>
+                            <div class="ios-icon-name">Dart</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-github-original colored"></i></div>
+                            <div class="ios-icon-name">GitHub</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Icons -->
-                <div class="desktop-icons-area">
-                    <div class="desktop-icons-grid">
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-react-original colored"></i></div>
-                            <div class="d-icon-name">React</div>
-                            <div class="d-icon-level">Advanced</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-typescript-plain colored"></i></div>
-                            <div class="d-icon-name">TypeScript</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-python-plain colored"></i></div>
-                            <div class="d-icon-name">Python</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-cplusplus-plain colored"></i></div>
-                            <div class="d-icon-name">C++</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-react-original colored"></i></div>
-                            <div class="d-icon-name">React Native</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-flutter-plain colored"></i></div>
-                            <div class="d-icon-name">Flutter</div>
-                            <div class="d-icon-level">Familiar</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-html5-plain colored"></i></div>
-                            <div class="d-icon-name">HTML / CSS</div>
-                            <div class="d-icon-level">Advanced</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-mysql-plain colored"></i></div>
-                            <div class="d-icon-name">SQL</div>
-                            <div class="d-icon-level">Familiar</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-firebase-plain colored"></i></div>
-                            <div class="d-icon-name">Firebase</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-git-plain colored"></i></div>
-                            <div class="d-icon-name">Git / GitHub</div>
-                            <div class="d-icon-level">Advanced</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-figma-plain colored"></i></div>
-                            <div class="d-icon-name">Figma</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-vscode-plain colored"></i></div>
-                            <div class="d-icon-name">VS Code</div>
-                            <div class="d-icon-level">Advanced</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-linux-plain colored"></i></div>
-                            <div class="d-icon-name">Linux</div>
-                            <div class="d-icon-level">Familiar</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img"><i class="devicon-dart-plain colored"></i></div>
-                            <div class="d-icon-name">Dart</div>
-                            <div class="d-icon-level">Familiar</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img" style="font-size:24px;">📋</div>
-                            <div class="d-icon-name">Agile / Scrum</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                        <div class="desktop-icon">
-                            <div class="d-icon-img" style="font-size:24px;">🧩</div>
-                            <div class="d-icon-name">OOP</div>
-                            <div class="d-icon-level">Proficient</div>
-                        </div>
-                    </div>
-                    <div class="desktop-scroll-hint">— end of list —</div>
+                <!-- iOS dock -->
+                <div class="ios-dock">
+                    <div class="dock-ios-icon"><i class="devicon-github-original colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-vscode-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-figma-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-git-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-python-plain colored"></i></div>
                 </div>
 
-                <!-- Dock -->
-                <div class="desktop-dock">
-                    <div class="dock-icon"><i class="devicon-github-original"></i></div>
-                    <div class="dock-icon"><i class="devicon-vscode-plain colored"></i></div>
-                    <div class="dock-icon"><i class="devicon-figma-plain colored"></i></div>
-                    <div class="dock-icon"><i class="devicon-git-plain colored"></i></div>
-                    <div class="dock-icon"><i class="devicon-firefox-plain colored"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="monitor-neck"></div>
-        <div class="monitor-base"></div>
-    </div>
+            </div><!-- /.imac-screen -->
+        </div><!-- /.imac-wrap -->
+    </div><!-- /.desktop-wrap -->
 </section>
 
 <section id="experience">
@@ -940,6 +1300,112 @@
             <div class="tl-desc">Supported strategic planning and club-wide leadership initiatives. Analyzed organizational growth opportunities and implemented action plans — recognized as the sole Outstanding Intern at program end.</div>
         </div>
     </div>
+</section>
+
+<section id="beyond">
+    <span class="sec-eye">beyond the terminal</span>
+    <h2 class="sec-title">Not on my <em>résumé</em></h2>
+
+    <p class="beyond-blurb">code is just one side. here's everything else.</p>
+
+    <div class="journal-scroll" id="journalScroll">
+
+        <!-- Page 1 — Travel -->
+        <div class="jp jp-lined">
+            <div class="jp-label">01 — hobby</div>
+            <div class="jp-title">✈️ wanderlust</div>
+            <div class="jp-sub">my biggest hobby — I collect cities the way others collect stamps. always planning the next trip.</div>
+            <div class="travel-grid">
+                <div class="travel-photo">🏙️<span class="travel-photo-lbl">city life</span></div>
+                <div class="travel-photo">🌊<span class="travel-photo-lbl">ocean views</span></div>
+                <div class="travel-photo">🗺️<span class="travel-photo-lbl">getting lost</span></div>
+                <div class="travel-photo">🌅<span class="travel-photo-lbl">golden hour</span></div>
+            </div>
+        </div>
+
+        <!-- Page 2 — Coffee & Matcha -->
+        <div class="jp jp-graph">
+            <div class="jp-label">02 — caffeine</div>
+            <div class="jp-title">☕🍵 caffeine connoisseur</div>
+            <div class="jp-sub">coffee addict AND matcha connoisseur — I have a whole home café setup for both. I will take you to the best spot in town. I know all of them.</div>
+            <span class="coffee-emoji">☕</span>
+            <div class="jp-sub" style="font-style:italic;margin-top:2px;">"want to grab coffee (or matcha)? I'm serious."</div>
+            <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">let's grab a drink →</a>
+        </div>
+
+        <!-- Page 3 — Letterboxd -->
+        <div class="jp">
+            <div class="jp-label">03 — film</div>
+            <div class="jp-title">🎬 my top 4</div>
+            <div class="film-grid">
+                <div class="film-card" style="background:linear-gradient(150deg,#7A4A1A,#B87030)">
+                    <div class="film-year">2019</div>
+                    <div class="film-name">Little Women</div>
+                    <div class="film-stars">★★★★★</div>
+                </div>
+                <div class="film-card" style="background:linear-gradient(150deg,#111,#2E2E2E)">
+                    <div class="film-year">2006</div>
+                    <div class="film-name">Devil Wears Prada</div>
+                    <div class="film-stars">★★★★★</div>
+                </div>
+                <div class="film-card" style="background:linear-gradient(150deg,#7A1818,#B83030)">
+                    <div class="film-year">2007</div>
+                    <div class="film-name">Ratatouille</div>
+                    <div class="film-stars">★★★★★</div>
+                </div>
+                <div class="film-card" style="background:linear-gradient(150deg,#18284A,#2E4878)">
+                    <div class="film-year">2016</div>
+                    <div class="film-name">La La Land</div>
+                    <div class="film-stars">★★★★★</div>
+                </div>
+            </div>
+            <a href="https://letterboxd.com" target="_blank" class="lb-btn">+ add me on letterboxd</a>
+        </div>
+
+        <!-- Page 4 — Lakers -->
+        <div class="jp">
+            <div class="jp-label">04 — sports</div>
+            <div class="jp-title">🏀 laker nation</div>
+            <div class="jp-sub" style="margin-bottom:0">huge fan. non-negotiable.</div>
+            <div class="lakers-badge">🏀</div>
+            <div class="lakers-quote">"the most important thing is to try and inspire people so that they can be great at whatever they want to do."</div>
+            <div class="lakers-attr">— Kobe Bryant</div>
+        </div>
+
+        <!-- Page 5 — Study songs -->
+        <div class="jp jp-lined">
+            <div class="jp-label">05 — on repeat</div>
+            <div class="jp-title">🎵 study mode</div>
+            <div class="jp-sub">what's in my ears when I'm deep in a project</div>
+            <div class="song-list">
+                <div class="song-row">
+                    <div class="song-disc" style="background:linear-gradient(135deg,#C090A8,#7A3858)">♪</div>
+                    <div class="song-info">
+                        <div class="song-name">No Ordinary Love</div>
+                        <div class="song-artist">Sade</div>
+                    </div>
+                    <div class="song-num">01</div>
+                </div>
+                <div class="song-row">
+                    <div class="song-disc" style="background:linear-gradient(135deg,#5090C0,#1A4870)">♪</div>
+                    <div class="song-info">
+                        <div class="song-name">You Were Right</div>
+                        <div class="song-artist">Rüfüs Du Sol</div>
+                    </div>
+                    <div class="song-num">02</div>
+                </div>
+                <div class="song-row">
+                    <div class="song-disc" style="background:linear-gradient(135deg,#707070,#282828)">♪</div>
+                    <div class="song-info">
+                        <div class="song-name">Summer Games</div>
+                        <div class="song-artist">Drake</div>
+                    </div>
+                    <div class="song-num">03</div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /.journal-scroll -->
 </section>
 
 <section id="contact">
@@ -994,8 +1460,8 @@ function buildAnimation() {
     // ── Final spread positions ────────────────────────────────────────────────
     const FILE_H    = 88;
     const FILE_GAP  = 25;
-    const SPREAD_TOP = Math.max(20, (vh - (5 * FILE_H + 4 * FILE_GAP)) / 2);
-    const finalTop  = Array.from({ length: 5 }, (_, i) =>
+    const SPREAD_TOP = Math.max(20, (vh - (6 * FILE_H + 5 * FILE_GAP)) / 2);
+    const finalTop  = Array.from({ length: 6 }, (_, i) =>
         SPREAD_TOP + i * (FILE_H + FILE_GAP)
     );
 
@@ -1011,10 +1477,11 @@ function buildAnimation() {
         { top: folderBodyTop - TAB_SHOW - 14, left: FL + 22, w: FOLDER_W - 60, rot: -0.6, z: 13 },
         { top: folderBodyTop - TAB_SHOW - 21, left: FL + 16, w: FOLDER_W - 56, rot:  0.8, z: 12 },
         { top: folderBodyTop - TAB_SHOW - 28, left: FL + 24, w: FOLDER_W - 64, rot: -0.4, z: 11 },
+        { top: folderBodyTop - TAB_SHOW - 35, left: FL + 18, w: FOLDER_W - 52, rot:  0.6, z: 10 },
     ];
 
     const domFiles = Array.from(document.querySelectorAll('.nav-file')).reverse();
-    // [nf-1 About … nf-5 Contact]
+    // [nf-1 About … nf-6 Beyond]
 
     domFiles.forEach((f, i) => {
         const t = tabs[i];
@@ -1034,8 +1501,8 @@ function buildAnimation() {
     });
 
     const dy      = domFiles.map((_, i) => finalTop[i] - tabs[i].top);
-    const finalX   = [-14,  18, -10,  14,  -8];
-    const finalRot = [-0.9, 0.6, -0.4, 0.5, -0.2];
+    const finalX   = [-14,  18, -10,  14,  -8,  10];
+    const finalRot = [-0.9, 0.6, -0.4, 0.5, -0.2, 0.35];
 
     // ── Scrub timeline (progress 0 → 1 matches scroll position) ─────────────
     const tl = gsap.timeline({ defaults: { ease: 'none' } })
@@ -1139,6 +1606,73 @@ function setDot(i, secId) {
         d.classList.toggle('dot-l',  darkSecs.has(secId));
     });
 }
+
+
+/* ──────────────────────────────────────────────────────────────
+   5.  REY MASCOT SPRITE ANIMATION
+────────────────────────────────────────────────────────────── */
+(function () {
+    const el = document.querySelector('.rey-mascot');
+    if (!el) return;
+
+    const SRC         = 'New Piskel copy.png';
+    const COLS        = 2;
+    const TOTAL       = 5;   // 5 frames (last cell in 2x3 grid is empty)
+    const SCALE       = 2.5; // pixel-art upscale
+    const FPS         = 7;
+
+    const probe = new Image();
+    probe.onload = function () {
+        const fw = probe.naturalWidth  / COLS;
+        const fh = probe.naturalHeight / Math.ceil(TOTAL / COLS); // 3 rows
+        const dw = Math.round(fw * SCALE);
+        const dh = Math.round(fh * SCALE);
+
+        el.style.width           = dw + 'px';
+        el.style.height          = dh + 'px';
+        el.style.backgroundImage = `url('${SRC}')`;
+        el.style.backgroundSize  = `${Math.round(probe.naturalWidth * SCALE)}px ${Math.round(probe.naturalHeight * SCALE)}px`;
+        el.style.backgroundRepeat = 'no-repeat';
+
+        // Pre-compute [x, y] background-position for each frame
+        const positions = Array.from({ length: TOTAL }, (_, i) => [
+            (i % COLS) * dw,
+            Math.floor(i / COLS) * dh
+        ]);
+
+        let f = 0;
+        setInterval(() => {
+            const [x, y] = positions[f % TOTAL];
+            el.style.backgroundPosition = `-${x}px -${y}px`;
+            f++;
+        }, 1000 / FPS);
+    };
+
+    probe.src = SRC;
+}());
+
+/* ── Journal drag-to-scroll ─────────────────────────────────── */
+(function () {
+    const el = document.getElementById('journalScroll');
+    if (!el) return;
+    let down = false, startX, scrollLeft;
+    el.addEventListener('mousedown', e => {
+        down = true;
+        el.classList.add('is-grabbing');
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+    });
+    document.addEventListener('mouseup', () => {
+        down = false;
+        el.classList.remove('is-grabbing');
+    });
+    document.addEventListener('mousemove', e => {
+        if (!down) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        el.scrollLeft = scrollLeft - (x - startX) * 1.1;
+    });
+}());
 </script>
 
 </body>
