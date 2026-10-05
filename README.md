@@ -52,6 +52,7 @@ python3 -m http.server 8000
 
 - [ ] Finalize the color palette
 - [ ] Skills: hover a skill to see which project it was used in (e.g. "Python · used in Rey")
+- [ ] Pixel-art animated version of me, on the landing page or in About
 - [ ] Mobile-responsive layout
 - [ ] Accessibility pass (keyboard nav, reduced motion)
 - [ ] Port to Next.js + Tailwind and deploy on Vercel
