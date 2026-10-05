@@ -720,20 +720,21 @@ section { min-height:100vh; padding:100px 8%; }
  * left-hand page once it's turned (rotateY -180deg).
  */
 .book-wrap {
-    position: relative;
-    height: 470px;            /* JS adjusts this when the book is scaled down */
+    display: flex;
+    justify-content: center;
+    padding: 18px 0 14px;
 }
 .book {
     --page-w: 300px;
     --page-h: 420px;
-    position: absolute;
-    top: 14px;
-    left: 50%;
+    position: relative;
+    flex-shrink: 0;
     width: calc(var(--page-w) * 2);
     height: var(--page-h);
     perspective: 2400px;
-    transform-origin: top center;
-    transform: translateX(-50%) scale(var(--book-scale, 1));
+    /* JS sets --book-zoom: bigger on large screens, smaller on phones.
+       zoom (not transform: scale) keeps the text crisp at any size. */
+    zoom: var(--book-zoom, 1);
 }
 /* hardcover board peeking out around the pages */
 .book-cover {
@@ -1347,6 +1348,8 @@ section { min-height:100vh; padding:100px 8%; }
 
 /* journal photos open full-size */
 .zoomable { cursor: zoom-in; }
+.zoomable:focus { outline: none; }
+.zoomable:focus-visible { outline: 2px solid var(--c2); outline-offset: 2px; }
 .photo-lightbox {
     position: fixed;
     inset: 0;

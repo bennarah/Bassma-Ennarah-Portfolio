@@ -87,13 +87,16 @@
         if (e.key === 'ArrowRight') goTo(spread + 1);
     });
 
-    // Scale the book down to fit narrow screens
+    // Size the book to the screen: up to 1.35x on big screens (easier to read),
+    // shrinks on phones. Also keeps the whole book + controls visible vertically.
+    const MAX_ZOOM = 1.35;
     function fit() {
-        const full  = 600 + 32;                               // two pages + cover overhang
-        const avail = wrap.clientWidth - 16;
-        const s = Math.min(1, avail / full);
-        book.style.setProperty('--book-scale', s.toFixed(3));
-        wrap.style.height = Math.ceil((420 + 24) * s + 24) + 'px';
+        const fullW = 600 + 32;                                // two pages + cover overhang
+        const fullH = 420 + 24;
+        const byWidth  = (wrap.clientWidth - 16) / fullW;
+        const byHeight = (window.innerHeight - 150) / fullH;   // leave room for the arrows/dots
+        const z = Math.max(0.3, Math.min(MAX_ZOOM, byWidth, Math.max(byHeight, 1)));
+        book.style.setProperty('--book-zoom', z.toFixed(3));
     }
     // Photos open full-size in a lightbox
     const lb    = document.getElementById('photoLightbox');
