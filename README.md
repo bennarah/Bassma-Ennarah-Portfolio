@@ -51,6 +51,7 @@ python3 -m http.server 8000
 ## Roadmap
 
 - [ ] Finalize the color palette
+- [ ] Skills: hover a skill to see which project it was used in (e.g. "Python · used in Rey")
 - [ ] Mobile-responsive layout
 - [ ] Accessibility pass (keyboard nav, reduced motion)
 - [ ] Port to Next.js + Tailwind and deploy on Vercel

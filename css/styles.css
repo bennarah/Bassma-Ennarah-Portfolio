@@ -533,7 +533,7 @@ section { min-height:100vh; padding:100px 8%; }
 .proj-link:hover { opacity:1; border-bottom-color:currentColor; }
 
 /* Skills — iMac + iOS screen */
-#skills { background:var(--c3); color:var(--c3t); }
+#skills { background:var(--c3); color:var(--c3t); min-height:auto; padding-bottom:110px; }
 #skills .sec-title { color:var(--c3t); }
 
 .desktop-wrap {
@@ -611,8 +611,8 @@ section { min-height:100vh; padding:100px 8%; }
 
 .ios-icons-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px 6px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 9px 6px;
 }
 
 /* iOS app icon */
@@ -1547,3 +1547,20 @@ section { min-height:100vh; padding:100px 8%; }
         gap: 40px;
     }
 }
+
+/* letter tiles for AI tools on the iMac screen */
+.ios-icon-img.mono {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+    color: #fff;
+    border: none;
+}
+.mono-claude     { background: linear-gradient(145deg, #E08A63, #C4643F); }
+.mono-chatgpt    { background: linear-gradient(145deg, #1BAF8A, #0E7C61); font-size: 13px !important; }
+.mono-gemini     { background: linear-gradient(145deg, #4C8DF6, #8B5CF6); }
+.mono-cursor     { background: linear-gradient(145deg, #2B2B2B, #0E0E0E); }
+.mono-copilot    { background: linear-gradient(145deg, #6E5BD8, #3E2F9E); }
+.mono-claudecode { background: linear-gradient(145deg, #3A2A24, #1E1512); color: #E8956F !important; font-family: ui-monospace, Menlo, monospace !important; }
+.mono-reactnative { background: linear-gradient(145deg, #2A2F3A, #15181F); color: #61DAFB !important; }
