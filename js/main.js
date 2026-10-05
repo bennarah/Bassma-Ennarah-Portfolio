@@ -129,7 +129,7 @@ buildAnimation();
 const fadeEls = [
     '.sec-eye', '.sec-title',
     '.about-photo-wrap', '.about-bio p', '.stats',
-    '.proj-card', '.desktop-wrap', '.tl-item',
+    '.proj-card', '.desktop-wrap', '.stack-group', '.tl-item',
     '.contact-title', '.contact-sub', '.contact-links'
 ];
 

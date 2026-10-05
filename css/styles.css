@@ -1504,3 +1504,46 @@ section { min-height:100vh; padding:100px 8%; }
 .cafe-name { color: var(--text); font-weight: 500; }
 .cafe-city { color: var(--muted); font-size: 11px; }
 .cafe-spots + .coffee-cta { margin-top: 12px; }
+
+/* Skills: iMac (visual) + readable grouped list */
+.skills-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+}
+.stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+.stack-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6B5A3E;
+    margin-bottom: 9px;
+}
+.stack-chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.stack-chips li {
+    font-size: 15px;
+    line-height: 1.2;
+    color: var(--c3t);
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(46,36,22,.18);
+    border-radius: 999px;
+    padding: 6px 13px;
+}
+@media (max-width: 1000px) {
+    .skills-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+    }
+}
