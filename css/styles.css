@@ -703,10 +703,10 @@ section { min-height:100vh; padding:100px 8%; }
     padding: 100px 0 70px;
     overflow: hidden;
 }
-#beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: 80px; }
-#beyond .sec-title { color: var(--text); padding: 0 80px; margin-bottom: 16px; }
+#beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: 8%; }
+#beyond .sec-title { color: var(--text); padding: 0 8%; margin-bottom: 16px; }
 .beyond-blurb {
-    padding: 0 80px;
+    margin-left: 8%;
     font-size: 14px;
     line-height: 1.8;
     color: var(--muted);
