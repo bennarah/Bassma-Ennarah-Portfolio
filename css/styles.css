@@ -1455,25 +1455,11 @@ section { min-height:100vh; padding:100px 8%; }
     box-shadow: 0 3px 10px rgba(0,0,0,.14);
     transform: rotate(-1.5deg);
 }
-.cafe-photo img,
-.cafe-photo-empty {
+.cafe-photo img {
     display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-}
-.cafe-photo-empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgba(26,21,20,.4);
-    background: #EFE9DE;
-    border: 1px dashed rgba(26,21,20,.25);
 }
 .cafe-photo figcaption {
     font-family: 'Dancing Script', cursive;
