@@ -1395,3 +1395,53 @@ section { min-height:100vh; padding:100px 8%; }
     cursor: pointer;
 }
 .photo-lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* sports page — teams */
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0 20px;
+}
+.team-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,.14);
+}
+.team-card:nth-child(1) { transform: rotate(-1deg); }
+.team-card:nth-child(2) { transform: rotate(.8deg); }
+.team-lakers { background: linear-gradient(120deg, #552583 0%, #3E1A61 100%); }
+.team-barca  { background: linear-gradient(120deg, #004D98 0%, #0A3A75 55%, #A50044 100%); }
+.team-badge {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.team-lakers .team-badge { background: #FDB927; }
+.team-barca  .team-badge { background: #EDBB00; }
+.team-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.team-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+.team-meta {
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: .8;
+}
