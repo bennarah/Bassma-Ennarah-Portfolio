@@ -359,142 +359,190 @@
 
     <p class="beyond-blurb">There's a lot that doesn't make it onto a résumé — the things that actually make you <em>you</em>. Here's a little window into mine: the places I wander to, the drinks I'm always making at home or ordering out, the films I rewatch on nights I need them, and the things I'll always care about a little too much.</p>
 
-    <div class="journal-fan-wrap">
-        <div class="journal-stage" id="journalStage">
+    <div class="book-wrap" id="bookWrap">
+        <div class="book" id="book">
+            <div class="book-cover" aria-hidden="true"></div>
 
-                <!-- Page 1 — Travel -->
-                <div class="jp jp-lined j-page">
-                    <div class="jp-label">01 — hobby</div>
-                    <div class="jp-title">✈️ wanderlust</div>
-                    <div class="jp-sub">my biggest hobby — I collect cities the way others collect stamps. always planning the next trip.</div>
-                    <div class="travel-grid">
-                        <div class="travel-photo">🏙️<span class="travel-photo-lbl">city life</span></div>
-                        <div class="travel-photo">🌊<span class="travel-photo-lbl">ocean views</span></div>
-                        <div class="travel-photo">🗺️<span class="travel-photo-lbl">getting lost</span></div>
-                        <div class="travel-photo">🌅<span class="travel-photo-lbl">golden hour</span></div>
-                    </div>
+            <!-- Left base page: flyleaf + contents -->
+            <div class="book-page side-left">
+                <div class="jp jp-plain">
+                    <div class="jp-label">this journal belongs to</div>
+                    <div class="flyleaf-name">Bassma</div>
+                    <div class="flyleaf-rule"></div>
+                    <div class="jp-label" style="margin-top:22px;">contents</div>
+                    <ol class="toc">
+                        <li><button type="button" data-spread="1"><span>✈️ wanderlust</span><span class="toc-dots"></span><span>1</span></button></li>
+                        <li><button type="button" data-spread="1"><span>☕🍵 caffeine</span><span class="toc-dots"></span><span>2</span></button></li>
+                        <li><button type="button" data-spread="2"><span>🎬 my top 4</span><span class="toc-dots"></span><span>3</span></button></li>
+                        <li><button type="button" data-spread="2"><span>🏀 laker nation</span><span class="toc-dots"></span><span>4</span></button></li>
+                        <li><button type="button" data-spread="3"><span>🎵 study mode</span><span class="toc-dots"></span><span>5</span></button></li>
+                        <li><button type="button" data-spread="3"><span>🏰 park regular</span><span class="toc-dots"></span><span>6</span></button></li>
+                    </ol>
+                    <div class="flyleaf-hint">turn the page →</div>
                 </div>
-
-                <!-- Page 2 — Coffee & Matcha -->
-                <div class="jp jp-graph j-page">
-                    <div class="jp-label">02 — caffeine</div>
-                    <div class="jp-title">☕🍵 caffeine connoisseur</div>
-                    <div class="jp-sub">coffee addict AND matcha connoisseur — I have a whole home café setup for both. I will take you to the best spot in town. I know all of them.</div>
-                    <span class="coffee-emoji">☕</span>
-                    <div class="jp-sub" style="font-style:italic;margin-top:2px;">"want to grab coffee (or matcha)? I'm serious."</div>
-                    <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">let's grab a drink →</a>
-                </div>
-
-                <!-- Page 3 — Letterboxd -->
-                <div class="jp j-page">
-                    <div class="jp-label">03 — film</div>
-                    <div class="jp-title">🎬 my top 4</div>
-                    <div class="film-grid">
-                        <div class="film-card" style="background:linear-gradient(150deg,#7A4A1A,#B87030)">
-                            <div class="film-year">2019</div>
-                            <div class="film-name">Little Women</div>
-                            <div class="film-stars">★★★★★</div>
-                        </div>
-                        <div class="film-card" style="background:linear-gradient(150deg,#111,#2E2E2E)">
-                            <div class="film-year">2006</div>
-                            <div class="film-name">Devil Wears Prada</div>
-                            <div class="film-stars">★★★★★</div>
-                        </div>
-                        <div class="film-card" style="background:linear-gradient(150deg,#7A1818,#B83030)">
-                            <div class="film-year">2007</div>
-                            <div class="film-name">Ratatouille</div>
-                            <div class="film-stars">★★★★★</div>
-                        </div>
-                        <div class="film-card" style="background:linear-gradient(150deg,#18284A,#2E4878)">
-                            <div class="film-year">2016</div>
-                            <div class="film-name">La La Land</div>
-                            <div class="film-stars">★★★★★</div>
-                        </div>
-                    </div>
-                    <a href="https://letterboxd.com" target="_blank" class="lb-btn">+ add me on letterboxd</a>
-                </div>
-
-                <!-- Page 4 — Lakers -->
-                <div class="jp j-page">
-                    <div class="jp-label">04 — sports</div>
-                    <div class="jp-title">🏀 laker nation</div>
-                    <div class="jp-sub" style="margin-bottom:0">huge fan. non-negotiable.</div>
-                    <div class="lakers-badge">🏀</div>
-                    <div class="lakers-quote">"the most important thing is to try and inspire people so that they can be great at whatever they want to do."</div>
-                    <div class="lakers-attr">— Kobe Bryant</div>
-                </div>
-
-                <!-- Page 5 — Study songs -->
-                <div class="jp jp-lined j-page">
-                    <div class="jp-label">05 — on repeat</div>
-                    <div class="jp-title">🎵 study mode</div>
-                    <div class="jp-sub">what's in my ears when I'm deep in a project</div>
-                    <div class="song-list">
-                        <div class="song-row">
-                            <div class="song-disc" style="background:linear-gradient(135deg,#C090A8,#7A3858)">♪</div>
-                            <div class="song-info">
-                                <div class="song-name">No Ordinary Love</div>
-                                <div class="song-artist">Sade</div>
-                            </div>
-                            <div class="song-num">01</div>
-                        </div>
-                        <div class="song-row">
-                            <div class="song-disc" style="background:linear-gradient(135deg,#5090C0,#1A4870)">♪</div>
-                            <div class="song-info">
-                                <div class="song-name">You Were Right</div>
-                                <div class="song-artist">Rüfüs Du Sol</div>
-                            </div>
-                            <div class="song-num">02</div>
-                        </div>
-                        <div class="song-row">
-                            <div class="song-disc" style="background:linear-gradient(135deg,#707070,#282828)">♪</div>
-                            <div class="song-info">
-                                <div class="song-name">Summer Games</div>
-                                <div class="song-artist">Drake</div>
-                            </div>
-                            <div class="song-num">03</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Page 6 — Disneyland -->
-                <div class="jp jp-dotted j-page">
-                    <div class="jp-label">06 — happiest place</div>
-                    <div class="jp-title">🏰 park regular</div>
-                    <div class="jp-sub">proud Disneyland Magic Key holder — which means any free afternoon has a way of turning into a park day.</div>
-
-                    <div class="park-ticket">
-                        <div class="park-ticket-main">
-                            <span class="park-ticket-kicker">admit one · always</span>
-                            <span class="park-ticket-title">Magic Key</span>
-                            <span class="park-ticket-sub">holder · Anaheim, CA</span>
-                        </div>
-                        <div class="park-ticket-stub">
-                            <span class="park-ticket-inf">∞</span>
-                            <span class="park-ticket-stub-lbl">visits</span>
-                        </div>
-                    </div>
-
-                    <div class="park-sparkles" aria-hidden="true">✨ 🎢 🎆 🍦 ✨</div>
-                    <div class="jp-sub" style="font-style:italic;text-align:center;">"ask me anything about the parks — I've got tips."</div>
-                </div>
-
-        </div><!-- /.journal-stage -->
-
-        <div class="journal-fan-nav">
-            <button class="jnav" id="jnavPrev" disabled aria-label="Previous page">‹</button>
-            <div class="journal-pips">
-                <div class="j-pip"></div>
-                <div class="j-pip"></div>
-                <div class="j-pip"></div>
-                <div class="j-pip"></div>
-                <div class="j-pip"></div>
-                <div class="j-pip"></div>
             </div>
-            <button class="jnav" id="jnavNext" aria-label="Next page">›</button>
-        </div>
 
-    </div><!-- /.journal-fan-wrap -->
+            <!-- Right base page: last page of the journal -->
+            <div class="book-page side-right">
+                <div class="jp jp-lined">
+                    <div class="jp-label">07 — the end (for now)</div>
+                    <div class="jp-title">✎ to be continued…</div>
+                    <div class="jp-sub">I'm always adding pages. got a coffee spot, a film, or a ride I need to try? send it my way.</div>
+                    <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">bassma.ennarah@gmail.com</a>
+                    <div class="outro-sign">— bassma</div>
+                    <span class="folio">7</span>
+                </div>
+            </div>
+
+            <!-- Leaves: each sheet has a front (right-hand page) and a back (left-hand page once turned) -->
+            <div class="leaf">
+                <div class="face front side-right">
+                    <div class="jp jp-lined">
+                        <div class="jp-label">01 — hobby</div>
+                        <div class="jp-title">✈️ wanderlust</div>
+                        <div class="jp-sub">my biggest hobby — I collect cities the way others collect stamps. always planning the next trip.</div>
+                        <div class="travel-grid">
+                            <div class="travel-photo">🏙️<span class="travel-photo-lbl">city life</span></div>
+                            <div class="travel-photo">🌊<span class="travel-photo-lbl">ocean views</span></div>
+                            <div class="travel-photo">🗺️<span class="travel-photo-lbl">getting lost</span></div>
+                            <div class="travel-photo">🌅<span class="travel-photo-lbl">golden hour</span></div>
+                        </div>
+                        <span class="folio">1</span>
+                    </div>
+                </div>
+                <div class="face back side-left">
+                    <div class="jp jp-graph">
+                        <div class="jp-label">02 — caffeine</div>
+                        <div class="jp-title">☕🍵 caffeine connoisseur</div>
+                        <div class="jp-sub">coffee addict AND matcha connoisseur — I have a whole home café setup for both. I will take you to the best spot in town. I know all of them.</div>
+                        <span class="coffee-emoji">☕</span>
+                        <div class="jp-sub" style="font-style:italic;margin-top:2px;">"want to grab coffee (or matcha)? I'm serious."</div>
+                        <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">let's grab a drink →</a>
+                        <span class="folio">2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="leaf">
+                <div class="face front side-right">
+                    <div class="jp">
+                        <div class="jp-label">03 — film</div>
+                        <div class="jp-title">🎬 my top 4</div>
+                        <div class="film-grid">
+                            <div class="film-card" style="background:linear-gradient(150deg,#7A4A1A,#B87030)">
+                                <div class="film-year">2019</div>
+                                <div class="film-name">Little Women</div>
+                                <div class="film-stars">★★★★★</div>
+                            </div>
+                            <div class="film-card" style="background:linear-gradient(150deg,#111,#2E2E2E)">
+                                <div class="film-year">2006</div>
+                                <div class="film-name">Devil Wears Prada</div>
+                                <div class="film-stars">★★★★★</div>
+                            </div>
+                            <div class="film-card" style="background:linear-gradient(150deg,#7A1818,#B83030)">
+                                <div class="film-year">2007</div>
+                                <div class="film-name">Ratatouille</div>
+                                <div class="film-stars">★★★★★</div>
+                            </div>
+                            <div class="film-card" style="background:linear-gradient(150deg,#18284A,#2E4878)">
+                                <div class="film-year">2016</div>
+                                <div class="film-name">La La Land</div>
+                                <div class="film-stars">★★★★★</div>
+                            </div>
+                        </div>
+                        <a href="https://letterboxd.com" target="_blank" class="lb-btn">+ add me on letterboxd</a>
+                        <span class="folio">3</span>
+                    </div>
+                </div>
+                <div class="face back side-left">
+                    <div class="jp">
+                        <div class="jp-label">04 — sports</div>
+                        <div class="jp-title">🏀 laker nation</div>
+                        <div class="jp-sub" style="margin-bottom:0">huge fan. non-negotiable.</div>
+                        <div class="lakers-badge">🏀</div>
+                        <div class="lakers-quote">"the most important thing is to try and inspire people so that they can be great at whatever they want to do."</div>
+                        <div class="lakers-attr">— Kobe Bryant</div>
+                        <span class="folio">4</span>
+                    </div>
+                </div>
+            </div>
+            <div class="leaf">
+                <div class="face front side-right">
+                    <div class="jp jp-lined">
+                        <div class="jp-label">05 — on repeat</div>
+                        <div class="jp-title">🎵 study mode</div>
+                        <div class="jp-sub">what's in my ears when I'm deep in a project</div>
+                        <div class="song-list">
+                            <div class="song-row">
+                                <div class="song-disc" style="background:linear-gradient(135deg,#C090A8,#7A3858)">♪</div>
+                                <div class="song-info">
+                                    <div class="song-name">No Ordinary Love</div>
+                                    <div class="song-artist">Sade</div>
+                                </div>
+                                <div class="song-num">01</div>
+                            </div>
+                            <div class="song-row">
+                                <div class="song-disc" style="background:linear-gradient(135deg,#5090C0,#1A4870)">♪</div>
+                                <div class="song-info">
+                                    <div class="song-name">You Were Right</div>
+                                    <div class="song-artist">Rüfüs Du Sol</div>
+                                </div>
+                                <div class="song-num">02</div>
+                            </div>
+                            <div class="song-row">
+                                <div class="song-disc" style="background:linear-gradient(135deg,#707070,#282828)">♪</div>
+                                <div class="song-info">
+                                    <div class="song-name">Summer Games</div>
+                                    <div class="song-artist">Drake</div>
+                                </div>
+                                <div class="song-num">03</div>
+                            </div>
+                        </div>
+                        <span class="folio">5</span>
+                    </div>
+                </div>
+                <div class="face back side-left">
+                    <div class="jp jp-dotted">
+                        <div class="jp-label">06 — happiest place</div>
+                        <div class="jp-title">🏰 park regular</div>
+                        <div class="jp-sub">proud Disneyland Magic Key holder — which means any free afternoon has a way of turning into a park day.</div>
+
+                        <div class="park-ticket">
+                            <div class="park-ticket-main">
+                                <span class="park-ticket-kicker">admit one · always</span>
+                                <span class="park-ticket-title">Magic Key</span>
+                                <span class="park-ticket-sub">holder · Anaheim, CA</span>
+                            </div>
+                            <div class="park-ticket-stub">
+                                <span class="park-ticket-inf">∞</span>
+                                <span class="park-ticket-stub-lbl">visits</span>
+                            </div>
+                        </div>
+
+                        <div class="fave-ride">
+                            <span class="fave-ride-lbl">🎢 favorite ride</span>
+                            <span class="fave-ride-name">Rise of the Resistance</span>
+                            <span class="fave-ride-why">because of how technologically advanced it is. the trackless ride vehicles get me every time.</span>
+                        </div>
+                        <div class="jp-sub" style="font-style:italic;text-align:center;">"ask me for park tips. I have plenty."</div>
+                        <span class="folio">6</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-spine" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <div class="journal-nav">
+        <button class="jnav" id="jnavPrev" disabled aria-label="Previous page">‹</button>
+        <div class="journal-pips">
+            <button type="button" class="j-pip" aria-label="Contents"></button>
+            <button type="button" class="j-pip" aria-label="Pages 1 and 2"></button>
+            <button type="button" class="j-pip" aria-label="Pages 3 and 4"></button>
+            <button type="button" class="j-pip" aria-label="Pages 5 and 6"></button>
+        </div>
+        <button class="jnav" id="jnavNext" aria-label="Next page">›</button>
+    </div>
 </section>
 
 <section id="contact">
