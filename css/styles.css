@@ -1033,23 +1033,70 @@ section { min-height:100vh; padding:100px 8%; }
 }
 
 /* ── Letterboxd ── */
-.film-grid {
+/* top 4, Letterboxd-profile style: posters in a row + a ranked list */
+.film-posters {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin: 14px 0 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
+    margin: 14px 0 14px;
 }
-.film-card {
-    border-radius: 6px;
-    height: 106px;
-    padding: 10px 9px 9px;
+.film-poster {
+    margin: 0;
+    aspect-ratio: 2 / 3;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,.22);
+}
+.film-poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.film-poster-placeholder {
+    display: flex;
+    align-items: flex-end;
+    padding: 6px;
+    background: linear-gradient(160deg, #3E5A4E, #1F3029);
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #F2EDE4;
+}
+.film-list {
+    list-style: none;
+    counter-reset: film;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    margin-bottom: 16px;
 }
-.film-year  { font-size: 9px; color: rgba(255,255,255,.55); margin-bottom: 2px; }
-.film-name  { font-size: 11px; font-weight: 700; color: white; line-height: 1.25; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
-.film-stars { font-size: 9px; color: #f5c518; margin-top: 3px; }
+.film-list li {
+    counter-increment: film;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(26,21,20,.08);
+    font-size: 12px;
+}
+.film-list li::before {
+    content: counter(film);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--muted);
+    width: 10px;
+}
+.film-title { flex: 1; min-width: 0; color: var(--text); font-weight: 500; }
+.film-year  { font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.film-stars { font-size: 9px; color: #E0A800; letter-spacing: 1px; }
+.visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
 .lb-btn {
     display: block;
     width: 100%;
@@ -1400,15 +1447,15 @@ section { min-height:100vh; padding:100px 8%; }
 .team-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 16px 0 20px;
+    gap: 16px;
+    margin: 26px 0 0;
 }
 .team-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 8px;
+    gap: 14px;
+    padding: 20px 16px;
+    border-radius: 10px;
     color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,.14);
 }
@@ -1418,12 +1465,12 @@ section { min-height:100vh; padding:100px 8%; }
 .team-barca  { background: linear-gradient(120deg, #004D98 0%, #0A3A75 55%, #A50044 100%); }
 .team-badge {
     flex-shrink: 0;
-    width: 40px; height: 40px;
+    width: 54px; height: 54px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 27px;
 }
 .team-lakers .team-badge { background: #FDB927; }
 .team-barca  .team-badge { background: #EDBB00; }
@@ -1435,7 +1482,7 @@ section { min-height:100vh; padding:100px 8%; }
 }
 .team-name {
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 700;
     line-height: 1.15;
 }
