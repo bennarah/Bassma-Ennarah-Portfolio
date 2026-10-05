@@ -1,2 +1,11 @@
-HANDOFF.md
+# macOS
 .DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Local-only working files
+Claude outputs/
+archive/
+HANDOFF.md

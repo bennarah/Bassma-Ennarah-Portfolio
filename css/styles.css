@@ -1,0 +1,1031 @@
+/* ============================================================
+   Bassma Ennarah — Portfolio styles
+============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --cream:       #F2EDE4;
+    --manila:      #C4B490;
+    --manila-dark: #A89468;
+    --manila-shad: #8A7050;
+    --text:        #1A1514;
+    --muted:       #7A6E66;
+
+    --c1: #F2C4CE;  --c1t: #3D1230;
+    --c2: #3B1636;  --c2t: #F2C4CE;
+    --c3: #EDE3C8;  --c3t: #2E2416;
+    --c4: #6E8F5C;  --c4t: #F2EDE4;
+    --c5: #1C3454;  --c5t: #F2EDE4;
+    --c6: #C8846A;  --c6t: #2A1410;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   PINNED SCENE  — folder + files all live here
+============================================================ */
+#scene {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #F0E8D8;
+    background-image: url('../assets/images/textures/paper.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* top meta bar */
+.meta-bar {
+    position: absolute;
+    top: 32px; left: 0; right: 0;
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    z-index: 50;
+}
+
+/* ── Folder ── */
+#folder-wrap {
+    position: absolute;
+    /* GSAP will set xPercent: -50, yPercent: -50 so we just need top/left */
+    top: 52%;
+    left: 50%;
+    z-index: 20;   /* folder sits ON TOP of files initially */
+}
+
+.folder-tab {
+    position: absolute;
+    top: -26px; left: 0;
+    width: 155px; height: 28px;
+    background: linear-gradient(180deg, #B8A472 0%, #A89060 100%);
+    border-radius: 7px 7px 0 0;
+    z-index: 5;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.35),
+        inset 0 -1px 0 rgba(0,0,0,.12);
+}
+
+/* fold edge where tab meets body */
+.folder-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(0,0,0,.12);
+}
+
+.folder-body {
+    position: relative;
+    width: 600px;
+    height: 370px;
+    background: linear-gradient(160deg,
+        #D0C09A 0%,
+        #C4B490 35%,
+        #BAA882 70%,
+        #B09C74 100%);
+    border-radius: 0 12px 12px 12px;
+    box-shadow:
+        0 2px 0 #C09030,
+        0 5px 0 #A87820,
+        0 8px 0 rgba(0,0,0,.07),
+        0 16px 60px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.5),
+        inset 0 -1px 0 rgba(0,0,0,.06);
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* subtle canvas/paper texture on folder */
+.folder-body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: .4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    mix-blend-mode: multiply;
+}
+
+/* right-edge shadow fold */
+.folder-body::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0; width: 32px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.06));
+    border-radius: 0 12px 12px 0;
+    z-index: 2;
+}
+
+.folder-anno {
+    position: absolute;
+    top: 18px; left: 20px;
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(90,65,20,.5);
+    font-weight: 500;
+}
+
+/* polaroid */
+.polaroid-wrap { position: absolute; top: 20px; right: 24px; z-index: 8; }
+
+/* shared clip position — both SVGs sit here */
+.paperclip-svg,
+.paperclip-behind {
+    position: absolute;
+    top: -20px; left: 10px;
+    width: 36px;
+}
+
+/* BACK layer: inner loop only, hidden above the polaroid top */
+.paperclip-behind {
+    z-index: 0;
+    clip-path: inset(20px 0 0 0); /* only show from polaroid top edge downward */
+}
+
+/* FRONT layer: outer loop only, no clipping — rides over the photo */
+.paperclip-svg {
+    z-index: 30;
+}
+
+.polaroid {
+    position: relative;
+    z-index: 1;
+    width: 132px;
+    background: #fff;
+    padding: 8px 8px 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    transform: rotate(4.5deg);
+}
+
+/* ensure the image doesn't escape polaroid's stacking context above the clip */
+.polaroid-img {
+    position: relative;
+    z-index: 0;
+}
+
+.polaroid-img {
+    width: 116px; height: 128px;
+    background: linear-gradient(140deg,#C9A8BE 0%,#8BA4B8 50%,#A2C0AA 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    letter-spacing: 3px; color: rgba(255,255,255,.9);
+}
+
+/* folder text */
+.folder-text { position: absolute; bottom: 36px; left: 34px; }
+
+.name-script {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 54px;
+    color: rgba(95,68,18,.72);
+    line-height: 1; margin-bottom: -6px;
+}
+
+.name-last {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 66px; font-weight: 900;
+    letter-spacing: -1.5px; color: var(--text); line-height: 1;
+}
+
+.name-tagline {
+    margin-top: 14px;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+}
+
+/* ── Nav files — absolutely positioned inside #scene ── */
+/*
+ * All five files stack at the folder's centre (58vh) to start.
+ * GSAP will animate each one upward to its final spread position.
+ * z-index is LOWER than the folder so they appear to emerge from inside it.
+ */
+.nav-file {
+    position: absolute;
+    /* initial top set by GSAP */
+    left: 7%;
+    width: 86%;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 52px;
+    text-decoration: none;
+    border-radius: 6px;
+    box-shadow: 0 6px 28px rgba(0,0,0,.12);
+    cursor: pointer;
+    z-index: 8;   /* above folder body once they emerge */
+    opacity: 0;   /* GSAP fades them in */
+    /* hover handled after scene pin ends */
+    transition: box-shadow .25s ease;
+}
+
+.nav-file:hover {
+    box-shadow: 0 14px 36px rgba(0,0,0,.18);
+}
+
+.nf-1 { background: var(--c1); color: var(--c1t); }
+.nf-2 { background: var(--c2); color: var(--c2t); }
+.nf-3 { background: var(--c3); color: var(--c3t); }
+.nf-4 { background: var(--c4); color: var(--c4t); }
+.nf-5 { background: var(--c5); color: var(--c5t); }
+.nf-6 { background: var(--c6); color: var(--c6t); }
+
+.nf-num   { font-size:11px; letter-spacing:3px; text-transform:uppercase; opacity:0; min-width:32px; }
+.nf-label { flex:1; text-align:center; font-family:'Playfair Display',serif; font-size:32px; font-weight:700; letter-spacing:-.5px; opacity:0; }
+.nf-arrow { font-size:20px; opacity:0; transition:opacity .2s,transform .2s; }
+.nav-file:hover .nf-arrow { opacity:1; transform:translateX(5px); }
+
+.nf-1 .nf-num,.nf-1 .nf-label,.nf-1 .nf-arrow { color:var(--c1t); }
+.nf-2 .nf-num,.nf-2 .nf-label,.nf-2 .nf-arrow { color:var(--c2t); }
+.nf-3 .nf-num,.nf-3 .nf-label,.nf-3 .nf-arrow { color:var(--c3t); }
+.nf-4 .nf-num,.nf-4 .nf-label,.nf-4 .nf-arrow { color:var(--c4t); }
+.nf-5 .nf-num,.nf-5 .nf-label,.nf-5 .nf-arrow { color:var(--c5t); }
+
+/* scroll hint */
+.scroll-hint {
+    position: absolute;
+    bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    color: var(--muted);
+    animation: bob 2.4s ease-in-out infinite;
+    z-index: 50;
+    text-align: center;
+}
+.scroll-hint span {
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+    color: rgba(90,65,20,.55);
+    line-height: 1;
+}
+.scroll-hint svg { opacity: .45; }
+@keyframes bob {
+    0%,100% { transform:translateX(-50%) translateY(0); }
+    50%      { transform:translateX(-50%) translateY(7px); }
+}
+
+/* ============================================================
+   CONTENT SECTIONS
+============================================================ */
+section { min-height:100vh; padding:100px 8%; }
+
+.sec-eye {
+    display:block; font-size:10.5px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--muted); margin-bottom:14px;
+}
+
+.sec-title {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(48px,7vw,78px);
+    font-weight:900; line-height:.95; margin-bottom:60px;
+}
+.sec-title em { font-style:italic; font-weight:400; }
+
+/* About */
+#about {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 72px;
+    align-items: start;
+}
+
+/* polaroid photo */
+.about-photo-wrap {
+    position: relative;
+    width: 210px;
+    margin-top: 16px;
+    flex-shrink: 0;
+}
+
+.polaroid-tape {
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(-1.5deg);
+    width: 66px; height: 22px;
+    background: rgba(242,196,206,.7);
+    border-radius: 2px;
+    z-index: 2;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.polaroid-about {
+    background: #fff;
+    padding: 10px 10px 44px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.07);
+    transform: rotate(-3deg);
+    position: relative;
+}
+
+.polaroid-about img {
+    width: 190px;
+    height: 230px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+}
+
+.polaroid-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 18px;
+    text-align: center;
+    color: var(--muted);
+    padding-top: 8px;
+}
+
+.about-doodle {
+    display: block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 15px;
+    color: var(--muted);
+    opacity: .55;
+    margin-top: 14px;
+    text-align: center;
+    transform: rotate(2deg);
+}
+
+.about-bio p { font-size:16.5px; line-height:1.85; color:var(--muted); margin-bottom:18px; }
+.about-bio p strong { color:var(--text); font-weight:600; }
+
+/* stat stickers */
+.stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 44px;
+    padding-top: 44px;
+    border-top: 1px solid rgba(0,0,0,.08);
+}
+.stats > div {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+}
+.stats > div:nth-child(1) { transform: rotate(-1.5deg); }
+.stats > div:nth-child(2) { transform: rotate(1.2deg); }
+.stats > div:nth-child(3) { transform: rotate(-0.8deg); }
+.stat-num { font-family:'Playfair Display',serif; font-size:42px; font-weight:900; line-height:1; }
+.stat-lbl { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+/* Projects */
+#projects { background:var(--c2); color:var(--c2t); }
+#projects .sec-eye   { color:rgba(242,196,206,.5); }
+#projects .sec-title { color:var(--c2t); }
+
+.proj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+
+.proj-card {
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:8px; padding:32px 28px;
+    transition:border-color .2s, background .2s;
+    position: relative;
+}
+.proj-card:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.22); }
+
+/* ── Phone mockup (Nanuk, Fitness) ── */
+.device-phone {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.phone-shell {
+    width: 108px;
+    background: #111;
+    border-radius: 28px;
+    padding: 10px 7px 14px;
+    box-shadow:
+        0 10px 32px rgba(0,0,0,.55),
+        inset 0 0 0 1px rgba(255,255,255,.09);
+    position: relative;
+}
+.phone-pill {
+    width: 34px; height: 5px;
+    background: #252525;
+    border-radius: 3px;
+    margin: 0 auto 8px;
+}
+.phone-screen {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #000;
+}
+.phone-screen img { width:100%; display:block; }
+.phone-screen-empty {
+    border-radius: 18px;
+    height: 180px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.15);
+}
+
+/* ── Desktop window mockup (Rey) ── */
+.device-window {
+    margin-bottom: 24px;
+}
+.window-shell {
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+        0 10px 32px rgba(0,0,0,.55),
+        inset 0 0 0 1px rgba(255,255,255,.09);
+}
+.window-bar {
+    background: #1e1e1e;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.traffic { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.traffic-r { background:#ff5f57; }
+.traffic-y { background:#febc2e; }
+.traffic-g { background:#28c840; }
+.window-bar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: rgba(255,255,255,.25);
+    letter-spacing: 1px;
+    margin-right: 28px;
+}
+.window-screen {
+    overflow: hidden;
+    max-height: 165px;
+}
+.window-screen img { width:100%; display:block; object-fit:cover; object-position:top left; }
+
+/* ── Rey mascot sprite ── */
+.rey-mascot {
+    position: absolute;
+    bottom: -18px;
+    right: 22px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    z-index: 20;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,.3));
+    animation: rey-bounce 1.8s ease-in-out infinite;
+}
+@keyframes rey-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-5px); }
+}
+
+/* in-progress badge */
+.proj-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.13);
+}
+.proj-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--c1);
+    animation: blink 1.8s ease-in-out infinite;
+}
+@keyframes blink {
+    0%,100% { opacity:1; }
+    50%      { opacity:0.25; }
+}
+
+.proj-num  { font-size:10px; letter-spacing:3px; text-transform:uppercase; opacity:.35; margin-bottom:18px; }
+.proj-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:12px; }
+.proj-desc { font-size:14px; line-height:1.75; opacity:.68; margin-bottom:24px; }
+
+.tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+.tag  { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding:4px 12px; border:1px solid rgba(255,255,255,.18); border-radius:20px; opacity:.7; }
+
+.proj-links { display:flex; gap:18px; }
+.proj-link  { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:inherit; text-decoration:none; opacity:.55; transition:opacity .2s, border-color .2s; border-bottom:1px solid transparent; }
+.proj-link:hover { opacity:1; border-bottom-color:currentColor; }
+
+/* Skills — iMac + iOS screen */
+#skills { background:var(--c3); color:var(--c3t); }
+#skills .sec-title { color:var(--c3t); }
+
+.desktop-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* iMac image wrapper */
+.imac-wrap {
+    position: relative;
+    width: min(740px, 100%);
+    filter: drop-shadow(0 32px 64px rgba(0,0,0,.22));
+}
+.imac-img {
+    width: 100%;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Screen overlay — matches the transparent cutout in Mac.png */
+.imac-screen {
+    position: absolute;
+    left: 4.29%;
+    top: 5.2%;
+    width: 91.43%;
+    height: 65.5%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* iOS wallpaper — very light pastel pink */
+.ios-wallpaper {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #fce8f2 0%, #f8d4e8 40%, #f2c0dc 80%, #f8d4e8 100%);
+    z-index: 0;
+}
+.ios-wallpaper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 30% 30%, rgba(255,255,255,.5) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 40% at 75% 70%, rgba(240,160,200,.25) 0%, transparent 65%);
+}
+
+/* iOS status bar */
+.ios-status-bar {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 18px 3px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(80,30,55,.8);
+    flex-shrink: 0;
+}
+.ios-time { font-size: 12px; font-weight: 700; letter-spacing: .3px; }
+.ios-status-right { display:flex; gap:5px; align-items:center; }
+
+/* iOS scrollable icon grid */
+.ios-icons-area {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 24px 6px;
+    scrollbar-width: none;
+}
+.ios-icons-area::-webkit-scrollbar { display: none; }
+
+.ios-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px 6px;
+}
+
+/* iOS app icon */
+.ios-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: default;
+}
+.ios-icon-img {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    transition: transform .15s;
+}
+.ios-icon:active .ios-icon-img { transform: scale(.9); }
+.ios-icon-img i { line-height: 1; }
+
+.ios-icon-name {
+    font-size: 8.5px;
+    font-weight: 600;
+    color: rgba(80,30,55,.85);
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: .1px;
+    max-width: 56px;
+}
+
+/* iOS dock */
+.ios-dock {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 22px 8px;
+    background: rgba(255,255,255,.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,.5);
+    flex-shrink: 0;
+}
+.dock-ios-icon {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    background: rgba(255,255,255,.55);
+    border: 1px solid rgba(255,255,255,.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: transform .18s;
+    cursor: default;
+}
+.dock-ios-icon i { line-height: 1; }
+.dock-ios-icon:hover { transform: translateY(-5px) scale(1.12); }
+
+/* Experience */
+#experience { background:var(--c4); color:var(--c4t); }
+#experience .sec-eye   { color:rgba(242,237,228,.5); }
+#experience .sec-title { color:var(--c4t); }
+
+.timeline { position:relative; padding-left:36px; }
+.timeline::before { content:''; position:absolute; left:0; top:8px; bottom:0; width:1px; background:rgba(255,255,255,.25); }
+
+.tl-item { position:relative; margin-bottom:56px; }
+.tl-item::before { content:''; position:absolute; left:-40px; top:10px; width:9px; height:9px; border-radius:50%; background:white; box-shadow:0 0 0 3px rgba(255,255,255,.2); }
+
+.tl-date    { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; opacity:.6; margin-bottom:8px; }
+.tl-role    { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; margin-bottom:4px; }
+.tl-company { font-size:14px; opacity:.65; margin-bottom:12px; }
+.tl-desc    { font-size:15px; line-height:1.8; opacity:.78; max-width:580px; }
+
+/* ============================================================
+   BEYOND THE TERMINAL — misc / personality section
+============================================================ */
+#beyond {
+    background: #EDE8DC;
+    padding: 100px 0 70px;
+    overflow: hidden;
+}
+#beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: 80px; }
+#beyond .sec-title { color: var(--text); padding: 0 80px; margin-bottom: 16px; }
+.beyond-blurb {
+    padding: 0 80px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 44px;
+}
+
+/* ── Journal fan ── */
+/* Journal fan — centered in section */
+.journal-fan-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*
+ * Pages all share the same left edge (x=0) as their pivot.
+ * transform-origin: left center on each page means every rotation
+ * fans the page's right side outward — exactly like a journal spine.
+ * Stage is wide enough that the front page (300 px) sits centered
+ * with room on the right for fanned pages to peek out.
+ */
+.journal-stage {
+    position: relative;
+    perspective: 1100px;
+    perspective-origin: left center;
+    width: 480px;   /* 300 front + ~180 fan overhang */
+    height: 420px;  /* must match .jp height exactly */
+}
+.j-page {
+    display: none;
+    position: absolute;
+    top: 0; left: 0;
+    width: 300px;
+    height: 420px;
+    /* All pages pivot around the LEFT spine edge */
+    transform-origin: left center;
+    transition: transform 0.48s cubic-bezier(0.4,0,0.2,1),
+                opacity  0.38s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    cursor: pointer;
+}
+.journal-fan-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 28px;
+}
+.jnav {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(26,21,20,.18);
+    background: rgba(255,255,255,.6);
+    color: var(--muted);
+    font-size: 22px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, transform .15s, opacity .2s;
+    line-height: 1;
+}
+.jnav:hover:not(:disabled) {
+    background: rgba(255,255,255,.95);
+    color: var(--text);
+    transform: scale(1.08);
+}
+.jnav:disabled { opacity: .22; cursor: default; transform: none; }
+.journal-pips {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.j-pip {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(26,21,20,.18);
+    cursor: pointer;
+    transition: background .25s, transform .25s;
+}
+.j-pip.active { background: rgba(26,21,20,.55); transform: scale(1.4); }
+.j-pip:hover:not(.active) { background: rgba(26,21,20,.35); }
+
+/* Base page card — ALL pages are identical dimensions */
+.jp {
+    width: 300px;
+    height: 420px;   /* matches .j-page height */
+    overflow: hidden;
+    background: #FAF7F1;
+    border-radius: 10px;
+    padding: 26px 22px 24px;
+    position: relative;
+    box-shadow: 2px 4px 18px rgba(0,0,0,.09), 0 1px 0 rgba(0,0,0,.04);
+}
+.jp-lined {
+    background-image: repeating-linear-gradient(
+        transparent, transparent 27px,
+        rgba(180,160,130,.14) 27px, rgba(180,160,130,.14) 28px
+    );
+}
+.jp-graph {
+    background-image:
+        linear-gradient(rgba(180,160,130,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180,160,130,.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+.jp-label {
+    font-size: 9.5px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.jp-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.15;
+}
+.jp-sub {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--muted);
+}
+
+/* ── Travel ── */
+.travel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 16px;
+}
+.travel-photo {
+    aspect-ratio: 4/3;
+    background: #DDD6CC;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    gap: 4px;
+}
+.travel-photo:nth-child(odd)  { transform: rotate(-1.2deg); }
+.travel-photo:nth-child(even) { transform: rotate(1deg); }
+.travel-photo-lbl {
+    font-family: 'Dancing Script', cursive;
+    font-size: 10px;
+    color: rgba(26,21,20,.45);
+}
+
+/* ── Coffee ── */
+.coffee-emoji {
+    font-size: 64px;
+    text-align: center;
+    display: block;
+    margin: 16px 0 12px;
+    line-height: 1;
+}
+.coffee-cta {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ── Letterboxd ── */
+.film-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0 16px;
+}
+.film-card {
+    border-radius: 6px;
+    height: 106px;
+    padding: 10px 9px 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.film-year  { font-size: 9px; color: rgba(255,255,255,.55); margin-bottom: 2px; }
+.film-name  { font-size: 11px; font-weight: 700; color: white; line-height: 1.25; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+.film-stars { font-size: 9px; color: #f5c518; margin-top: 3px; }
+.lb-btn {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    background: #1a1a1a;
+    color: white;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* ── Lakers ── */
+.lakers-badge {
+    width: 78px; height: 78px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #552583, #FDB927);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    margin: 18px auto 16px;
+    box-shadow: 0 6px 20px rgba(85,37,131,.28);
+}
+.lakers-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    opacity: .85;
+}
+.lakers-attr {
+    text-align: center;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* ── Songs ── */
+.song-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+.song-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 8px 10px;
+    background: rgba(0,0,0,.04);
+    border-radius: 8px;
+}
+.song-disc {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.song-info   { flex: 1; min-width: 0; }
+.song-name   { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+.song-artist { font-size: 10px; color: var(--muted); }
+.song-num    { font-size: 10px; font-weight: 600; color: rgba(26,21,20,.22); flex-shrink: 0; }
+
+/* Contact */
+#contact { background:var(--c5); color:var(--c5t); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#contact .sec-eye { color:rgba(242,237,228,.45); }
+
+.contact-title { font-family:'Playfair Display',serif; font-size:clamp(60px,9vw,108px); font-weight:900; line-height:.92; color:white; margin-bottom:28px; }
+.contact-sub   { font-size:17px; line-height:1.75; opacity:.6; max-width:460px; margin-bottom:52px; }
+
+.contact-links { display:flex; gap:28px; flex-wrap:wrap; justify-content:center; }
+.contact-link  { color:white; text-decoration:none; font-size:12px; letter-spacing:2.5px; text-transform:uppercase; padding-bottom:4px; border-bottom:1px solid rgba(255,255,255,.3); transition:border-color .2s,opacity .2s; opacity:.75; }
+.contact-link:hover { border-bottom-color:white; opacity:1; }
+
+/* Nav dots */
+#nav-dots {
+    position:fixed; right:24px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:9px;
+    z-index:1000; opacity:0; transition:opacity .4s;
+}
+#nav-dots.vis { opacity:1; }
+
+.dot { position:relative; width:7px; height:7px; border-radius:50%; background:rgba(26,21,20,.22); cursor:pointer; transition:transform .25s,background .25s; }
+.dot.active { transform:scale(1.6); background:rgba(26,21,20,.65); }
+.dot-l       { background:rgba(255,255,255,.25); }
+.dot-l.active{ background:rgba(255,255,255,.85); }
+
+/* Dot tooltips */
+.dot-tip {
+    position: absolute;
+    right: calc(100% + 13px);
+    top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    background: rgba(26,21,20,.82);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 4px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .18s, transform .18s;
+}
+.dot-tip::after {
+    content: '';
+    position: absolute;
+    left: 100%; top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-left-color: rgba(26,21,20,.82);
+}
+.dot:hover .dot-tip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}

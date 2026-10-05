@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bassma Ennarah — CS student at Cal State Fullerton. Projects, skills, experience, and a little of everything else.">
+    <title>Bassma Ennarah — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Nav dots -->
+<nav id="nav-dots">
+    <div class="dot" data-sec="scene"><span class="dot-tip">Home</span></div>
+    <div class="dot" data-sec="about"><span class="dot-tip">About</span></div>
+    <div class="dot" data-sec="projects"><span class="dot-tip">Projects</span></div>
+    <div class="dot" data-sec="skills"><span class="dot-tip">Skills</span></div>
+    <div class="dot" data-sec="experience"><span class="dot-tip">Experience</span></div>
+    <div class="dot" data-sec="beyond"><span class="dot-tip">Beyond</span></div>
+    <div class="dot" data-sec="contact"><span class="dot-tip">Contact</span></div>
+</nav>
+
+<!-- ============================================================
+     PINNED SCENE  (folder + files animate here)
+============================================================ -->
+<div id="scene">
+
+    <div class="meta-bar">
+        <span>CS Student · Software Engineer</span>
+        <span>2024 — Present</span>
+    </div>
+
+    <!-- ── Nav files ──
+         They all start stacked at the folder centre.
+         GSAP moves each one upward to its final band position.
+         Order in DOM = stack order: nf-5 is deepest (rendered first / behind),
+         nf-1 is on top (rendered last, emerges first).
+    -->
+    <a href="#beyond"     class="nav-file nf-6" id="f6">
+        <span class="nf-num">06</span><span class="nf-label">Beyond</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#contact"    class="nav-file nf-5" id="f5">
+        <span class="nf-num">05</span><span class="nf-label">Contact</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#experience" class="nav-file nf-4" id="f4">
+        <span class="nf-num">04</span><span class="nf-label">Experience</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#skills"     class="nav-file nf-3" id="f3">
+        <span class="nf-num">03</span><span class="nf-label">Skills</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#projects"   class="nav-file nf-2" id="f2">
+        <span class="nf-num">02</span><span class="nf-label">Projects</span><span class="nf-arrow">→</span>
+    </a>
+    <a href="#about"      class="nav-file nf-1" id="f1">
+        <span class="nf-num">01</span><span class="nf-label">About Me</span><span class="nf-arrow">→</span>
+    </a>
+
+    <!-- ── Folder ── -->
+    <div id="folder-wrap">
+        <div class="folder-tab"></div>
+
+        <div class="folder-body">
+            <span class="folder-anno">Portfolio · v1.0</span>
+
+            <div class="polaroid-wrap">
+
+                <!-- BEHIND layer: inner loop only — slides behind the photo -->
+                <svg class="paperclip-behind" viewBox="0 0 36 88" fill="none">
+                    <path d="M20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
+                          stroke="rgba(0,0,0,.18)" stroke-width="4" stroke-linecap="round" fill="none"
+                          transform="translate(0.6,1.2)"/>
+                    <path d="M20 10 C13 10,9 16,9 23 L9 60 C9 65,13 69,18 69 C23 69,27 65,27 60 L27 30"
+                          stroke="#8A8478" stroke-width="3" stroke-linecap="round" fill="none"/>
+                </svg>
+
+                <!-- FRONT layer: outer loop only — rides over the photo -->
+                <svg class="paperclip-svg" viewBox="0 0 36 88" fill="none">
+                    <defs>
+                        <linearGradient id="clip-grad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stop-color="#7A7468"/>
+                            <stop offset="30%"  stop-color="#C8C2B0"/>
+                            <stop offset="55%"  stop-color="#E8E0CC"/>
+                            <stop offset="75%"  stop-color="#B0A890"/>
+                            <stop offset="100%" stop-color="#888078"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- shadow -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="rgba(0,0,0,.22)" stroke-width="4.5" stroke-linecap="round" fill="none"
+                          transform="translate(0.8,1.5)"/>
+                    <!-- metallic body -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="url(#clip-grad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <!-- specular highlight -->
+                    <path d="M18 5 C9 5,3 11,3 20 L3 64 C3 76,10 83,20 83 C30 83,33 76,33 64 L33 22"
+                          stroke="rgba(255,255,255,.32)" stroke-width="1" stroke-linecap="round" fill="none"
+                          transform="translate(-0.4,-0.4)"/>
+                </svg>
+
+                <div class="polaroid">
+                    <img class="polaroid-img" src="assets/images/headshot.jpg" alt="Bassma Ennarah" style="object-fit:cover;">
+                </div>
+            </div>
+
+            <div class="folder-text">
+                <span class="name-script">Bassma</span>
+                <span class="name-last">ENNARAH</span>
+                <p class="name-tagline">Computer Science · Builder · Creator</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- scroll hint -->
+    <div class="scroll-hint" aria-hidden="true">
+        <span>scroll to open ↓</span>
+    </div>
+
+</div><!-- /#scene -->
+
+
+<!-- ============================================================
+     CONTENT SECTIONS
+============================================================ -->
+<section id="about">
+    <div class="about-photo-wrap">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-about">
+            <img src="assets/images/headshot.jpg" alt="Bassma Ennarah">
+            <p class="polaroid-caption">bassma :)</p>
+        </div>
+        <span class="about-doodle">← that's me</span>
+    </div>
+    <div>
+        <span class="sec-eye">01 — About</span>
+        <h2 class="sec-title">About <em>me</em></h2>
+        <div class="about-bio">
+            <p>I'm a CS student at Cal State Fullerton, graduating December 2026. I build web and mobile apps — mostly with React, TypeScript, Python, and Firebase — and I care a lot about <strong>making things that actually feel good to use.</strong></p>
+            <p>I also run a 400+ member organization at CSUF for women in business and STEM. It's taught me that <strong>shipping under pressure, coordinating across people, and caring about the end user</strong> matter just as much as the code itself.</p>
+            <p>Right now I'm working on Rey (an AI terminal companion for beginners) and Nanuk (a sustainability scanner with a polar bear). Both in progress. Both things I genuinely wanted to exist.</p>
+        </div>
+        <div class="stats">
+            <div><div class="stat-num">27+</div><div class="stat-lbl">Repos</div></div>
+            <div><div class="stat-num">400+</div><div class="stat-lbl">Members led</div></div>
+            <div><div class="stat-num">Dec '26</div><div class="stat-lbl">Graduating</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <span class="sec-eye">02 — Projects</span>
+    <h2 class="sec-title">Selected <em>work</em></h2>
+    <div class="proj-grid">
+        <div class="proj-card">
+            <div class="device-window">
+                <div class="window-shell">
+                    <div class="window-bar">
+                        <div class="traffic traffic-r"></div>
+                        <div class="traffic traffic-y"></div>
+                        <div class="traffic traffic-g"></div>
+                        <span class="window-bar-title">Rey — Terminal Assistant</span>
+                    </div>
+                    <div class="window-screen">
+                        <img src="assets/images/projects/rey-demo.png" alt="Rey Terminal Assistant">
+                    </div>
+                </div>
+            </div>
+            <span class="proj-badge">In Progress</span>
+            <div class="proj-num">01</div>
+            <div class="proj-name">Rey</div>
+            <div class="proj-desc">An AI-powered desktop companion for beginner programmers. Ask Rey any terminal question in plain English and get a clear answer — no Stack Overflow rabbit holes required.</div>
+            <div class="tags"><span class="tag">Python</span><span class="tag">AI</span><span class="tag">macOS</span><span class="tag">Desktop</span></div>
+            <div class="proj-links"><a href="https://github.com/bennarah/Rey-Terminal-Assistant" class="proj-link" target="_blank">GitHub ↗</a></div>
+            <div class="rey-mascot"></div>
+        </div>
+        <div class="proj-card">
+            <div class="device-phone">
+                <div class="phone-shell">
+                    <div class="phone-pill"></div>
+                    <div class="phone-screen">
+                        <img src="assets/images/projects/nanuk-app.jpg" alt="Nanuk App">
+                    </div>
+                </div>
+            </div>
+            <span class="proj-badge">In Progress</span>
+            <div class="proj-num">02</div>
+            <div class="proj-name">Nanuk</div>
+            <div class="proj-desc">Scan a product barcode and instantly see its sustainability impact — scored, explained, and tied to a polar bear mascot whose Arctic home depends on your choices. Built at FullyHacks 2026.</div>
+            <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">AI</span><span class="tag">Mobile</span></div>
+            <div class="proj-links"><a href="https://github.com/nathanchamorro1/fullyhacks-2026" class="proj-link" target="_blank">GitHub ↗</a></div>
+        </div>
+        <div class="proj-card">
+            <div class="device-phone">
+                <div class="phone-shell">
+                    <div class="phone-pill"></div>
+                    <div class="phone-screen"><img src="assets/images/projects/fitness-app.png" alt="Fitness App"></div>
+                </div>
+            </div>
+            <div class="proj-num">03</div>
+            <div class="proj-name">Fitness App</div>
+            <div class="proj-desc">AI-powered mobile app helping users reach their health goals through personalized workout insights. Led as Team Lead — owned sprint planning, testing, and frontend delivery end-to-end.</div>
+            <div class="tags"><span class="tag">React Native</span><span class="tag">Firebase</span><span class="tag">AI</span><span class="tag">Agile</span></div>
+            <div class="proj-links"><a href="https://github.com/bennarah/fitness-app" class="proj-link" target="_blank">GitHub ↗</a></div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <span class="sec-eye">03 — Skills</span>
+    <h2 class="sec-title">Tech <em>stack</em></h2>
+
+    <div class="desktop-wrap">
+        <div class="imac-wrap">
+            <img class="imac-img" src="assets/images/mockups/imac.png" alt="iMac">
+
+            <!-- iOS screen overlay — sits inside the transparent screen cutout -->
+            <div class="imac-screen">
+
+                <!-- Wallpaper -->
+                <div class="ios-wallpaper"></div>
+
+                <!-- Status bar -->
+                <div class="ios-status-bar">
+                    <span class="ios-time">9:41</span>
+                    <span class="ios-status-right">
+                        <!-- Signal bars -->
+                        <svg width="17" height="12" viewBox="0 0 17 12" fill="rgba(80,30,55,.8)" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0"   y="6"  width="3" height="6"  rx="0.8"/>
+                            <rect x="4.5" y="4"  width="3" height="8"  rx="0.8"/>
+                            <rect x="9"   y="2"  width="3" height="10" rx="0.8"/>
+                            <rect x="13.5" y="0" width="3" height="12" rx="0.8"/>
+                        </svg>
+                        <!-- Wi-Fi -->
+                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 9.5a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z" fill="rgba(80,30,55,.8)"/>
+                            <path d="M4.2 6.8C5.2 5.7 6.5 5 8 5s2.8.7 3.8 1.8" stroke="rgba(80,30,55,.8)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+                            <path d="M1 3.8C3 1.5 5.4 0 8 0s5 1.5 7 3.8" stroke="rgba(80,30,55,.8)" stroke-width="1.3" stroke-linecap="round" fill="none" opacity=".5"/>
+                        </svg>
+                        <!-- Battery -->
+                        <svg width="25" height="12" viewBox="0 0 25 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="rgba(80,30,55,.5)"/>
+                            <rect x="1.5" y="1.5" width="19" height="9" rx="2" fill="rgba(80,30,55,.8)"/>
+                            <path d="M23 4v4c.9-.4 1.5-1.1 1.5-2s-.6-1.6-1.5-2z" fill="rgba(80,30,55,.4)"/>
+                        </svg>
+                    </span>
+                </div>
+
+                <!-- App icon grid -->
+                <div class="ios-icons-area">
+                    <div class="ios-icons-grid">
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="ios-icon-name">React</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-typescript-plain colored"></i></div>
+                            <div class="ios-icon-name">TypeScript</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-python-plain colored"></i></div>
+                            <div class="ios-icon-name">Python</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-cplusplus-plain colored"></i></div>
+                            <div class="ios-icon-name">C++</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-react-original colored"></i></div>
+                            <div class="ios-icon-name">React Native</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-flutter-plain colored"></i></div>
+                            <div class="ios-icon-name">Flutter</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-html5-plain colored"></i></div>
+                            <div class="ios-icon-name">HTML / CSS</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-mysql-plain colored"></i></div>
+                            <div class="ios-icon-name">SQL</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-firebase-plain colored"></i></div>
+                            <div class="ios-icon-name">Firebase</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-git-plain colored"></i></div>
+                            <div class="ios-icon-name">Git</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-figma-plain colored"></i></div>
+                            <div class="ios-icon-name">Figma</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-vscode-plain colored"></i></div>
+                            <div class="ios-icon-name">VS Code</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-linux-plain colored"></i></div>
+                            <div class="ios-icon-name">Linux</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-dart-plain colored"></i></div>
+                            <div class="ios-icon-name">Dart</div>
+                        </div>
+                        <div class="ios-icon">
+                            <div class="ios-icon-img"><i class="devicon-github-original colored"></i></div>
+                            <div class="ios-icon-name">GitHub</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iOS dock -->
+                <div class="ios-dock">
+                    <div class="dock-ios-icon"><i class="devicon-github-original colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-vscode-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-figma-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-git-plain colored"></i></div>
+                    <div class="dock-ios-icon"><i class="devicon-python-plain colored"></i></div>
+                </div>
+
+            </div><!-- /.imac-screen -->
+        </div><!-- /.imac-wrap -->
+    </div><!-- /.desktop-wrap -->
+</section>
+
+<section id="experience">
+    <span class="sec-eye">04 — Experience</span>
+    <h2 class="sec-title">Where I've <em>been</em></h2>
+    <div class="timeline">
+        <div class="tl-item">
+            <div class="tl-date">June 2025 — Present</div>
+            <div class="tl-role">Team Coordinator</div>
+            <div class="tl-company">Women in Business & STEM, CSUF · Fullerton, CA</div>
+            <div class="tl-desc">Organizing schedules, events, and operations for a 400+ member organization. Leading communications, newsletters, and member engagement — and making sure nothing falls through the cracks.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-date">July 2025 — August 2025</div>
+            <div class="tl-role">Project Management Intern</div>
+            <div class="tl-company">SELECT</div>
+            <div class="tl-desc">Collaborated with the PM and engineering team to deliver a client project on schedule and within scope. Contributed to sprint planning, task estimation, and milestone tracking in an Agile environment.</div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-date">December 2024 — June 2025</div>
+            <div class="tl-role">Leadership Team Intern</div>
+            <div class="tl-company">Women in Business & STEM, CSUF · Fullerton, CA</div>
+            <div class="tl-desc">Supported strategic planning and club-wide leadership initiatives. Analyzed organizational growth opportunities and implemented action plans — recognized as the sole Outstanding Intern at program end.</div>
+        </div>
+    </div>
+</section>
+
+<section id="beyond">
+    <span class="sec-eye">beyond the terminal</span>
+    <h2 class="sec-title">Not on my <em>résumé</em></h2>
+
+    <p class="beyond-blurb">There's a lot that doesn't make it onto a résumé — the things that actually make you <em>you</em>. Here's a little window into mine: the places I wander to, the drinks I'm always making at home or ordering out, the films I rewatch on nights I need them, and the things I'll always care about a little too much.</p>
+
+    <div class="journal-fan-wrap">
+        <div class="journal-stage" id="journalStage">
+
+                <!-- Page 1 — Travel -->
+                <div class="jp jp-lined j-page">
+                    <div class="jp-label">01 — hobby</div>
+                    <div class="jp-title">✈️ wanderlust</div>
+                    <div class="jp-sub">my biggest hobby — I collect cities the way others collect stamps. always planning the next trip.</div>
+                    <div class="travel-grid">
+                        <div class="travel-photo">🏙️<span class="travel-photo-lbl">city life</span></div>
+                        <div class="travel-photo">🌊<span class="travel-photo-lbl">ocean views</span></div>
+                        <div class="travel-photo">🗺️<span class="travel-photo-lbl">getting lost</span></div>
+                        <div class="travel-photo">🌅<span class="travel-photo-lbl">golden hour</span></div>
+                    </div>
+                </div>
+
+                <!-- Page 2 — Coffee & Matcha -->
+                <div class="jp jp-graph j-page">
+                    <div class="jp-label">02 — caffeine</div>
+                    <div class="jp-title">☕🍵 caffeine connoisseur</div>
+                    <div class="jp-sub">coffee addict AND matcha connoisseur — I have a whole home café setup for both. I will take you to the best spot in town. I know all of them.</div>
+                    <span class="coffee-emoji">☕</span>
+                    <div class="jp-sub" style="font-style:italic;margin-top:2px;">"want to grab coffee (or matcha)? I'm serious."</div>
+                    <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">let's grab a drink →</a>
+                </div>
+
+                <!-- Page 3 — Letterboxd -->
+                <div class="jp j-page">
+                    <div class="jp-label">03 — film</div>
+                    <div class="jp-title">🎬 my top 4</div>
+                    <div class="film-grid">
+                        <div class="film-card" style="background:linear-gradient(150deg,#7A4A1A,#B87030)">
+                            <div class="film-year">2019</div>
+                            <div class="film-name">Little Women</div>
+                            <div class="film-stars">★★★★★</div>
+                        </div>
+                        <div class="film-card" style="background:linear-gradient(150deg,#111,#2E2E2E)">
+                            <div class="film-year">2006</div>
+                            <div class="film-name">Devil Wears Prada</div>
+                            <div class="film-stars">★★★★★</div>
+                        </div>
+                        <div class="film-card" style="background:linear-gradient(150deg,#7A1818,#B83030)">
+                            <div class="film-year">2007</div>
+                            <div class="film-name">Ratatouille</div>
+                            <div class="film-stars">★★★★★</div>
+                        </div>
+                        <div class="film-card" style="background:linear-gradient(150deg,#18284A,#2E4878)">
+                            <div class="film-year">2016</div>
+                            <div class="film-name">La La Land</div>
+                            <div class="film-stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <a href="https://letterboxd.com" target="_blank" class="lb-btn">+ add me on letterboxd</a>
+                </div>
+
+                <!-- Page 4 — Lakers -->
+                <div class="jp j-page">
+                    <div class="jp-label">04 — sports</div>
+                    <div class="jp-title">🏀 laker nation</div>
+                    <div class="jp-sub" style="margin-bottom:0">huge fan. non-negotiable.</div>
+                    <div class="lakers-badge">🏀</div>
+                    <div class="lakers-quote">"the most important thing is to try and inspire people so that they can be great at whatever they want to do."</div>
+                    <div class="lakers-attr">— Kobe Bryant</div>
+                </div>
+
+                <!-- Page 5 — Study songs -->
+                <div class="jp jp-lined j-page">
+                    <div class="jp-label">05 — on repeat</div>
+                    <div class="jp-title">🎵 study mode</div>
+                    <div class="jp-sub">what's in my ears when I'm deep in a project</div>
+                    <div class="song-list">
+                        <div class="song-row">
+                            <div class="song-disc" style="background:linear-gradient(135deg,#C090A8,#7A3858)">♪</div>
+                            <div class="song-info">
+                                <div class="song-name">No Ordinary Love</div>
+                                <div class="song-artist">Sade</div>
+                            </div>
+                            <div class="song-num">01</div>
+                        </div>
+                        <div class="song-row">
+                            <div class="song-disc" style="background:linear-gradient(135deg,#5090C0,#1A4870)">♪</div>
+                            <div class="song-info">
+                                <div class="song-name">You Were Right</div>
+                                <div class="song-artist">Rüfüs Du Sol</div>
+                            </div>
+                            <div class="song-num">02</div>
+                        </div>
+                        <div class="song-row">
+                            <div class="song-disc" style="background:linear-gradient(135deg,#707070,#282828)">♪</div>
+                            <div class="song-info">
+                                <div class="song-name">Summer Games</div>
+                                <div class="song-artist">Drake</div>
+                            </div>
+                            <div class="song-num">03</div>
+                        </div>
+                    </div>
+                </div>
+
+        </div><!-- /.journal-stage -->
+
+        <div class="journal-fan-nav">
+            <button class="jnav" id="jnavPrev" disabled aria-label="Previous page">‹</button>
+            <div class="journal-pips">
+                <div class="j-pip"></div>
+                <div class="j-pip"></div>
+                <div class="j-pip"></div>
+                <div class="j-pip"></div>
+                <div class="j-pip"></div>
+            </div>
+            <button class="jnav" id="jnavNext" aria-label="Next page">›</button>
+        </div>
+
+    </div><!-- /.journal-fan-wrap -->
+</section>
+
+<section id="contact">
+    <span class="sec-eye">05 — Contact</span>
+    <h1 class="contact-title">Let's<br><em>talk.</em></h1>
+    <p class="contact-sub">I'm open to internships, collaborations, and interesting conversations. If you have a project or opportunity, my inbox is open.</p>
+    <div class="contact-links">
+        <a href="mailto:bassma.ennarah@gmail.com"          class="contact-link">Email</a>
+        <a href="https://linkedin.com/in/bassma-ennarah" class="contact-link" target="_blank">LinkedIn</a>
+        <a href="https://github.com/bennarah"            class="contact-link" target="_blank">GitHub</a>
+        <a href="#"                                      class="contact-link">Resume ↓</a>
+    </div>
+</section>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script src="js/main.js"></script>
+<script src="js/rey-sprite.js"></script>
+<script src="js/journal.js"></script>
+
+</body>
+</html>
