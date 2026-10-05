@@ -377,19 +377,30 @@
                         <li><button type="button" data-spread="2"><span>🏀 laker nation</span><span class="toc-dots"></span><span>4</span></button></li>
                         <li><button type="button" data-spread="3"><span>🎵 study mode</span><span class="toc-dots"></span><span>5</span></button></li>
                         <li><button type="button" data-spread="3"><span>🏰 park regular</span><span class="toc-dots"></span><span>6</span></button></li>
+                        <li><button type="button" data-spread="3"><span>📸 park days</span><span class="toc-dots"></span><span>7</span></button></li>
                     </ol>
                     <div class="flyleaf-hint">turn the page →</div>
                 </div>
             </div>
 
-            <!-- Right base page: last page of the journal -->
+            <!-- Right base page: Disneyland photos (continues page 6) -->
             <div class="book-page side-right">
-                <div class="jp jp-lined">
-                    <div class="jp-label">07 — the end (for now)</div>
-                    <div class="jp-title">✎ to be continued…</div>
-                    <div class="jp-sub">I'm always adding pages. got a coffee spot, a film, or a ride I need to try? send it my way.</div>
-                    <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">bassma.ennarah@gmail.com</a>
-                    <div class="outro-sign">— bassma</div>
+                <div class="jp jp-dotted">
+                    <div class="jp-label">07 — happiest place, cont.</div>
+                    <div class="jp-title">📸 park days</div>
+                    <div class="park-photos">
+                        <figure class="park-polaroid tilt-l">
+                            <span class="tape" aria-hidden="true"></span>
+                            <img class="zoomable" src="assets/images/beyond/disney-galaxys-edge.jpg" alt="Bassma in Minnie ears with an iced coffee at Disneyland" loading="lazy">
+                            <figcaption>coffee break ☕</figcaption>
+                        </figure>
+                        <figure class="park-polaroid tilt-r">
+                            <span class="tape" aria-hidden="true"></span>
+                            <img class="zoomable" src="assets/images/beyond/disney-toontown.jpg" alt="Bassma in pumpkin ears on a phone in Toontown" loading="lazy">
+                            <figcaption>toontown, halloween time 🎃</figcaption>
+                        </figure>
+                    </div>
+                    <div class="park-signoff">to be continued… ✎</div>
                     <span class="folio">7</span>
                 </div>
             </div>
@@ -402,10 +413,10 @@
                         <div class="jp-title">✈️ wanderlust</div>
                         <div class="jp-sub">my biggest hobby — I collect cities the way others collect stamps. always planning the next trip.</div>
                         <div class="travel-grid">
-                            <div class="travel-photo">🏙️<span class="travel-photo-lbl">city life</span></div>
-                            <div class="travel-photo">🌊<span class="travel-photo-lbl">ocean views</span></div>
-                            <div class="travel-photo">🗺️<span class="travel-photo-lbl">getting lost</span></div>
-                            <div class="travel-photo">🌅<span class="travel-photo-lbl">golden hour</span></div>
+                            <figure class="travel-photo"><img class="zoomable" src="assets/images/beyond/travel-barcelona.jpg" alt="Bassma in front of the Sagrada Família in Barcelona" loading="lazy" style="object-position:50% 65%"><figcaption class="travel-photo-lbl">barcelona</figcaption></figure>
+                            <figure class="travel-photo"><img class="zoomable" src="assets/images/beyond/travel-giza.jpg" alt="Bassma with the Pyramids of Giza behind her" loading="lazy" style="object-position:50% 70%"><figcaption class="travel-photo-lbl">giza</figcaption></figure>
+                            <figure class="travel-photo"><img class="zoomable" src="assets/images/beyond/travel-new-york.jpg" alt="Bassma on Fifth Avenue in New York City" loading="lazy" style="object-position:50% 66%"><figcaption class="travel-photo-lbl">new york</figcaption></figure>
+                            <figure class="travel-photo"><img class="zoomable" src="assets/images/beyond/travel-paris.jpg" alt="Bassma on a bridge over the Seine with the Eiffel Tower" loading="lazy" style="object-position:50% 39%"><figcaption class="travel-photo-lbl">paris</figcaption></figure>
                         </div>
                         <span class="folio">1</span>
                     </div>
@@ -542,6 +553,15 @@
             <button type="button" class="j-pip" aria-label="Pages 5 and 6"></button>
         </div>
         <button class="jnav" id="jnavNext" aria-label="Next page">›</button>
+    </div>
+
+    <!-- Full-size photo viewer for journal photos -->
+    <div class="photo-lightbox" id="photoLightbox" hidden>
+        <button type="button" class="photo-lightbox-close" aria-label="Close photo">×</button>
+        <figure>
+            <img id="photoLightboxImg" src="" alt="">
+            <figcaption id="photoLightboxCap"></figcaption>
+        </figure>
     </div>
 </section>
 

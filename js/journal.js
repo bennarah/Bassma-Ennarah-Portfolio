@@ -72,7 +72,7 @@
     // Click a page to turn it: right-hand page → forward, left-hand page → back.
     // Links and buttons inside pages keep working normally.
     book.addEventListener('click', e => {
-        if (e.target.closest('a, button')) return;
+        if (e.target.closest('a, button, .zoomable')) return;
         const face = e.target.closest('.face');
         if (!face) return;
         goTo(face.classList.contains('front') ? spread + 1 : spread - 1);
@@ -82,6 +82,7 @@
     document.addEventListener('keydown', e => {
         const r = document.getElementById('beyond').getBoundingClientRect();
         if (r.top > window.innerHeight || r.bottom < 0) return;
+        if (lb && !lb.hidden) return;
         if (e.key === 'ArrowLeft')  goTo(spread - 1);
         if (e.key === 'ArrowRight') goTo(spread + 1);
     });
@@ -94,6 +95,38 @@
         book.style.setProperty('--book-scale', s.toFixed(3));
         wrap.style.height = Math.ceil((420 + 24) * s + 24) + 'px';
     }
+    // Photos open full-size in a lightbox
+    const lb    = document.getElementById('photoLightbox');
+    const lbImg = document.getElementById('photoLightboxImg');
+    const lbCap = document.getElementById('photoLightboxCap');
+    let lastFocus = null;
+    function openPhoto(img) {
+        lastFocus = document.activeElement;
+        lbImg.src = img.currentSrc || img.src;
+        lbImg.alt = img.alt;
+        const cap = img.closest('figure')?.querySelector('figcaption');
+        lbCap.textContent = cap ? cap.textContent : '';
+        lb.hidden = false;
+        lb.querySelector('.photo-lightbox-close').focus();
+    }
+    function closePhoto() {
+        lb.hidden = true;
+        lbImg.src = '';
+        if (lastFocus) lastFocus.focus();
+    }
+    book.querySelectorAll('.zoomable').forEach(img => {
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.addEventListener('click', e => { e.stopPropagation(); openPhoto(img); });
+        img.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPhoto(img); }
+        });
+    });
+    if (lb) {
+        lb.addEventListener('click', closePhoto);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closePhoto(); });
+    }
+
     window.addEventListener('resize', fit);
     fit();
     updateUI();
