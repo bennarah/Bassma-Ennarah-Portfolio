@@ -533,7 +533,9 @@ section { min-height:100vh; padding:100px 8%; }
 .proj-link:hover { opacity:1; border-bottom-color:currentColor; }
 
 /* Skills — iMac + iOS screen */
-#skills { background:var(--c3); color:var(--c3t); display:flex; flex-direction:column; justify-content:center; }
+#skills { background:var(--c3); color:var(--c3t); display:flex; flex-direction:column; }
+/* title stays at the same spot as every other section; the iMac + list center in the space below it */
+#skills .skills-layout { margin-block: auto; }
 #skills .sec-title { color:var(--c3t); }
 
 .desktop-wrap {
@@ -1548,4 +1550,3 @@ section { min-height:100vh; padding:100px 8%; }
     }
 }
 
-#skills .sec-title { margin-bottom: 44px; }
