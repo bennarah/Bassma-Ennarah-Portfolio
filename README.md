@@ -8,8 +8,8 @@ My personal portfolio site. The landing page is a manila file folder: scroll dow
 - **Projects:** Rey (AI terminal assistant), Nanuk (FullyHacks 2026 sustainability scanner), Fitness App
 - **Skills:** my tech stack, shown as an iOS home screen on an iMac
 - **Experience:** a timeline of my roles
-- **Beyond:** a flip-through journal of the things that aren't on my résumé
-- **Contact:** email, LinkedIn, GitHub, résumé
+- **Beyond:** a flip-through journal of the things that aren't on my resume
+- **Contact:** email, LinkedIn, GitHub, resume
 
 ## Built with
 
@@ -45,7 +45,7 @@ python3 -m http.server 8000
     │   ├── mockups/        # device frames (iMac)
     │   └── textures/       # background paper texture
     ├── sprites/            # pixel-art sprite sheets
-    └── resume/             # résumé PDF
+    └── resume/             # resume PDF
 ```
 
 ## Roadmap
