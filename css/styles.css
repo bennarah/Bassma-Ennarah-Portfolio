@@ -1510,7 +1510,7 @@ section { min-height:100vh; padding:100px 8%; }
     display: grid;
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
     gap: 56px;
-    align-items: center;
+    align-items: start;
 }
 .stack-list {
     display: flex;
