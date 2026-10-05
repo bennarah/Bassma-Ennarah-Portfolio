@@ -1536,3 +1536,28 @@ section { min-height:100vh; padding:100px 8%; }
     }
 }
 
+
+/* Featured project card (Coffee Tenet): spans the row, phone left, text right */
+.proj-featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+    padding: 40px 48px;
+}
+.proj-featured .device-phone { margin-bottom: 0; }
+.proj-featured .proj-desc { max-width: 560px; }
+.phone-lg { width: 160px; border-radius: 34px; padding: 12px 9px 16px; }
+.phone-lg .phone-screen { border-radius: 24px; }
+.phone-lg video { display: block; width: 100%; }
+.phone-video-placeholder { height: 300px; text-align: center; line-height: 1.6; }
+.proj-private {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: .5;
+}
+@media (max-width: 800px) {
+    .proj-featured { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 32px 28px; }
+}
