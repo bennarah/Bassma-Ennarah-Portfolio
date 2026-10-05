@@ -7,9 +7,14 @@ gsap.registerPlugin(ScrollTrigger);
 ────────────────────────────────────────────────────────────── */
 gsap.set('#folder-wrap', { xPercent: -50, yPercent: -50 });
 
-gsap.from('#folder-wrap', { y: 30, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
+// The entrance animates the folder's *children* (and the hint's text), not
+// #folder-wrap / .scroll-hint themselves. Those two are driven by the scroll
+// timeline below, and animating the same element twice made the folder pop back
+// on top of the open tabs after a reload partway down the page.
+gsap.from('#folder-wrap > .folder-tab, #folder-wrap > .folder-body',
+                          { y: 30, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
 gsap.from('.meta-bar',    { opacity: 0, duration: 0.8, delay: 0.9,  ease: 'power2.out' });
-gsap.from('.scroll-hint', { opacity: 0, duration: 0.8, delay: 1.4,  ease: 'power2.out' });
+gsap.from('.scroll-hint span', { opacity: 0, duration: 0.8, delay: 1.4, ease: 'power2.out' });
 
 
 /* ──────────────────────────────────────────────────────────────
@@ -161,7 +166,10 @@ ScrollTrigger.create({
 
 dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
-        document.getElementById(sections[i]).scrollIntoView({ behavior: 'smooth' });
+        // "Home" goes to the very top (closed folder). scrollIntoView on the pinned
+        // scene would land at the end of the animation instead.
+        if (sections[i] === 'scene') window.scrollTo({ top: 0, behavior: 'smooth' });
+        else document.getElementById(sections[i]).scrollIntoView({ behavior: 'smooth' });
     });
 });
 
