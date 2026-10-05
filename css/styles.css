@@ -1029,3 +1029,83 @@ section { min-height:100vh; padding:100px 8%; }
     opacity: 1;
     transform: translateY(-50%) translateX(0);
 }
+
+/* ── Disneyland ── */
+.jp-dotted {
+    background-image: radial-gradient(rgba(180,160,130,.22) 1px, transparent 1.2px);
+    background-size: 16px 16px;
+}
+.park-ticket {
+    display: flex;
+    margin: 20px 0 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2B3A6B 0%, #4B3F7A 55%, #8C5A8E 100%);
+    color: #F7EFDC;
+    box-shadow: 0 6px 18px rgba(43,58,107,.28);
+    transform: rotate(-1.5deg);
+}
+.park-ticket-main {
+    flex: 1;
+    padding: 14px 14px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.park-ticket-kicker {
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .7;
+}
+.park-ticket-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 30px;
+    line-height: 1.05;
+    color: #F4D58D;
+}
+.park-ticket-sub {
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: .75;
+}
+.park-ticket-stub {
+    width: 66px;
+    border-left: 2px dashed rgba(247,239,220,.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+/* punched notches on the perforation */
+.park-ticket-stub::before,
+.park-ticket-stub::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #FAF7F1;
+}
+.park-ticket-stub::before { top: -7px; }
+.park-ticket-stub::after  { bottom: -7px; }
+.park-ticket-inf {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    line-height: 1;
+    color: #F4D58D;
+}
+.park-ticket-stub-lbl {
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .75;
+}
+.park-sparkles {
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+}
