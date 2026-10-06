@@ -838,14 +838,10 @@ section { min-height:100vh; padding:100px var(--gutter); }
     inset: 0;
     pointer-events: none;
     z-index: 5;
-    transition: background-color .95s cubic-bezier(.645,.045,.355,1);
 }
 .side-right::after { background-image: linear-gradient(90deg, rgba(60,40,20,.16) 0%, rgba(60,40,20,.04) 8%, transparent 16%); }
 .side-left::after  { background-image: linear-gradient(270deg, rgba(60,40,20,.16) 0%, rgba(60,40,20,.04) 8%, transparent 16%); }
-.leaf .face.front::after      { background-color: rgba(0,0,0,0); }
-.leaf.flipped .face.front::after { background-color: rgba(0,0,0,.18); }
-.leaf .face.back::after       { background-color: rgba(0,0,0,.18); }
-.leaf.flipped .face.back::after  { background-color: rgba(0,0,0,0); }
+/* (no darkening overlay on turning pages: Safari flickered it on and off after a turn) */
 
 .book-spine {
     position: absolute;
@@ -926,7 +922,7 @@ section { min-height:100vh; padding:100px var(--gutter); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .leaf, .book-page::after, .face::after { transition-duration: .01s; }
+    .leaf { transition-duration: .01s; }
 }
 
 .journal-nav {
