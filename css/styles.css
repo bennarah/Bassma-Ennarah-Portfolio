@@ -1648,3 +1648,6 @@ section { min-height:100vh; padding:100px var(--gutter); }
     transform: scale(var(--imac-scale, 1));
     transform-origin: top left;
 }
+
+/* sign-off on the last page of the journal */
+.journal-end { position: absolute; right: 22px; bottom: 40px; margin: 0; }
