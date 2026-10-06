@@ -28,7 +28,18 @@ gsap.from('.scroll-hint span', { opacity: 0, duration: 0.8, delay: 1.4, ease: 'p
    revealing the full band.  Folder drops off screen simultaneously.
    All five happen at once (0.04 s stagger = simultaneous feel).
 ────────────────────────────────────────────────────────────── */
+let burst = null;   // { tl, st } for the current build
+
 function buildAnimation() {
+    // Rebuilding (after a resize): put everything back to the closed-folder
+    // state and remove the old pin before measuring again.
+    if (burst) {
+        burst.tl.progress(0);
+        burst.st.kill(true);
+        burst.tl.kill();
+        burst = null;
+    }
+
     const vh = window.innerHeight;
     const vw = window.innerWidth;
 
@@ -114,7 +125,7 @@ function buildAnimation() {
     // ── Pin + scrub ───────────────────────────────────────────────────────────
     // scrub: 0.5  → animation chases the scroll with a short lag (feels physical)
     // end: +=150% → 1.5× viewport of scrolling to run the full animation
-    ScrollTrigger.create({
+    const st = ScrollTrigger.create({
         trigger:       '#scene',
         start:         'top top',
         end:           '+=150%',
@@ -123,8 +134,35 @@ function buildAnimation() {
         scrub:         0.5,
         animation:     tl,
     });
+    burst = { tl, st };
 }
 buildAnimation();
+
+// The tab positions above are measured from the window size, so rebuild when
+// the window is resized (browser resize, dev tools, fullscreen, side panels).
+// Keeps the visitor at the same point in the animation / page.
+let lastW = window.innerWidth, lastH = window.innerHeight, resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (window.innerWidth === lastW && window.innerHeight === lastH) return;
+        lastW = window.innerWidth; lastH = window.innerHeight;
+
+        const old = burst.st;
+        const y = window.scrollY;
+        const inPin = y <= old.end;
+        const progress = old.progress;
+        const pastEnd = y - old.end;
+
+        buildAnimation();
+        ScrollTrigger.refresh();
+
+        const now = burst.st;
+        const target = inPin ? now.start + progress * (now.end - now.start) : now.end + pastEnd;
+        window.scrollTo(0, target);
+        burst.tl.progress(now.progress);
+    }, 200);
+});
 
 
 
@@ -189,3 +227,20 @@ function setDot(i, secId) {
         d.classList.toggle('dot-l',  darkSecs.has(secId));
     });
 }
+
+
+/* ──────────────────────────────────────────────────────────────
+   6.  SMOOTH IN-PAGE LINKS
+   (done here instead of CSS scroll-behavior: smooth, which interferes with
+   ScrollTrigger's measurements)
+────────────────────────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    a.addEventListener('click', e => {
+        const target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
