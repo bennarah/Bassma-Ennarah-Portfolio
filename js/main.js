@@ -2,6 +2,18 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Always start on the closed folder. Browsers (Safari especially) restore the old
+// scroll position on refresh, which can leave the folder half-open on load.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (!location.hash) {
+    ScrollTrigger.clearScrollMemory('manual');
+    window.scrollTo(0, 0);
+    window.addEventListener('load', () => setTimeout(() => {
+        window.scrollTo(0, 0);
+        ScrollTrigger.update();
+    }, 0));
+}
+
 // Safari's engine (desktop Safari + every iPhone browser) — the journal uses a
 // Safari-safe way of resizing there (see .webkit-book in styles.css).
 // Add ?webkitbook to the URL to preview that mode in Chrome.
@@ -205,8 +217,13 @@ buildAnimation();
     // Hover (mouse only): the papers peek up out of the closed folder.
     const scene = document.getElementById('scene');
     const peek = on => scene.classList.toggle('folder-peek', on && !!burst && burst.st.progress < 0.02);
-    folder.addEventListener('mouseenter', () => peek(true));
-    folder.addEventListener('mouseleave', () => peek(false));
+    // Only on devices with a real mouse: iPhones fire a fake "mouseenter" on tap,
+    // and a hover effect there makes Safari treat the first tap as a hover
+    // instead of a click.
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        folder.addEventListener('mouseenter', () => peek(true));
+        folder.addEventListener('mouseleave', () => peek(false));
+    }
     window.addEventListener('scroll', () => { if (window.scrollY > 4) peek(false); }, { passive: true });
 
     folder.setAttribute('role', 'button');
