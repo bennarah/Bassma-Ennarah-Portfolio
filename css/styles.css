@@ -37,6 +37,10 @@ body {
 #scene {
     position: relative;
     height: 100vh;
+    /* svh = height of the visible screen while the browser's toolbar is showing.
+       Plain 100vh on iPhones is taller than that, which hid "scroll to open"
+       behind Safari's toolbar. Browsers that don't know svh use the line above. */
+    height: 100svh;
     overflow: hidden;
     background-color: #F0E8D8;
     background-image: url('../assets/images/textures/paper.jpeg');
