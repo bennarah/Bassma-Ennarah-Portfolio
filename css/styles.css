@@ -1693,3 +1693,6 @@ section { min-height:100vh; padding:100px var(--gutter); }
 .about-resume { color: var(--text); margin-top: 6px; }
 .tl-resume    { color: var(--c4t); opacity: .8; }
 .about-resume:hover, .tl-resume:hover { opacity: .6; }
+
+.about-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 6px; }
+.about-links .about-resume { margin-top: 0; }
