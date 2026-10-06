@@ -115,7 +115,8 @@ body {
         inset 0 1px 0 rgba(255,255,255,.5),
         inset 0 -1px 0 rgba(0,0,0,.06);
     z-index: 5;
-    overflow: hidden;
+    /* visible so the paperclip can reach over the folder's top edge */
+    overflow: visible;
 }
 
 /* subtle canvas/paper texture on folder */
@@ -157,14 +158,14 @@ body {
 .paperclip-svg,
 .paperclip-behind {
     position: absolute;
-    top: -20px; left: 10px;
+    top: -34px; left: 10px;   /* clip pokes ~14px above the folder edge */
     width: 36px;
 }
 
 /* BACK layer: inner loop only, hidden above the polaroid top */
 .paperclip-behind {
     z-index: 0;
-    clip-path: inset(20px 0 0 0); /* only show from polaroid top edge downward */
+    clip-path: inset(34px 0 0 0); /* only show from polaroid top edge downward */
 }
 
 /* FRONT layer: outer loop only, no clipping — rides over the photo */
