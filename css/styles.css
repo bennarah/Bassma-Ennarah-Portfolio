@@ -912,7 +912,7 @@ section { min-height:100vh; padding:100px var(--gutter); }
 }
 .flyleaf-hint {
     position: absolute;
-    bottom: 40px;
+    bottom: 14px;
     right: 22px;
     font-family: 'Dancing Script', cursive;
     font-size: 17px;
@@ -1679,3 +1679,6 @@ section { min-height:100vh; padding:100px var(--gutter); }
 
 /* sign-off on the last page of the journal */
 .journal-end { position: absolute; right: 22px; bottom: 40px; margin: 0; }
+
+/* pages covered by other pages aren't drawn (see journal.js) */
+.book .page-hidden { visibility: hidden; }

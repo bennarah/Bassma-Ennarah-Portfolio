@@ -50,6 +50,29 @@
         }, TURN_MS));
     }
 
+    // ── Only draw the pages you can actually see ─────────────────────────
+    // Pages stacked exactly on top of each other made Safari flicker between
+    // them ("which one is in front?"). So at rest each side shows just its
+    // top page; everything underneath is hidden. While pages are turning, the
+    // pages involved in the turn stay visible until it finishes.
+    const baseLeft  = book.querySelector('.book-page.side-left');
+    const baseRight = book.querySelector('.book-page.side-right');
+    let settleTimer = null;
+
+    function neededFor(s) {
+        // spread s shows: leaf s-1 (turned, on the left) and leaf s (on the right);
+        // the base pages only show at the very start / very end
+        const set = new Set();
+        if (s > 0) set.add(leaves[s - 1]); else set.add(baseLeft);
+        if (s < N) set.add(leaves[s]);     else set.add(baseRight);
+        return set;
+    }
+    function showOnly(set) {
+        [baseLeft, baseRight, ...leaves].forEach(el =>
+            el.classList.toggle('page-hidden', !set.has(el)));
+    }
+    showOnly(neededFor(0));
+
     function goTo(target) {
         target = Math.max(0, Math.min(N, target));
         if (target === spread) return;
@@ -57,9 +80,21 @@
         const steps = [];
         if (forward) for (let i = spread; i < target; i++) steps.push(i);
         else         for (let i = spread - 1; i >= target; i--) steps.push(i);
+
+        // during the turn: what's showing now + every page involved + the destination
+        const during = new Set([...neededFor(spread), ...neededFor(target)]);
+        [...document.querySelectorAll('.book .leaf:not(.page-hidden), .book .book-page:not(.page-hidden)')].forEach(el => during.add(el));
+        steps.forEach(i => during.add(leaves[i]));
+        showOnly(during);
+
         steps.forEach((leafIdx, k) => setTimeout(() => turn(leafIdx, forward), k * STAGGER));
         spread = target;
         updateUI();
+
+        // once everything has landed, hide the pages that are now covered
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(() => showOnly(neededFor(spread)),
+                                 (steps.length - 1) * STAGGER + TURN_MS + 50);
     }
 
     function updateUI() {
