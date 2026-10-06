@@ -34,7 +34,7 @@ gsap.from('.meta-bar',    { opacity: 0, duration: 0.8, delay: 0.9,  ease: 'power
     const hint = document.querySelector('.hint-inner');
     if (!hint) return;
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-        hint.querySelector('.hint-text').textContent = 'tap or scroll to open';
+        hint.querySelector('.hint-text').textContent = 'tap the folder or scroll to open';
     }
     let timer;
     const arm = () => { clearTimeout(timer); timer = setTimeout(() => hint.classList.add('show'), 1500); };
