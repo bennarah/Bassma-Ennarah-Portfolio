@@ -28,7 +28,19 @@ gsap.set('#folder-wrap', { xPercent: -50, yPercent: -50 });
 gsap.from('.folder-scale > .folder-tab, .folder-scale > .folder-body',
                           { y: 30, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
 gsap.from('.meta-bar',    { opacity: 0, duration: 0.8, delay: 0.9,  ease: 'power2.out' });
-gsap.from('.scroll-hint span', { opacity: 0, duration: 0.8, delay: 1.4, ease: 'power2.out' });
+// The "click or scroll to open" hint fades in after a short pause with no
+// scrolling (phones say "tap" instead of "click").
+(function () {
+    const hint = document.querySelector('.hint-inner');
+    if (!hint) return;
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        hint.querySelector('.hint-text').textContent = 'tap or scroll to open';
+    }
+    let timer;
+    const arm = () => { clearTimeout(timer); timer = setTimeout(() => hint.classList.add('show'), 1500); };
+    arm();
+    window.addEventListener('scroll', () => { if (!hint.classList.contains('show')) arm(); }, { passive: true });
+}());
 
 
 /* ──────────────────────────────────────────────────────────────
