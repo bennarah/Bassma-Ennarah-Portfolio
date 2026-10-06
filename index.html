@@ -60,6 +60,8 @@
 
     <!-- ── Folder ── -->
     <div id="folder-wrap">
+      <!-- .folder-scale shrinks the whole folder on small screens (see --folder-scale in main.js) -->
+      <div class="folder-scale">
         <div class="folder-tab"></div>
 
         <div class="folder-body">
@@ -111,6 +113,7 @@
                 <p class="name-tagline">Computer Science · Builder · Creator · Leader</p>
             </div>
         </div>
+      </div>
     </div>
 
     <!-- scroll hint -->
@@ -244,6 +247,9 @@
                 <!-- Wallpaper -->
                 <div class="ios-wallpaper"></div>
 
+                <!-- Everything inside is laid out at 677x387 and scaled to fit (see main.js §7) -->
+                <div class="imac-screen-inner">
+
                 <!-- Status bar -->
                 <div class="ios-status-bar">
                     <span class="ios-time">9:41</span>
@@ -344,6 +350,7 @@
                     <div class="dock-ios-icon"><i class="devicon-git-plain colored"></i></div>
                 </div>
 
+                </div><!-- /.imac-screen-inner -->
             </div><!-- /.imac-screen -->
         </div><!-- /.imac-wrap -->
     </div><!-- /.desktop-wrap -->

@@ -5,6 +5,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
+    /* Side margin used by every section. 8% on desktop, 22px on phones (see the mobile block at the bottom). */
+    --gutter: 8%;
+
     --cream:       #F2EDE4;
     --manila:      #C4B490;
     --manila-dark: #A89468;
@@ -45,7 +48,7 @@ body {
 .meta-bar {
     position: absolute;
     top: 32px; left: 0; right: 0;
-    padding: 0 48px;
+    padding: 0 var(--gutter);
     display: flex;
     justify-content: space-between;
     font-size: 10.5px;
@@ -284,7 +287,7 @@ body {
 /* ============================================================
    CONTENT SECTIONS
 ============================================================ */
-section { min-height:100vh; padding:100px 8%; }
+section { min-height:100vh; padding:100px var(--gutter); }
 
 .sec-eye {
     display:block; font-size:10.5px; letter-spacing:3px;
@@ -702,10 +705,11 @@ section { min-height:100vh; padding:100px 8%; }
     padding: 100px 0 70px;
     overflow: hidden;
 }
-#beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: 8%; }
-#beyond .sec-title { color: var(--text); padding: 0 8%; margin-bottom: 16px; }
+#beyond .sec-eye   { color: rgba(26,21,20,.35); padding-left: var(--gutter); }
+#beyond .sec-title { color: var(--text); padding: 0 var(--gutter); margin-bottom: 16px; }
 .beyond-blurb {
-    margin-left: 8%;
+    /* margin on both sides so the text never touches the right edge on phones */
+    margin: 0 var(--gutter);
     font-size: 14px;
     line-height: 1.8;
     color: var(--muted);
@@ -1571,3 +1575,69 @@ section { min-height:100vh; padding:100px 8%; }
     transition: text-decoration-color .2s;
 }
 .inline-link:hover { text-decoration-color: currentColor; }
+
+/* ============================================================
+   RESPONSIVE
+   Breakpoints: 1000px (tablets) and 700px (phones).
+   Rule of thumb: on smaller screens, side-by-side layouts stack
+   vertically instead of shrinking.
+============================================================ */
+@media (max-width: 1000px) {
+    .proj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+    :root { --gutter: 22px; }
+
+    section { padding-top: 84px; padding-bottom: 84px; }
+    #beyond { padding: 84px 0 64px; }
+    .sec-title { margin-bottom: 40px; }
+
+    /* landing tabs */
+    .nav-file { padding: 0 18px; }
+    .nf-label { font-size: 24px; }
+
+    /* About: photo on top, text below */
+    #about { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+    .about-photo-wrap { margin: 8px auto 0; }
+
+    /* Projects: one card per row, phone mockups centered */
+    .proj-grid { grid-template-columns: minmax(0, 1fr); }
+    .proj-featured .device-phone { justify-content: center; }
+
+    /* nav dots cover text on narrow screens */
+    #nav-dots { display: none; }
+}
+
+/* ── Landing folder scaling ──
+   The folder is designed at 600x370. On narrow screens main.js sets
+   --folder-scale (e.g. 0.57 on a 390px phone) and the whole folder shrinks
+   proportionally. #folder-wrap takes the scaled size so centering still works. */
+#folder-wrap {
+    width:  calc(600px * var(--folder-scale, 1));
+    height: calc(370px * var(--folder-scale, 1));
+}
+.folder-scale {
+    position: relative;
+    width: 600px;
+    height: 370px;
+    transform: scale(var(--folder-scale, 1));
+    transform-origin: top left;
+}
+/* Text that would be too small after scaling gets a bigger base size */
+@media (max-width: 700px) {
+    .name-tagline { font-size: 17px; letter-spacing: 1.6px; }
+    .folder-anno  { font-size: 15px; }
+}
+
+/* iMac screen contents: fixed design size, scaled by --imac-scale (main.js §7) */
+.imac-screen-inner {
+    position: absolute;
+    top: 0; left: 0;
+    width: 677px;
+    height: 387px;
+    display: flex;
+    flex-direction: column;
+    transform: scale(var(--imac-scale, 1));
+    transform-origin: top left;
+}

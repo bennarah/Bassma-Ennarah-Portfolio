@@ -11,7 +11,7 @@ gsap.set('#folder-wrap', { xPercent: -50, yPercent: -50 });
 // #folder-wrap / .scroll-hint themselves. Those two are driven by the scroll
 // timeline below, and animating the same element twice made the folder pop back
 // on top of the open tabs after a reload partway down the page.
-gsap.from('#folder-wrap > .folder-tab, #folder-wrap > .folder-body',
+gsap.from('.folder-scale > .folder-tab, .folder-scale > .folder-body',
                           { y: 30, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.2 });
 gsap.from('.meta-bar',    { opacity: 0, duration: 0.8, delay: 0.9,  ease: 'power2.out' });
 gsap.from('.scroll-hint span', { opacity: 0, duration: 0.8, delay: 1.4, ease: 'power2.out' });
@@ -43,15 +43,26 @@ function buildAnimation() {
     const vh = window.innerHeight;
     const vw = window.innerWidth;
 
+    // ── Folder scale (mobile) ─────────────────────────────────────────────────
+    // The folder is designed at 600px wide. On narrow screens shrink it so it
+    // fits with the page gutter on both sides. Every folder measurement below
+    // is multiplied by S so the tabs still line up behind it.
+    const GUTTER = vw <= 700 ? 22 : 48;
+    const S = Math.min(1, (vw - GUTTER * 2) / 600);
+    document.documentElement.style.setProperty('--folder-scale', S.toFixed(4));
+
     // ── Folder geometry ───────────────────────────────────────────────────────
-    const FOLDER_W      = 600;
-    const folderBodyTop = vh * 0.52 - 185;   // top of the manila folder body
+    const FOLDER_W      = 600 * S;
+    const folderBodyTop = vh * 0.52 - 185 * S;   // top of the manila folder body
     const FL            = (vw - FOLDER_W) / 2;
 
     // ── Final spread positions ────────────────────────────────────────────────
-    const FILE_H    = 88;
-    const FILE_GAP  = 25;
-    const SPREAD_TOP = Math.max(20, (vh - (6 * FILE_H + 5 * FILE_GAP)) / 2);
+    // tabs shrink a little on short screens so all six fit when spread out
+    const FILE_GAP  = vh < 760 ? 14 : 25;
+    const FILE_H    = Math.min(88, Math.floor((vh - 100 - 5 * FILE_GAP) / 6));
+    // centered vertically, but never higher than 64px so the top tab
+    // doesn't cover the "CS Student · Software Engineer" line
+    const SPREAD_TOP = Math.max(64, (vh - (6 * FILE_H + 5 * FILE_GAP)) / 2);
     const finalTop  = Array.from({ length: 6 }, (_, i) =>
         SPREAD_TOP + i * (FILE_H + FILE_GAP)
     );
@@ -60,15 +71,16 @@ function buildAnimation() {
     // Files start BEHIND the folder (z < folder-wrap's 20).
     // The folder body paints on top, masking everything below folderBodyTop.
     // Only the top TAB_SHOW px of each file is visible — a real paper peek.
-    const TAB_SHOW = 24;
+    const TAB_SHOW = 24 * S;
 
+    // offsets are in "design pixels" and get scaled with the folder
     const tabs = [
-        { top: folderBodyTop - TAB_SHOW -  0, left: FL + 28, w: FOLDER_W - 74, rot: -1.8, z: 15 },
-        { top: folderBodyTop - TAB_SHOW -  7, left: FL + 12, w: FOLDER_W - 42, rot:  1.2, z: 14 },
-        { top: folderBodyTop - TAB_SHOW - 14, left: FL + 22, w: FOLDER_W - 60, rot: -0.6, z: 13 },
-        { top: folderBodyTop - TAB_SHOW - 21, left: FL + 16, w: FOLDER_W - 56, rot:  0.8, z: 12 },
-        { top: folderBodyTop - TAB_SHOW - 28, left: FL + 24, w: FOLDER_W - 64, rot: -0.4, z: 11 },
-        { top: folderBodyTop - TAB_SHOW - 35, left: FL + 18, w: FOLDER_W - 52, rot:  0.6, z: 10 },
+        { top: folderBodyTop - TAB_SHOW -  0 * S, left: FL + 28 * S, w: FOLDER_W - 74 * S, rot: -1.8, z: 15 },
+        { top: folderBodyTop - TAB_SHOW -  7 * S, left: FL + 12 * S, w: FOLDER_W - 42 * S, rot:  1.2, z: 14 },
+        { top: folderBodyTop - TAB_SHOW - 14 * S, left: FL + 22 * S, w: FOLDER_W - 60 * S, rot: -0.6, z: 13 },
+        { top: folderBodyTop - TAB_SHOW - 21 * S, left: FL + 16 * S, w: FOLDER_W - 56 * S, rot:  0.8, z: 12 },
+        { top: folderBodyTop - TAB_SHOW - 28 * S, left: FL + 24 * S, w: FOLDER_W - 64 * S, rot: -0.4, z: 11 },
+        { top: folderBodyTop - TAB_SHOW - 35 * S, left: FL + 18 * S, w: FOLDER_W - 52 * S, rot:  0.6, z: 10 },
     ];
 
     const domFiles = Array.from(document.querySelectorAll('.nav-file')).reverse();
@@ -244,3 +256,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         target.scrollIntoView({ behavior: 'smooth' });
     });
 });
+
+
+/* ──────────────────────────────────────────────────────────────
+   7.  iMAC SCREEN SCALING
+   The iOS screen contents are designed at 677x387 (the screen size when the
+   iMac is 740px wide) and scaled to whatever size the iMac actually is,
+   so all three rows of icons + the dock fit on every screen size.
+────────────────────────────────────────────────────────────── */
+(function () {
+    const screen = document.querySelector('.imac-screen');
+    if (!screen || !('ResizeObserver' in window)) return;
+    const DESIGN_W = 677;
+    new ResizeObserver(([entry]) => {
+        const w = entry.contentRect.width;
+        if (w) screen.style.setProperty('--imac-scale', (w / DESIGN_W).toFixed(4));
+    }).observe(screen);
+}());

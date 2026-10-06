@@ -93,7 +93,9 @@
     function fit() {
         const fullW = 600 + 32;                                // two pages + cover overhang
         const fullH = 420 + 24;
-        const byWidth  = (wrap.clientWidth - 16) / fullW;
+        // same side margin as the rest of the site (the --gutter in styles.css)
+        const gutter   = window.innerWidth <= 700 ? 22 : 48;
+        const byWidth  = (wrap.clientWidth - gutter * 2) / fullW;
         const byHeight = (window.innerHeight - 150) / fullH;   // leave room for the arrows/dots
         const z = Math.max(0.3, Math.min(MAX_ZOOM, byWidth, Math.max(byHeight, 1)));
         book.style.setProperty('--book-zoom', z.toFixed(3));
