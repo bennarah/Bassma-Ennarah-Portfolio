@@ -164,6 +164,40 @@ function buildAnimation() {
 }
 buildAnimation();
 
+// Clicking (or tapping) the folder opens it: the page scrolls itself through
+// the pinned section, so the visitor sees the exact same scroll animation.
+(function () {
+    const folder = document.getElementById('folder-wrap');
+    let playing = false;
+    function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+    function openFolder() {
+        if (playing || !burst) return;
+        const start = window.scrollY;
+        const end = burst.st.end + 2;           // just past the end of the animation
+        if (start >= burst.st.end - 4) return;   // already open
+        playing = true;
+        const duration = 1600;
+        const t0 = performance.now();
+        // a wheel/touch from the visitor takes over immediately
+        const cancel = () => { playing = false; };
+        window.addEventListener('wheel', cancel, { once: true, passive: true });
+        window.addEventListener('touchstart', cancel, { once: true, passive: true });
+        (function step(now) {
+            if (!playing) return;
+            const t = Math.min(1, (now - t0) / duration);
+            window.scrollTo(0, start + (end - start) * easeInOut(t));
+            if (t < 1) requestAnimationFrame(step); else playing = false;
+        })(t0);
+    }
+    folder.setAttribute('role', 'button');
+    folder.setAttribute('tabindex', '0');
+    folder.setAttribute('aria-label', 'Open the folder');
+    folder.addEventListener('click', openFolder);
+    folder.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFolder(); }
+    });
+}());
+
 // The tab positions above are measured from the window size, so rebuild when
 // the window is resized (browser resize, dev tools, fullscreen, side panels).
 // Keeps the visitor at the same point in the animation / page.

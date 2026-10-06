@@ -1700,3 +1700,8 @@ section { min-height:100vh; padding:100px var(--gutter); }
 .about-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 6px; }
 .about-links .about-resume { margin-top: 0; }
 
+
+/* the folder is clickable (opens it) */
+#folder-wrap { cursor: pointer; }
+#folder-wrap:focus { outline: none; }
+#folder-wrap:focus-visible .folder-body { outline: 2px solid var(--c2); outline-offset: 4px; }
