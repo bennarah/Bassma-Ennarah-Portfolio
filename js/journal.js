@@ -29,15 +29,24 @@
     function restingZ(i, flipped) {
         return flipped ? 10 + i : 10 + (N - i);
     }
-    leaves.forEach((leaf, i) => { leaf.style.zIndex = restingZ(i, false); });
+    // Matching 3D depth: the sheet on top of each pile sits slightly higher.
+    function restingLift(i, flipped) {
+        return ((flipped ? i + 1 : N - i) * 0.5) + 'px';
+    }
+    leaves.forEach((leaf, i) => {
+        leaf.style.zIndex = restingZ(i, false);
+        leaf.style.setProperty('--lift', restingLift(i, false));
+    });
 
     function turn(i, forward) {
         const leaf = leaves[i];
         clearTimeout(timers.get(leaf));
         leaf.style.zIndex = 60 + (forward ? i : N - i);   // lift above everything while moving
+        leaf.style.setProperty('--lift', (N + 2) * 0.5 + 'px');
         leaf.classList.toggle('flipped', forward);
         timers.set(leaf, setTimeout(() => {
             leaf.style.zIndex = restingZ(i, forward);
+            leaf.style.setProperty('--lift', restingLift(i, forward));
         }, TURN_MS));
     }
 
@@ -98,7 +107,7 @@
         const byWidth  = (wrap.clientWidth - gutter * 2) / fullW;
         const byHeight = (window.innerHeight - 150) / fullH;   // leave room for the arrows/dots
         const z = Math.max(0.3, Math.min(MAX_ZOOM, byWidth, Math.max(byHeight, 1)));
-        book.style.setProperty('--book-zoom', z.toFixed(3));
+        wrap.style.setProperty('--book-zoom', z.toFixed(3));   // inherited by .book
     }
     // Photos open full-size in a lightbox
     const lb    = document.getElementById('photoLightbox');

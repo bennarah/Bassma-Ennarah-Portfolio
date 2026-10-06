@@ -4,6 +4,10 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* iPhone Safari "text autosizing" enlarges text it thinks is too small,
+   which pushed journal text past the bottom of its pages. Turn it off. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
 :root {
     /* Side margin used by every section. 8% on desktop, 22px on phones (see the mobile block at the bottom). */
     --gutter: 8%;
@@ -743,9 +747,28 @@ section { min-height:100vh; padding:100px var(--gutter); }
     width: calc(var(--page-w) * 2);
     height: var(--page-h);
     perspective: 2400px;
+    /* Real 3D space for the pages, so whichever page is closer is drawn on
+       top (no flicker between a turned page and the page under it). */
+    transform-style: preserve-3d;
     /* JS sets --book-zoom: bigger on large screens, smaller on phones.
-       zoom (not transform: scale) keeps the text crisp at any size. */
+       zoom keeps the text crisp in Chrome/Firefox... */
     zoom: var(--book-zoom, 1);
+}
+/* ...but Safari (and every iPhone browser) glitches with zoom + 3D, so there
+   the book is scaled with transform instead. main.js adds .webkit-book. */
+.webkit-book .book-wrap {
+    display: block;
+    position: relative;
+    padding: 0;
+    height: calc(444px * var(--book-zoom, 1) + 32px);
+}
+.webkit-book .book {
+    zoom: 1;
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%) scale(var(--book-zoom, 1));
+    transform-origin: top center;
 }
 /* hardcover board peeking out around the pages */
 .book-cover {
@@ -775,13 +798,18 @@ section { min-height:100vh; padding:100px var(--gutter); }
 .book-page.side-left  { box-shadow: -1px 1px 0 #EFE8DA, -2px 2px 0 #DDD3C0, -3px 3px 0 #EFE8DA, -4px 4px 0 #D6CBB6; border-radius: 6px 0 0 6px; }
 .book-page.side-right { box-shadow:  1px 1px 0 #EFE8DA,  2px 2px 0 #DDD3C0,  3px 3px 0 #EFE8DA,  4px 4px 0 #D6CBB6; border-radius: 0 6px 6px 0; }
 
+.book-cover { transform: translateZ(-2px); }
+.book-page  { transform: translateZ(0); }
 .leaf {
     transform-origin: left center;
     transform-style: preserve-3d;
     transition: transform .95s cubic-bezier(.645,.045,.355,1);
     cursor: pointer;
+    /* --lift (set in journal.js) raises each sheet a fraction of a pixel so
+       stacked pages never sit at exactly the same depth */
+    transform: translateZ(var(--lift, 1px));
 }
-.leaf.flipped { transform: rotateY(-180deg); }
+.leaf.flipped { transform: translateZ(var(--lift, 1px)) rotateY(-180deg); }
 
 .face {
     position: absolute;

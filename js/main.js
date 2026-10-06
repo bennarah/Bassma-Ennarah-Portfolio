@@ -2,6 +2,14 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Safari's engine (desktop Safari + every iPhone browser) — the journal uses a
+// Safari-safe way of resizing there (see .webkit-book in styles.css).
+// Add ?webkitbook to the URL to preview that mode in Chrome.
+const ua = navigator.userAgent;
+if ((/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg|Android/.test(ua)) || /[?&]webkitbook/.test(location.search)) {
+    document.documentElement.classList.add('webkit-book');
+}
+
 // On phones the address bar shrinks/grows while you scroll, which changes the
 // window height. Don't treat that as a resize (it would re-measure every
 // scroll animation mid-scroll and make the fade-ins fire early, off-screen).
