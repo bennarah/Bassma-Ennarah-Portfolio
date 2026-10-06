@@ -1705,3 +1705,12 @@ section { min-height:100vh; padding:100px var(--gutter); }
 #folder-wrap { cursor: pointer; }
 #folder-wrap:focus { outline: none; }
 #folder-wrap:focus-visible .folder-body { outline: 2px solid var(--c2); outline-offset: 4px; }
+
+/* hovering the closed folder: the papers inside lift a little, like it's about to open */
+.nav-file { transition: box-shadow .25s ease, margin-top .35s cubic-bezier(.3,1.4,.5,1); }
+#scene.folder-peek .nav-file { margin-top: calc(-12px * var(--folder-scale, 1)); }
+#scene.folder-peek .nf-2 { margin-top: calc(-15px * var(--folder-scale, 1)); transition-delay: 0s, .03s; }
+#scene.folder-peek .nf-3 { margin-top: calc(-11px * var(--folder-scale, 1)); transition-delay: 0s, .06s; }
+#scene.folder-peek .nf-4 { margin-top: calc(-16px * var(--folder-scale, 1)); transition-delay: 0s, .09s; }
+#scene.folder-peek .nf-5 { margin-top: calc(-13px * var(--folder-scale, 1)); transition-delay: 0s, .12s; }
+#scene.folder-peek .nf-6 { margin-top: calc(-17px * var(--folder-scale, 1)); transition-delay: 0s, .15s; }

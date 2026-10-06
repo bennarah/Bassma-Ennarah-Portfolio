@@ -172,6 +172,7 @@ buildAnimation();
     function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
     function openFolder() {
         if (playing || !burst) return;
+        peek(false);
         const start = window.scrollY;
         const end = burst.st.end + 2;           // just past the end of the animation
         if (start >= burst.st.end - 4) return;   // already open
@@ -189,6 +190,13 @@ buildAnimation();
             if (t < 1) requestAnimationFrame(step); else playing = false;
         })(t0);
     }
+    // Hover (mouse only): the papers peek up out of the closed folder.
+    const scene = document.getElementById('scene');
+    const peek = on => scene.classList.toggle('folder-peek', on && !!burst && burst.st.progress < 0.02);
+    folder.addEventListener('mouseenter', () => peek(true));
+    folder.addEventListener('mouseleave', () => peek(false));
+    window.addEventListener('scroll', () => { if (window.scrollY > 4) peek(false); }, { passive: true });
+
     folder.setAttribute('role', 'button');
     folder.setAttribute('tabindex', '0');
     folder.setAttribute('aria-label', 'Open the folder');
