@@ -8,7 +8,7 @@ The landing page is a manila file folder: scroll down and the colored papers sli
 
 1. **About:** bio, polaroid, quick stats and a link to my resume
 2. **Projects:** Coffee Tenet (social café discovery app), Rey (AI terminal assistant), Nanuk (FullyHacks 2026 sustainability scanner), Fitness App
-3. **Skills:** my tech stack as an iOS home screen on an iMac, plus a readable grouped list and coursework
+3. **Skills:** my tech stack as an iOS home screen on an iMac, plus a readable grouped list
 4. **Experience:** a timeline of my roles
 5. **Beyond:** a journal that flips like a real book, with the things that aren't on my resume
 6. **Contact:** email, LinkedIn, GitHub, resume

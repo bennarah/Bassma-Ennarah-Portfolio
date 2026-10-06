@@ -1699,15 +1699,3 @@ section { min-height:100vh; padding:100px var(--gutter); }
 .about-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 6px; }
 .about-links .about-resume { margin-top: 0; }
 
-/* Left column: iMac with Coursework under it (stacks on narrow screens) */
-.skills-left { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
-/* iMac size follows the screen height so the whole section (title, iMac,
-   coursework) fits on one screen. The iMac image is 0.8x as tall as it is wide. */
-.skills-left .imac-wrap { width: min(100%, clamp(380px, calc((100vh - 540px) * 1.25), 600px)); }
-/* narrow screens: iMac, then the skills list, then Coursework last */
-@media (max-width: 1000px) {
-    .skills-left { display: contents; }
-    .skills-left .imac-wrap { width: min(740px, 100%); }
-    .skills-layout > .stack-list { order: 2; }
-    .skills-left > .coursework { order: 3; }
-}
