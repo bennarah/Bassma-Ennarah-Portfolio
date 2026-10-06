@@ -36,6 +36,7 @@ python3 -m http.server 8000
 
 ```
 ├── index.html              # page markup + link-preview tags
+├── favicon.ico             # tab icon for browsers that look for it at the root
 ├── css/
 │   └── styles.css          # all styles (mobile rules at the bottom)
 ├── js/
