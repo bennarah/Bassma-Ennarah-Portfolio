@@ -830,27 +830,25 @@ section { min-height:100vh; padding:100px var(--gutter); }
     box-shadow: none;
 }
 
-/* gutter shading near the spine + a darkening that follows the turn */
-.book-page::after,
-.face::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-}
-.side-right::after { background-image: linear-gradient(90deg, rgba(60,40,20,.16) 0%, rgba(60,40,20,.04) 8%, transparent 16%); }
-.side-left::after  { background-image: linear-gradient(270deg, rgba(60,40,20,.16) 0%, rgba(60,40,20,.04) 8%, transparent 16%); }
-/* (no darkening overlay on turning pages: Safari flickered it on and off after a turn) */
-
+/* Spine shading: ONE strip drawn just above the pages, centered on the spine.
+   (It used to be painted on every page, which Safari re-drew and flickered
+   each time a page turned.) */
 .book-spine {
     position: absolute;
     top: 0; bottom: 0;
-    left: calc(var(--page-w) - 1px);
-    width: 2px;
-    background: rgba(60,40,20,.18);
-    z-index: 100;
+    left: calc(var(--page-w) - 24px);
+    width: 48px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(60,40,20,.07) 30%,
+        rgba(60,40,20,.16) 48%,
+        rgba(60,40,20,.28) 50%,
+        rgba(60,40,20,.16) 52%,
+        rgba(60,40,20,.07) 70%,
+        transparent 100%);
+    transform: translateZ(4px);
     pointer-events: none;
+    z-index: 100;
 }
 
 /* page numbers */
