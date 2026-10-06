@@ -481,10 +481,13 @@ section { min-height:100vh; padding:100px var(--gutter); }
 .window-screen img { width:100%; display:block; object-fit:cover; object-position:top left; }
 
 /* ── Rey mascot sprite ── */
+.proj-links-rey {
+    align-items: flex-end;
+    justify-content: space-between;
+}
 .rey-mascot {
-    position: absolute;
-    bottom: -18px;
-    right: 22px;
+    flex-shrink: 0;
+    margin: -12px -6px -14px 0;   /* sits snug in the card's bottom-right corner */
     image-rendering: pixelated;
     image-rendering: crisp-edges;
     z-index: 20;

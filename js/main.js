@@ -2,6 +2,12 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// On phones the address bar shrinks/grows while you scroll, which changes the
+// window height. Don't treat that as a resize (it would re-measure every
+// scroll animation mid-scroll and make the fade-ins fire early, off-screen).
+ScrollTrigger.config({ ignoreMobileResize: true });
+const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
 /* ──────────────────────────────────────────────────────────────
    1.  FOLDER ENTRANCE  (on page load)
 ────────────────────────────────────────────────────────────── */
@@ -157,7 +163,11 @@ let lastW = window.innerWidth, lastH = window.innerHeight, resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-        if (window.innerWidth === lastW && window.innerHeight === lastH) return;
+        const widthChanged  = window.innerWidth !== lastW;
+        const heightChanged = window.innerHeight !== lastH;
+        // Phones: only rebuild when the width changes (rotating the phone).
+        // Height-only changes there are just the address bar.
+        if (!widthChanged && (!heightChanged || isTouch)) return;
         lastW = window.innerWidth; lastH = window.innerHeight;
 
         const old = burst.st;

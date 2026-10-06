@@ -10,7 +10,8 @@
     const SRC         = 'assets/sprites/rey-sprite.png';
     const COLS        = 2;
     const TOTAL       = 5;   // 5 frames (last cell in 2x3 grid is empty)
-    const SCALE       = 2.5; // pixel-art upscale
+    // pixel-art upscale: whole numbers keep the pixels crisp
+    const SCALE       = window.innerWidth <= 700 ? 1 : 1.5;
     const FPS         = 7;
 
     const probe = new Image();
