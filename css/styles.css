@@ -255,8 +255,9 @@ body {
 .nf-2 { background: var(--c2); color: var(--c2t); }
 .nf-3 { background: var(--c3); color: var(--c3t); }
 .nf-4 { background: var(--c4); color: var(--c4t); }
-.nf-5 { background: var(--c5); color: var(--c5t); }
-.nf-6 { background: var(--c6); color: var(--c6t); }
+/* tab 05 = Beyond (terracotta), tab 06 = Contact (navy, same as the Contact section) */
+.nf-5 { background: var(--c6); color: var(--c6t); }
+.nf-6 { background: var(--c5); color: var(--c5t); }
 
 .nf-num   { font-size:11px; letter-spacing:3px; text-transform:uppercase; opacity:0; min-width:32px; }
 .nf-label { flex:1; text-align:center; font-family:'Playfair Display',serif; font-size:32px; font-weight:700; letter-spacing:-.5px; opacity:0; }
@@ -267,7 +268,8 @@ body {
 .nf-2 .nf-num,.nf-2 .nf-label,.nf-2 .nf-arrow { color:var(--c2t); }
 .nf-3 .nf-num,.nf-3 .nf-label,.nf-3 .nf-arrow { color:var(--c3t); }
 .nf-4 .nf-num,.nf-4 .nf-label,.nf-4 .nf-arrow { color:var(--c4t); }
-.nf-5 .nf-num,.nf-5 .nf-label,.nf-5 .nf-arrow { color:var(--c5t); }
+.nf-5 .nf-num,.nf-5 .nf-label,.nf-5 .nf-arrow { color:var(--c6t); }
+.nf-6 .nf-num,.nf-6 .nf-label,.nf-6 .nf-arrow { color:var(--c5t); }
 
 /* scroll hint */
 .scroll-hint {
@@ -1696,3 +1698,16 @@ section { min-height:100vh; padding:100px var(--gutter); }
 
 .about-links { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 6px; }
 .about-links .about-resume { margin-top: 0; }
+
+/* Left column: iMac with Coursework under it (stacks on narrow screens) */
+.skills-left { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+/* iMac size follows the screen height so the whole section (title, iMac,
+   coursework) fits on one screen. The iMac image is 0.8x as tall as it is wide. */
+.skills-left .imac-wrap { width: min(100%, clamp(380px, calc((100vh - 540px) * 1.25), 600px)); }
+/* narrow screens: iMac, then the skills list, then Coursework last */
+@media (max-width: 1000px) {
+    .skills-left { display: contents; }
+    .skills-left .imac-wrap { width: min(740px, 100%); }
+    .skills-layout > .stack-list { order: 2; }
+    .skills-left > .coursework { order: 3; }
+}

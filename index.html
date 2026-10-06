@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bassma Ennarah is a CS student at Cal State Fullerton. Projects, skills, experience, and a little of everything else.">
     <title>Bassma Ennarah | Portfolio</title>
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 
     <!-- Link previews (iMessage, LinkedIn, Slack, etc.). Image URLs must be absolute. -->
     <meta property="og:type" content="website">
@@ -20,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Dancing+Script:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.17.0/devicon.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -51,11 +54,11 @@
          Order in DOM = stack order: nf-5 is deepest (rendered first / behind),
          nf-1 is on top (rendered last, emerges first).
     -->
-    <a href="#beyond"     class="nav-file nf-6" id="f6">
-        <span class="nf-num">06</span><span class="nf-label">Beyond</span><span class="nf-arrow">→</span>
+    <a href="#contact"    class="nav-file nf-6" id="f6">
+        <span class="nf-num">06</span><span class="nf-label">Contact</span><span class="nf-arrow">→</span>
     </a>
-    <a href="#contact"    class="nav-file nf-5" id="f5">
-        <span class="nf-num">05</span><span class="nf-label">Contact</span><span class="nf-arrow">→</span>
+    <a href="#beyond"     class="nav-file nf-5" id="f5">
+        <span class="nf-num">05</span><span class="nf-label">Beyond</span><span class="nf-arrow">→</span>
     </a>
     <a href="#experience" class="nav-file nf-4" id="f4">
         <span class="nf-num">04</span><span class="nf-label">Experience</span><span class="nf-arrow">→</span>
@@ -134,7 +137,6 @@
     </div>
 
 </div><!-- /#scene -->
-
 
 <!-- ============================================================
      CONTENT SECTIONS
@@ -256,6 +258,7 @@
     <h2 class="sec-title">Tech stack</h2>
 
     <div class="skills-layout">
+    <div class="skills-left">
     <div class="desktop-wrap" aria-hidden="true">
         <div class="imac-wrap">
             <img class="imac-img" src="assets/images/mockups/imac.png" alt="iMac">
@@ -373,6 +376,24 @@
             </div><!-- /.imac-screen -->
         </div><!-- /.imac-wrap -->
     </div><!-- /.desktop-wrap -->
+    <div class="stack-group coursework">
+        <h3 class="stack-label">Coursework</h3>
+        <ul class="stack-chips">
+            <li>Data Structures</li>
+            <li>Algorithms</li>
+            <li>Object-Oriented Programming</li>
+            <li>Operating Systems</li>
+            <li>Applied AI</li>
+            <li>Software Engineering</li>
+            <li>Web Back End</li>
+            <li>Front-End Engineering</li>
+            <li>File Structures &amp; Databases</li>
+            <li>Compilers</li>
+            <li>Cybersecurity</li>
+            <li>Linear Algebra</li>
+        </ul>
+    </div>
+    </div><!-- /.skills-left -->
 
     <!-- Readable version of the tech stack (the iMac above is decorative) -->
     <div class="stack-list">
@@ -444,6 +465,7 @@
         </div>
     </div>
     </div><!-- /.skills-layout -->
+
 </section>
 
 <section id="experience">
@@ -485,7 +507,7 @@
 </section>
 
 <section id="beyond">
-    <span class="sec-eye">beyond the terminal</span>
+    <span class="sec-eye">05 · Beyond the terminal</span>
     <h2 class="sec-title">Not on my resume</h2>
 
     <p class="beyond-blurb">There's a lot that doesn't make it onto a resume. Here's some of mine: the places I've traveled, the drinks I make at home, the films I rewatch, and the teams I root for.</p>
@@ -584,7 +606,6 @@
                                 <li><span class="cafe-name">Ayer</span><span class="cafe-city">Tustin</span></li>
                             </ol>
                         </div>
-                        <a href="mailto:bassma.ennarah@gmail.com" class="coffee-cta">let's grab a drink →</a>
                         <span class="folio">2</span>
                     </div>
                 </div>
@@ -721,7 +742,7 @@
 </section>
 
 <section id="contact">
-    <span class="sec-eye">05 · Contact</span>
+    <span class="sec-eye">06 · Contact</span>
     <h1 class="contact-title">Let's<br>talk.</h1>
     <p class="contact-sub">I'm open to internships, collaborations, and interesting conversations. If you have a project or opportunity, my inbox is open.</p>
     <div class="contact-links">
@@ -731,7 +752,6 @@
         <a href="assets/resume/Bassma_Ennarah_Resume_10-2026.pdf" class="contact-link" target="_blank" rel="noopener">Resume ↗</a>
     </div>
 </section>
-
 
 <!-- ============================================================
      JAVASCRIPT
