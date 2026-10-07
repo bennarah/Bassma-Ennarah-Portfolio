@@ -381,17 +381,6 @@ section { min-height:100vh; padding:100px var(--gutter); }
     padding-top: 8px;
 }
 
-.about-doodle {
-    display: block;
-    font-family: 'Dancing Script', cursive;
-    font-size: 15px;
-    color: var(--muted);
-    opacity: .55;
-    margin-top: 14px;
-    text-align: center;
-    transform: rotate(2deg);
-}
-
 .about-bio p { font-size:16.5px; line-height:1.85; color:var(--muted); margin-bottom:18px; }
 .about-bio p strong { color:var(--text); font-weight:600; }
 
